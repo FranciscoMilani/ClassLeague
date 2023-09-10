@@ -11,4 +11,11 @@
         <maven.compiler.target>20</maven.compiler.target>
         <exec.mainClass>br.ucs.classleague.ClassLeague</exec.mainClass>
     </properties>
+    <dependencies>
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <version>42.6.0</version>
+        </dependency>
+    </dependencies>
 </project>
