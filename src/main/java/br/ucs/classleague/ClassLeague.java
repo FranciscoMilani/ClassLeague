@@ -7,6 +7,6 @@ package br.ucs.classleague;
 public class ClassLeague {
 
     public static void main(String[] args) {
-        System.out.println("Hello World!");
+        // instanciar classe principal do projeto
     }
 }
