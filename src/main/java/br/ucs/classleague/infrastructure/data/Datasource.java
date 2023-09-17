@@ -1,4 +1,4 @@
-package br.ucs.classleague.data;
+package br.ucs.classleague.infrastructure.data;
 
 /**
  *
