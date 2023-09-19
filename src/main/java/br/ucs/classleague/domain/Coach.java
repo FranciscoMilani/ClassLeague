@@ -4,6 +4,6 @@ package br.ucs.classleague.domain;
  *
  * @author Francisco
  */
-public abstract class Person {
-    private String name;
+public class Coach extends Person {
+    private Integer coachId;
 }
