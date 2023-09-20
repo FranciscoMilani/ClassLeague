@@ -1,18 +1,33 @@
 package br.ucs.classleague.domain;
 
+import java.io.Serializable;
+
 /**
  *
  * @author Francisco
  */
-public class Team {
+public class Team implements Serializable{
+
+    private Long id;
     private String name;
     private String acronym;
     private Class schoolClass;
+
+    public Team() {
+    }
 
     public Team(String name, String acronym, Class schoolClass) {
         this.name = name;
         this.acronym = acronym;
         this.schoolClass = schoolClass;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getName() {
