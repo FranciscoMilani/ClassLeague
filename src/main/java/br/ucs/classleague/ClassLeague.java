@@ -1,5 +1,6 @@
 package br.ucs.classleague;
 
+import br.ucs.classleague.infrastructure.data.Datasource;
 import br.ucs.classleague.infrastructure.presentation.views.GUI;
 import com.formdev.flatlaf.FlatDarculaLaf;
 
@@ -18,5 +19,7 @@ public class ClassLeague {
                 new GUI().setVisible(true);
             }
         });
+        
+        Datasource src = new Datasource();
     }
 }

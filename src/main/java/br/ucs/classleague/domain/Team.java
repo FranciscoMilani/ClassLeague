@@ -11,12 +11,12 @@ public class Team implements Serializable{
     private Long id;
     private String name;
     private String acronym;
-    private Class schoolClass;
+    private SchoolClass schoolClass;
 
     public Team() {
     }
 
-    public Team(String name, String acronym, Class schoolClass) {
+    public Team(String name, String acronym, SchoolClass schoolClass) {
         this.name = name;
         this.acronym = acronym;
         this.schoolClass = schoolClass;
@@ -46,11 +46,11 @@ public class Team implements Serializable{
         this.acronym = acronym;
     }
 
-    public Class getSchoolClass() {
+    public SchoolClass getSchoolClass() {
         return schoolClass;
     }
 
-    public void setSchoolClass(Class schoolClass) {
+    public void setSchoolClass(SchoolClass schoolClass) {
         this.schoolClass = schoolClass;
     }
 }

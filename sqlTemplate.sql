@@ -1,9 +1,3 @@
-
-/**
- * Author:  Francisco
- * Created: 17 de set. de 2023
- */
-
 CREATE TABLE class (
     id serial NOT NULL,
     name VARCHAR(255) NOT NULL,

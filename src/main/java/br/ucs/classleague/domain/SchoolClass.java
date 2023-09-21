@@ -2,17 +2,25 @@ package br.ucs.classleague.domain;
 
 import java.io.Serializable;
 
-/**
- *
- * @author Francisco
- */
-public class Class implements Serializable{
+public class SchoolClass implements Serializable {
 
     private Long id;
     private String name;
-    private Integer schoolShift;
+    private SchoolShift schoolShift;
     private Integer number;
     private EducationalCycle educationalCycle;
+    
+    public static enum SchoolShift {
+        MATUTINE("Matutino"),
+        VESPERTINE("Vespertino"),
+        FULL_TIME("Tempo Integral");
+
+        private String name;
+
+        private SchoolShift(String name) {
+            this.name = name;
+        }
+    }
 
     public static enum EducationalCycle {
         ELEMENTARY_SCHOOL("Ensino Fundamental"),
@@ -25,11 +33,7 @@ public class Class implements Serializable{
         }
     }
 
-    public Class() {
-    }
-
-    public Class(Long id, String name, Integer schoolShift, Integer number, EducationalCycle educationalCycle) {
-        this.id = id;
+    public SchoolClass(String name, SchoolShift schoolShift, Integer number, EducationalCycle educationalCycle) {
         this.name = name;
         this.schoolShift = schoolShift;
         this.number = number;
@@ -52,11 +56,11 @@ public class Class implements Serializable{
         this.name = name;
     }
 
-    public Integer getSchoolShift() {
+    public SchoolShift getSchoolShift() {
         return schoolShift;
     }
 
-    public void setSchoolShift(Integer schoolShift) {
+    public void setSchoolShift(SchoolShift schoolShift) {
         this.schoolShift = schoolShift;
     }
 

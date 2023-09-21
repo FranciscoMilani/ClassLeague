@@ -32,3 +32,6 @@ nbdist/
 hs_err_pid*
 replay_pid*
 /target/
+
+# DB Credentials
+./src/main/resources/META-INF/db-config.xml
