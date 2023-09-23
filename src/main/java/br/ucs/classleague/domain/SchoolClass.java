@@ -1,9 +1,18 @@
 package br.ucs.classleague.domain;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import java.io.Serializable;
 
+@Entity
+@Table(name = "class")
 public class SchoolClass implements Serializable {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
     private SchoolShift schoolShift;
@@ -31,6 +40,9 @@ public class SchoolClass implements Serializable {
         private EducationalCycle(String name) {
             this.name = name;
         }
+    }
+    
+    public SchoolClass(){
     }
 
     public SchoolClass(String name, SchoolShift schoolShift, Integer number, EducationalCycle educationalCycle) {

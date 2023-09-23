@@ -15,6 +15,9 @@ public class Student extends Person {
     private String fatherName;
     private String motherName;
     private Integer pontos;
+    
+    public Student(){
+    }
 
     public Student(SchoolClass schoolClass, String fatherName, String motherName, Integer pontos, String name, String surname, Date birthDate, String gender, String telephone, String cpf, Address address) {
         super(name, surname, birthDate, gender, telephone, cpf, address);

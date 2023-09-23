@@ -1,13 +1,11 @@
 package br.ucs.classleague;
 
+import br.ucs.classleague.domain.SchoolClass;
+import br.ucs.classleague.infrastructure.data.ClassDao;
 import br.ucs.classleague.infrastructure.data.Datasource;
 import br.ucs.classleague.infrastructure.presentation.views.GUI;
 import com.formdev.flatlaf.FlatDarculaLaf;
 
-/**
- *
- * @author Francisco
- */
 public class ClassLeague {
 
     public static void main(String[] args) {
@@ -21,5 +19,9 @@ public class ClassLeague {
         });
         
         Datasource src = new Datasource();
+        ClassDao dao = new ClassDao();
+        dao.findById(1L).ifPresent((t) -> {
+            System.out.println(t.getName());
+        });
     }
 }
