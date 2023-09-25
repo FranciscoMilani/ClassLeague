@@ -8,7 +8,6 @@ import jakarta.persistence.Table;
 import java.io.Serializable;
 
 @Entity
-@Table(name = "class")
 public class SchoolClass implements Serializable {
 
     @Id

@@ -1,19 +1,14 @@
 package br.ucs.classleague.infrastructure.presentation.views;
 
+import br.ucs.classleague.infrastructure.presentation.controllers.RegisterController;
 import com.formdev.flatlaf.FlatDarculaLaf;
-import com.formdev.flatlaf.FlatDarkLaf;
-import com.formdev.flatlaf.FlatLightLaf;
 import java.awt.event.ActionEvent;
 
-/**
- *
- * @author Francisco
- */
-public class GUI extends javax.swing.JFrame {
 
-    /**
-     * Creates new form StudentRegister
-     */
+public class GUI extends javax.swing.JFrame {
+    
+    RegisterController registerController = new RegisterController(this);
+
     public GUI() {
         initComponents();
     }
@@ -28,10 +23,22 @@ public class GUI extends javax.swing.JFrame {
     private void initComponents() {
         java.awt.GridBagConstraints gridBagConstraints;
 
+        studentRegisterDialog = new javax.swing.JDialog();
+        studentRegister2 = new javax.swing.JPanel();
+        title3 = new javax.swing.JLabel();
+        jPanel4 = new javax.swing.JPanel();
+        jLabel11 = new javax.swing.JLabel();
+        jTextField8 = new javax.swing.JTextField();
+        jLabel12 = new javax.swing.JLabel();
+        jTextField9 = new javax.swing.JTextField();
+        jLabel13 = new javax.swing.JLabel();
+        classComboBox2 = new javax.swing.JComboBox<>();
+        jButton7 = new javax.swing.JButton();
         mainTabbedPane = new javax.swing.JTabbedPane();
         mainPanel = new javax.swing.JPanel();
         mainTopPanel = new javax.swing.JPanel();
         jButton6 = new javax.swing.JButton();
+        jButton5 = new javax.swing.JButton();
         mainSeparator = new javax.swing.JSeparator();
         mainBottomPanel = new javax.swing.JPanel();
         mainInnerTopPanel = new javax.swing.JPanel();
@@ -63,6 +70,127 @@ public class GUI extends javax.swing.JFrame {
         classComboBox = new javax.swing.JComboBox<>();
         jButton4 = new javax.swing.JButton();
 
+        studentRegister2.setLayout(new java.awt.GridBagLayout());
+
+        title3.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
+        title3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        title3.setText("Cadastro de Alunos");
+        title3.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        studentRegister2.add(title3, gridBagConstraints);
+
+        jPanel4.setBackground(new java.awt.Color(51, 51, 51));
+        jPanel4.setBorder(javax.swing.BorderFactory.createEmptyBorder(10, 10, 10, 10));
+        jPanel4.setLayout(new java.awt.GridBagLayout());
+
+        jLabel11.setText("Nome");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
+        gridBagConstraints.insets = new java.awt.Insets(0, 5, 0, 0);
+        jPanel4.add(jLabel11, gridBagConstraints);
+
+        jTextField8.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField8ActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.gridwidth = java.awt.GridBagConstraints.REMAINDER;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_END;
+        jPanel4.add(jTextField8, gridBagConstraints);
+
+        jLabel12.setText("Sexo");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
+        gridBagConstraints.insets = new java.awt.Insets(10, 5, 0, 0);
+        jPanel4.add(jLabel12, gridBagConstraints);
+
+        jTextField9.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField9ActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 3;
+        gridBagConstraints.gridwidth = java.awt.GridBagConstraints.REMAINDER;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_END;
+        jPanel4.add(jTextField9, gridBagConstraints);
+
+        jLabel13.setText("Turma");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 4;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
+        gridBagConstraints.insets = new java.awt.Insets(10, 5, 0, 0);
+        jPanel4.add(jLabel13, gridBagConstraints);
+
+        registerController.showClassesNames();
+        classComboBox2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                classComboBox2ActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 5;
+        gridBagConstraints.gridwidth = java.awt.GridBagConstraints.REMAINDER;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
+        jPanel4.add(classComboBox2, gridBagConstraints);
+
+        jButton7.setText("Cadastrar");
+        jButton7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton7ActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 6;
+        gridBagConstraints.ipadx = 20;
+        gridBagConstraints.ipady = 30;
+        gridBagConstraints.insets = new java.awt.Insets(30, 0, 10, 0);
+        jPanel4.add(jButton7, gridBagConstraints);
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        studentRegister2.add(jPanel4, gridBagConstraints);
+
+        javax.swing.GroupLayout studentRegisterDialogLayout = new javax.swing.GroupLayout(studentRegisterDialog.getContentPane());
+        studentRegisterDialog.getContentPane().setLayout(studentRegisterDialogLayout);
+        studentRegisterDialogLayout.setHorizontalGroup(
+            studentRegisterDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(studentRegisterDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(studentRegisterDialogLayout.createSequentialGroup()
+                    .addGap(0, 0, Short.MAX_VALUE)
+                    .addComponent(studentRegister2, javax.swing.GroupLayout.PREFERRED_SIZE, 1024, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(0, 0, Short.MAX_VALUE)))
+        );
+        studentRegisterDialogLayout.setVerticalGroup(
+            studentRegisterDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(studentRegisterDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(studentRegisterDialogLayout.createSequentialGroup()
+                    .addGap(0, 0, Short.MAX_VALUE)
+                    .addComponent(studentRegister2, javax.swing.GroupLayout.PREFERRED_SIZE, 733, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(0, 0, Short.MAX_VALUE)))
+        );
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("ClassLeague");
         setMinimumSize(null);
@@ -91,6 +219,14 @@ public class GUI extends javax.swing.JFrame {
         gridBagConstraints.ipadx = 200;
         gridBagConstraints.ipady = 50;
         mainTopPanel.add(jButton6, gridBagConstraints);
+
+        jButton5.setText("jButton5");
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
+        mainTopPanel.add(jButton5, new java.awt.GridBagConstraints());
 
         mainPanel.add(mainTopPanel);
         mainPanel.add(mainSeparator);
@@ -441,78 +577,72 @@ public class GUI extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_classComboBoxActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        FlatDarculaLaf.setup();
-        
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-//        try {
-//            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-//                if ("".equals(info.getName())) {
-//                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-//                    break;
-//                }
-//            }
-//        } catch (ClassNotFoundException ex) {
-//            java.util.logging.Logger.getLogger(GUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        } catch (InstantiationException ex) {
-//            java.util.logging.Logger.getLogger(GUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        } catch (IllegalAccessException ex) {
-//            java.util.logging.Logger.getLogger(GUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-//            java.util.logging.Logger.getLogger(GUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        }
-        //</editor-fold>
-        //</editor-fold>
+    private void jTextField8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField8ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField8ActionPerformed
 
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new GUI().setVisible(true);
-            }
-        });
-    }
+    private void jTextField9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField9ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField9ActionPerformed
+
+    private void classComboBox2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_classComboBox2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_classComboBox2ActionPerformed
+
+    private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton7ActionPerformed
+
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        studentRegisterDialog.setVisible(true);
+    }//GEN-LAST:event_jButton5ActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    javax.swing.JButton addTournamentBtn;
-    javax.swing.JComboBox<String> classComboBox;
-    javax.swing.JButton jButton1;
-    javax.swing.JButton jButton2;
-    javax.swing.JButton jButton3;
-    javax.swing.JButton jButton4;
-    javax.swing.JButton jButton6;
-    javax.swing.JLabel jLabel1;
-    javax.swing.JLabel jLabel2;
-    javax.swing.JLabel jLabel3;
-    javax.swing.JLabel jLabel4;
-    javax.swing.JLabel jLabel5;
-    javax.swing.JLabel jLabel6;
-    javax.swing.JLabel jLabel7;
-    javax.swing.JPanel jPanel1;
-    javax.swing.JPanel jPanel2;
-    javax.swing.JTextField jTextField1;
-    javax.swing.JTextField jTextField2;
-    javax.swing.JTextField jTextField3;
-    javax.swing.JTextField jTextField4;
-    javax.swing.JTextField jTextField5;
-    javax.swing.JPanel mainBottomPanel;
-    javax.swing.JPanel mainInnerBottomPanel;
-    javax.swing.JPanel mainInnerTopPanel;
-    javax.swing.JPanel mainPanel;
-    javax.swing.JSeparator mainSeparator;
-    javax.swing.JTabbedPane mainTabbedPane;
-    javax.swing.JPanel mainTopPanel;
-    javax.swing.JButton searchTournamentBtn;
-    javax.swing.JTextField searchTournamentField;
-    javax.swing.JPanel studentRegister;
-    javax.swing.JLabel title;
-    javax.swing.JLabel title1;
-    javax.swing.JPanel tournamentRegister;
+    public javax.swing.JButton addTournamentBtn;
+    public javax.swing.JComboBox<String> classComboBox;
+    public javax.swing.JComboBox<String> classComboBox2;
+    public javax.swing.JButton jButton1;
+    public javax.swing.JButton jButton2;
+    public javax.swing.JButton jButton3;
+    public javax.swing.JButton jButton4;
+    public javax.swing.JButton jButton5;
+    public javax.swing.JButton jButton6;
+    public javax.swing.JButton jButton7;
+    public javax.swing.JLabel jLabel1;
+    public javax.swing.JLabel jLabel11;
+    public javax.swing.JLabel jLabel12;
+    public javax.swing.JLabel jLabel13;
+    public javax.swing.JLabel jLabel2;
+    public javax.swing.JLabel jLabel3;
+    public javax.swing.JLabel jLabel4;
+    public javax.swing.JLabel jLabel5;
+    public javax.swing.JLabel jLabel6;
+    public javax.swing.JLabel jLabel7;
+    public javax.swing.JPanel jPanel1;
+    public javax.swing.JPanel jPanel2;
+    public javax.swing.JPanel jPanel4;
+    public javax.swing.JTextField jTextField1;
+    public javax.swing.JTextField jTextField2;
+    public javax.swing.JTextField jTextField3;
+    public javax.swing.JTextField jTextField4;
+    public javax.swing.JTextField jTextField5;
+    public javax.swing.JTextField jTextField8;
+    public javax.swing.JTextField jTextField9;
+    public javax.swing.JPanel mainBottomPanel;
+    public javax.swing.JPanel mainInnerBottomPanel;
+    public javax.swing.JPanel mainInnerTopPanel;
+    public javax.swing.JPanel mainPanel;
+    public javax.swing.JSeparator mainSeparator;
+    public javax.swing.JTabbedPane mainTabbedPane;
+    public javax.swing.JPanel mainTopPanel;
+    public javax.swing.JButton searchTournamentBtn;
+    public javax.swing.JTextField searchTournamentField;
+    public javax.swing.JPanel studentRegister;
+    public javax.swing.JPanel studentRegister2;
+    public javax.swing.JDialog studentRegisterDialog;
+    public javax.swing.JLabel title;
+    public javax.swing.JLabel title1;
+    public javax.swing.JLabel title3;
+    public javax.swing.JPanel tournamentRegister;
     // End of variables declaration//GEN-END:variables
 }
