@@ -1,9 +1,12 @@
 package br.ucs.classleague.infrastructure.data;
 
-/**
- *
- * @author Francisco
- */
-public class StudentDao {
+import br.ucs.classleague.domain.Student;
+import java.io.Serializable;
+
+public class StudentDao extends GenericDAO<Student, Long> {
+    
+    public StudentDao() {
+        super(Student.class);
+    }
     
 }

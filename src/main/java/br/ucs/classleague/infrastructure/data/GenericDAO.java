@@ -33,46 +33,42 @@ public class GenericDAO<T, ID extends Serializable> {
         }
     }
 
-//    public void save(T entity) {
-//        EntityManager entityManager = EntityManagerProvider.getEntityManager();
-//        EntityTransaction transaction = entityManager.getTransaction();
-//
-//        try {
-//            transaction.begin();
-//            if (entityManager.find(T, entity) != null) {
-//                entityManager.merge(entity);
-//            } else {
-//                entityManager.persist(entity);
-//            }
-//            transaction.commit();
-//        } catch (Exception e) {
-//            if (transaction != null && transaction.isActive()) {
-//                transaction.rollback();
-//            }
-//            e.printStackTrace();
-//        } finally {
-//            entityManager.close();
-//        }
-//    }
-//
-//    public void deleteById(ID id) {
-//        EntityManager entityManager = entityManagerFactory.createEntityManager();
-//        EntityTransaction transaction = entityManager.getTransaction();
-//
-//        try {
-//            transaction.begin();
-//            T entity = entityManager.find(entityClass, id);
-//            if (entity != null) {
-//                entityManager.remove(entity);
-//            }
-//            transaction.commit();
-//        } catch (Exception e) {
-//            if (transaction != null && transaction.isActive()) {
-//                transaction.rollback();
-//            }
-//            e.printStackTrace();
-//        } finally {
-//            entityManager.close();
-//        }
-//    }
+    public void create(T entity) {;
+        EntityManager entityManager = EntityManagerProvider.getEntityManager();
+        EntityTransaction transaction = entityManager.getTransaction();
+
+        try {
+            transaction.begin();
+            entityManager.persist(entity);
+            transaction.commit();
+        } catch (Exception e) {
+            if (transaction != null && transaction.isActive()) {
+                transaction.rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            entityManager.close();
+        }
+    }
+
+    public void deleteById(ID id) {
+        EntityManager entityManager = EntityManagerProvider.getEntityManager();
+        EntityTransaction transaction = entityManager.getTransaction();
+
+        try {
+            transaction.begin();
+            T entity = entityManager.find(entityClass, id);
+            if (entity != null) {
+                entityManager.remove(entity);
+            }
+            transaction.commit();
+        } catch (Exception e) {
+            if (transaction != null && transaction.isActive()) {
+                transaction.rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            entityManager.close();
+        }
+    }
 }

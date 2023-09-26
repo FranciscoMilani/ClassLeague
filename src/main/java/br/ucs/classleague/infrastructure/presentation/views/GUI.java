@@ -1,7 +1,7 @@
 package br.ucs.classleague.infrastructure.presentation.views;
 
+import br.ucs.classleague.domain.SchoolClass;
 import br.ucs.classleague.infrastructure.presentation.controllers.RegisterController;
-import com.formdev.flatlaf.FlatDarculaLaf;
 import java.awt.event.ActionEvent;
 
 
@@ -24,21 +24,10 @@ public class GUI extends javax.swing.JFrame {
         java.awt.GridBagConstraints gridBagConstraints;
 
         studentRegisterDialog = new javax.swing.JDialog();
-        studentRegister2 = new javax.swing.JPanel();
-        title3 = new javax.swing.JLabel();
-        jPanel4 = new javax.swing.JPanel();
-        jLabel11 = new javax.swing.JLabel();
-        jTextField8 = new javax.swing.JTextField();
-        jLabel12 = new javax.swing.JLabel();
-        jTextField9 = new javax.swing.JTextField();
-        jLabel13 = new javax.swing.JLabel();
-        classComboBox2 = new javax.swing.JComboBox<>();
-        jButton7 = new javax.swing.JButton();
+        classRegisterDialog = new javax.swing.JDialog();
         mainTabbedPane = new javax.swing.JTabbedPane();
         mainPanel = new javax.swing.JPanel();
         mainTopPanel = new javax.swing.JPanel();
-        jButton6 = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
         mainSeparator = new javax.swing.JSeparator();
         mainBottomPanel = new javax.swing.JPanel();
         mainInnerTopPanel = new javax.swing.JPanel();
@@ -59,136 +48,60 @@ public class GUI extends javax.swing.JFrame {
         jTextField2 = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
         jTextField3 = new javax.swing.JTextField();
-        studentRegister = new javax.swing.JPanel();
-        title1 = new javax.swing.JLabel();
-        jPanel2 = new javax.swing.JPanel();
-        jLabel5 = new javax.swing.JLabel();
-        jTextField4 = new javax.swing.JTextField();
-        jLabel6 = new javax.swing.JLabel();
-        jTextField5 = new javax.swing.JTextField();
-        jLabel7 = new javax.swing.JLabel();
-        classComboBox = new javax.swing.JComboBox<>();
-        jButton4 = new javax.swing.JButton();
+        classRegister = new javax.swing.JPanel();
+        title4 = new javax.swing.JLabel();
+        jPanel5 = new javax.swing.JPanel();
+        jLabel14 = new javax.swing.JLabel();
+        jClassName = new javax.swing.JTextField();
+        jLabel15 = new javax.swing.JLabel();
+        jClassNumber = new javax.swing.JTextField();
+        jLabel16 = new javax.swing.JLabel();
+        jClassShift = new javax.swing.JComboBox<>();
+        jLabel17 = new javax.swing.JLabel();
+        jClassCycle = new javax.swing.JComboBox<>();
+        jButton8 = new javax.swing.JButton();
+        studentRegister2 = new javax.swing.JPanel();
+        title3 = new javax.swing.JLabel();
+        jPanel4 = new javax.swing.JPanel();
+        jLabel11 = new javax.swing.JLabel();
+        jStudentNameField = new javax.swing.JTextField();
+        jLabel12 = new javax.swing.JLabel();
+        jStudentSexField = new javax.swing.JTextField();
+        jLabel13 = new javax.swing.JLabel();
+        jStudentClassComboBox = new javax.swing.JComboBox<>();
+        jButton7 = new javax.swing.JButton();
 
-        studentRegister2.setLayout(new java.awt.GridBagLayout());
-
-        title3.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
-        title3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        title3.setText("Cadastro de Alunos");
-        title3.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        studentRegister2.add(title3, gridBagConstraints);
-
-        jPanel4.setBackground(new java.awt.Color(51, 51, 51));
-        jPanel4.setBorder(javax.swing.BorderFactory.createEmptyBorder(10, 10, 10, 10));
-        jPanel4.setLayout(new java.awt.GridBagLayout());
-
-        jLabel11.setText("Nome");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
-        gridBagConstraints.insets = new java.awt.Insets(0, 5, 0, 0);
-        jPanel4.add(jLabel11, gridBagConstraints);
-
-        jTextField8.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField8ActionPerformed(evt);
-            }
-        });
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 1;
-        gridBagConstraints.gridwidth = java.awt.GridBagConstraints.REMAINDER;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_END;
-        jPanel4.add(jTextField8, gridBagConstraints);
-
-        jLabel12.setText("Sexo");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 2;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
-        gridBagConstraints.insets = new java.awt.Insets(10, 5, 0, 0);
-        jPanel4.add(jLabel12, gridBagConstraints);
-
-        jTextField9.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField9ActionPerformed(evt);
-            }
-        });
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 3;
-        gridBagConstraints.gridwidth = java.awt.GridBagConstraints.REMAINDER;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_END;
-        jPanel4.add(jTextField9, gridBagConstraints);
-
-        jLabel13.setText("Turma");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 4;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
-        gridBagConstraints.insets = new java.awt.Insets(10, 5, 0, 0);
-        jPanel4.add(jLabel13, gridBagConstraints);
-
-        registerController.showClassesNames();
-        classComboBox2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                classComboBox2ActionPerformed(evt);
-            }
-        });
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 5;
-        gridBagConstraints.gridwidth = java.awt.GridBagConstraints.REMAINDER;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
-        jPanel4.add(classComboBox2, gridBagConstraints);
-
-        jButton7.setText("Cadastrar");
-        jButton7.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton7ActionPerformed(evt);
-            }
-        });
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 6;
-        gridBagConstraints.ipadx = 20;
-        gridBagConstraints.ipady = 30;
-        gridBagConstraints.insets = new java.awt.Insets(30, 0, 10, 0);
-        jPanel4.add(jButton7, gridBagConstraints);
-
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 1;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        studentRegister2.add(jPanel4, gridBagConstraints);
+        studentRegisterDialog.setAlwaysOnTop(true);
+        studentRegisterDialog.setLocationByPlatform(true);
+        studentRegisterDialog.setMinimumSize(new java.awt.Dimension(500, 500));
+        studentRegisterDialog.setModal(true);
+        studentRegisterDialog.setPreferredSize(new java.awt.Dimension(500, 500));
+        studentRegisterDialog.setSize(new java.awt.Dimension(500, 500));
 
         javax.swing.GroupLayout studentRegisterDialogLayout = new javax.swing.GroupLayout(studentRegisterDialog.getContentPane());
         studentRegisterDialog.getContentPane().setLayout(studentRegisterDialogLayout);
         studentRegisterDialogLayout.setHorizontalGroup(
             studentRegisterDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
-            .addGroup(studentRegisterDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(studentRegisterDialogLayout.createSequentialGroup()
-                    .addGap(0, 0, Short.MAX_VALUE)
-                    .addComponent(studentRegister2, javax.swing.GroupLayout.PREFERRED_SIZE, 1024, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(0, 0, Short.MAX_VALUE)))
+            .addGap(0, 500, Short.MAX_VALUE)
         );
         studentRegisterDialogLayout.setVerticalGroup(
             studentRegisterDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
-            .addGroup(studentRegisterDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(studentRegisterDialogLayout.createSequentialGroup()
-                    .addGap(0, 0, Short.MAX_VALUE)
-                    .addComponent(studentRegister2, javax.swing.GroupLayout.PREFERRED_SIZE, 733, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(0, 0, Short.MAX_VALUE)))
+            .addGap(0, 500, Short.MAX_VALUE)
+        );
+
+        classRegisterDialog.setAlwaysOnTop(true);
+        classRegisterDialog.setMinimumSize(new java.awt.Dimension(500, 500));
+        classRegisterDialog.setSize(new java.awt.Dimension(500, 500));
+
+        javax.swing.GroupLayout classRegisterDialogLayout = new javax.swing.GroupLayout(classRegisterDialog.getContentPane());
+        classRegisterDialog.getContentPane().setLayout(classRegisterDialogLayout);
+        classRegisterDialogLayout.setHorizontalGroup(
+            classRegisterDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 500, Short.MAX_VALUE)
+        );
+        classRegisterDialogLayout.setVerticalGroup(
+            classRegisterDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 500, Short.MAX_VALUE)
         );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -206,34 +119,11 @@ public class GUI extends javax.swing.JFrame {
         mainPanel.setLayout(new javax.swing.BoxLayout(mainPanel, javax.swing.BoxLayout.Y_AXIS));
 
         mainTopPanel.setLayout(new java.awt.GridBagLayout());
-
-        jButton6.setText("jButton4");
-        jButton6.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton6ActionPerformed(evt);
-            }
-        });
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 1;
-        gridBagConstraints.ipadx = 200;
-        gridBagConstraints.ipady = 50;
-        mainTopPanel.add(jButton6, gridBagConstraints);
-
-        jButton5.setText("jButton5");
-        jButton5.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton5ActionPerformed(evt);
-            }
-        });
-        mainTopPanel.add(jButton5, new java.awt.GridBagConstraints());
-
         mainPanel.add(mainTopPanel);
         mainPanel.add(mainSeparator);
 
         mainBottomPanel.setLayout(new javax.swing.BoxLayout(mainBottomPanel, javax.swing.BoxLayout.Y_AXIS));
 
-        searchTournamentField.setText("...");
         searchTournamentField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 searchTournamentFieldActionPerformed(evt);
@@ -406,56 +296,54 @@ public class GUI extends javax.swing.JFrame {
 
         mainTabbedPane.addTab("Cadastro de Torneio", tournamentRegister);
 
-        studentRegister.setLayout(new java.awt.GridBagLayout());
+        classRegister.setLayout(new java.awt.GridBagLayout());
 
-        title1.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
-        title1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        title1.setText("Cadastro de Alunos");
-        title1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        title4.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
+        title4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        title4.setText("Cadastro de Turmas");
+        title4.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        studentRegister.add(title1, gridBagConstraints);
+        classRegister.add(title4, gridBagConstraints);
 
-        jPanel2.setBackground(new java.awt.Color(51, 51, 51));
-        jPanel2.setBorder(javax.swing.BorderFactory.createEmptyBorder(10, 10, 10, 10));
-        java.awt.GridBagLayout jPanel2Layout = new java.awt.GridBagLayout();
-        jPanel2Layout.columnWeights = new double[] {0.3, 0.7};
-        jPanel2.setLayout(jPanel2Layout);
+        jPanel5.setBackground(new java.awt.Color(51, 51, 51));
+        jPanel5.setBorder(javax.swing.BorderFactory.createEmptyBorder(10, 10, 10, 10));
+        jPanel5.setLayout(new java.awt.GridBagLayout());
 
-        jLabel5.setText("Nome");
+        jLabel14.setText("Nome");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
+        gridBagConstraints.weightx = 1.0;
         gridBagConstraints.insets = new java.awt.Insets(0, 5, 0, 0);
-        jPanel2.add(jLabel5, gridBagConstraints);
+        jPanel5.add(jLabel14, gridBagConstraints);
 
-        jTextField4.addActionListener(new java.awt.event.ActionListener() {
+        jClassName.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField4ActionPerformed(evt);
+                jClassNameActionPerformed(evt);
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 1;
-        gridBagConstraints.gridwidth = java.awt.GridBagConstraints.REMAINDER;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_END;
-        jPanel2.add(jTextField4, gridBagConstraints);
+        jPanel5.add(jClassName, gridBagConstraints);
 
-        jLabel6.setText("Sexo");
+        jLabel15.setText("Número");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 2;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
         gridBagConstraints.insets = new java.awt.Insets(10, 5, 0, 0);
-        jPanel2.add(jLabel6, gridBagConstraints);
+        jPanel5.add(jLabel15, gridBagConstraints);
 
-        jTextField5.addActionListener(new java.awt.event.ActionListener() {
+        jClassNumber.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField5ActionPerformed(evt);
+                jClassNumberActionPerformed(evt);
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -464,20 +352,21 @@ public class GUI extends javax.swing.JFrame {
         gridBagConstraints.gridwidth = java.awt.GridBagConstraints.REMAINDER;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_END;
-        jPanel2.add(jTextField5, gridBagConstraints);
+        gridBagConstraints.weightx = 1.0;
+        jPanel5.add(jClassNumber, gridBagConstraints);
 
-        jLabel7.setText("Turma");
+        jLabel16.setText("Turno");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 4;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
         gridBagConstraints.insets = new java.awt.Insets(10, 5, 0, 0);
-        jPanel2.add(jLabel7, gridBagConstraints);
+        jPanel5.add(jLabel16, gridBagConstraints);
 
-        classComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        classComboBox.addActionListener(new java.awt.event.ActionListener() {
+        jClassShift.setModel(new javax.swing.DefaultComboBoxModel<>(SchoolClass.SchoolShift.values()));
+        jClassShift.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                classComboBoxActionPerformed(evt);
+                jClassShiftActionPerformed(evt);
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -486,12 +375,137 @@ public class GUI extends javax.swing.JFrame {
         gridBagConstraints.gridwidth = java.awt.GridBagConstraints.REMAINDER;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
-        jPanel2.add(classComboBox, gridBagConstraints);
+        gridBagConstraints.weightx = 1.0;
+        jPanel5.add(jClassShift, gridBagConstraints);
 
-        jButton4.setText("Cadastrar");
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
+        jLabel17.setText("Ciclo Escolar");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
+        gridBagConstraints.insets = new java.awt.Insets(10, 5, 0, 0);
+        jPanel5.add(jLabel17, gridBagConstraints);
+
+        jClassCycle.setModel(new javax.swing.DefaultComboBoxModel<>(SchoolClass.EducationalCycle.values()));
+        jClassCycle.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
+                jClassCycleActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 7;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
+        jPanel5.add(jClassCycle, gridBagConstraints);
+
+        jButton8.setText("Cadastrar");
+        jButton8.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton8ActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 8;
+        gridBagConstraints.ipadx = 20;
+        gridBagConstraints.ipady = 30;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(30, 0, 10, 0);
+        jPanel5.add(jButton8, gridBagConstraints);
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        classRegister.add(jPanel5, gridBagConstraints);
+
+        mainTabbedPane.addTab("Cadastro de Turma", classRegister);
+
+        studentRegister2.setLayout(new java.awt.GridBagLayout());
+
+        title3.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
+        title3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        title3.setText("Cadastro de Alunos");
+        title3.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        studentRegister2.add(title3, gridBagConstraints);
+
+        jPanel4.setBackground(new java.awt.Color(51, 51, 51));
+        jPanel4.setBorder(javax.swing.BorderFactory.createEmptyBorder(10, 10, 10, 10));
+        jPanel4.setLayout(new java.awt.GridBagLayout());
+
+        jLabel11.setText("Nome");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(0, 5, 0, 0);
+        jPanel4.add(jLabel11, gridBagConstraints);
+
+        jStudentNameField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jStudentNameFieldActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_END;
+        jPanel4.add(jStudentNameField, gridBagConstraints);
+
+        jLabel12.setText("Sexo");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
+        gridBagConstraints.insets = new java.awt.Insets(10, 5, 0, 0);
+        jPanel4.add(jLabel12, gridBagConstraints);
+
+        jStudentSexField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jStudentSexFieldActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 3;
+        gridBagConstraints.gridwidth = java.awt.GridBagConstraints.REMAINDER;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_END;
+        gridBagConstraints.weightx = 1.0;
+        jPanel4.add(jStudentSexField, gridBagConstraints);
+
+        jLabel13.setText("Turma");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 4;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
+        gridBagConstraints.insets = new java.awt.Insets(10, 5, 0, 0);
+        jPanel4.add(jLabel13, gridBagConstraints);
+
+        registerController.showClassesNames();
+        jStudentClassComboBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jStudentClassComboBoxActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 5;
+        gridBagConstraints.gridwidth = java.awt.GridBagConstraints.REMAINDER;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
+        gridBagConstraints.weightx = 1.0;
+        jPanel4.add(jStudentClassComboBox, gridBagConstraints);
+
+        jButton7.setText("Cadastrar");
+        jButton7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton7ActionPerformed(evt);
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -499,16 +513,17 @@ public class GUI extends javax.swing.JFrame {
         gridBagConstraints.gridy = 6;
         gridBagConstraints.ipadx = 20;
         gridBagConstraints.ipady = 30;
+        gridBagConstraints.weightx = 1.0;
         gridBagConstraints.insets = new java.awt.Insets(30, 0, 10, 0);
-        jPanel2.add(jButton4, gridBagConstraints);
+        jPanel4.add(jButton7, gridBagConstraints);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 1;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        studentRegister.add(jPanel2, gridBagConstraints);
+        studentRegister2.add(jPanel4, gridBagConstraints);
 
-        mainTabbedPane.addTab("Cadastro de Aluno", studentRegister);
+        mainTabbedPane.addTab("Cadastro de Aluno", studentRegister2);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -532,10 +547,6 @@ public class GUI extends javax.swing.JFrame {
     private void jButton1ActionPerformed(ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
-
-    private void jButton6ActionPerformed(ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton6ActionPerformed
 
     private void addTournamentBtnActionPerformed(ActionEvent evt) {//GEN-FIRST:event_addTournamentBtnActionPerformed
         mainTabbedPane.setSelectedIndex(1);
@@ -561,73 +572,75 @@ public class GUI extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField3ActionPerformed
 
-    private void jTextField4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField4ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField4ActionPerformed
-
-    private void jTextField5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField5ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField5ActionPerformed
-
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton4ActionPerformed
-
-    private void classComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_classComboBoxActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_classComboBoxActionPerformed
-
-    private void jTextField8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField8ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField8ActionPerformed
-
-    private void jTextField9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField9ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField9ActionPerformed
-
-    private void classComboBox2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_classComboBox2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_classComboBox2ActionPerformed
-
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
-        // TODO add your handling code here:
+        registerController.registerStudent();
     }//GEN-LAST:event_jButton7ActionPerformed
 
-    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-        studentRegisterDialog.setVisible(true);
-    }//GEN-LAST:event_jButton5ActionPerformed
+    private void jStudentClassComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jStudentClassComboBoxActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jStudentClassComboBoxActionPerformed
+
+    private void jStudentSexFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jStudentSexFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jStudentSexFieldActionPerformed
+
+    private void jStudentNameFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jStudentNameFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jStudentNameFieldActionPerformed
+
+    private void jClassNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jClassNameActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jClassNameActionPerformed
+
+    private void jClassNumberActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jClassNumberActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jClassNumberActionPerformed
+
+    private void jClassShiftActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jClassShiftActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jClassShiftActionPerformed
+
+    private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
+        registerController.registerClass();
+    }//GEN-LAST:event_jButton8ActionPerformed
+
+    private void jClassCycleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jClassCycleActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jClassCycleActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public javax.swing.JButton addTournamentBtn;
-    public javax.swing.JComboBox<String> classComboBox;
-    public javax.swing.JComboBox<String> classComboBox2;
+    public javax.swing.JPanel classRegister;
+    public javax.swing.JDialog classRegisterDialog;
     public javax.swing.JButton jButton1;
     public javax.swing.JButton jButton2;
     public javax.swing.JButton jButton3;
-    public javax.swing.JButton jButton4;
-    public javax.swing.JButton jButton5;
-    public javax.swing.JButton jButton6;
     public javax.swing.JButton jButton7;
+    public javax.swing.JButton jButton8;
+    public javax.swing.JComboBox<SchoolClass.EducationalCycle> jClassCycle;
+    public javax.swing.JTextField jClassName;
+    public javax.swing.JTextField jClassNumber;
+    public javax.swing.JComboBox<SchoolClass.SchoolShift> jClassShift;
     public javax.swing.JLabel jLabel1;
     public javax.swing.JLabel jLabel11;
     public javax.swing.JLabel jLabel12;
     public javax.swing.JLabel jLabel13;
+    public javax.swing.JLabel jLabel14;
+    public javax.swing.JLabel jLabel15;
+    public javax.swing.JLabel jLabel16;
+    public javax.swing.JLabel jLabel17;
     public javax.swing.JLabel jLabel2;
     public javax.swing.JLabel jLabel3;
     public javax.swing.JLabel jLabel4;
-    public javax.swing.JLabel jLabel5;
-    public javax.swing.JLabel jLabel6;
-    public javax.swing.JLabel jLabel7;
     public javax.swing.JPanel jPanel1;
-    public javax.swing.JPanel jPanel2;
     public javax.swing.JPanel jPanel4;
+    public javax.swing.JPanel jPanel5;
+    public javax.swing.JComboBox<String> jStudentClassComboBox;
+    public javax.swing.JTextField jStudentNameField;
+    public javax.swing.JTextField jStudentSexField;
     public javax.swing.JTextField jTextField1;
     public javax.swing.JTextField jTextField2;
     public javax.swing.JTextField jTextField3;
-    public javax.swing.JTextField jTextField4;
-    public javax.swing.JTextField jTextField5;
-    public javax.swing.JTextField jTextField8;
-    public javax.swing.JTextField jTextField9;
     public javax.swing.JPanel mainBottomPanel;
     public javax.swing.JPanel mainInnerBottomPanel;
     public javax.swing.JPanel mainInnerTopPanel;
@@ -637,12 +650,11 @@ public class GUI extends javax.swing.JFrame {
     public javax.swing.JPanel mainTopPanel;
     public javax.swing.JButton searchTournamentBtn;
     public javax.swing.JTextField searchTournamentField;
-    public javax.swing.JPanel studentRegister;
     public javax.swing.JPanel studentRegister2;
     public javax.swing.JDialog studentRegisterDialog;
     public javax.swing.JLabel title;
-    public javax.swing.JLabel title1;
     public javax.swing.JLabel title3;
+    public javax.swing.JLabel title4;
     public javax.swing.JPanel tournamentRegister;
     // End of variables declaration//GEN-END:variables
 }

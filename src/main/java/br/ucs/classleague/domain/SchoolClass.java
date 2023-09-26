@@ -14,8 +14,8 @@ public class SchoolClass implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
-    private SchoolShift schoolShift;
     private Integer number;
+    private SchoolShift schoolShift;
     private EducationalCycle educationalCycle;
     
     public static enum SchoolShift {
@@ -44,7 +44,7 @@ public class SchoolClass implements Serializable {
     public SchoolClass(){
     }
 
-    public SchoolClass(String name, SchoolShift schoolShift, Integer number, EducationalCycle educationalCycle) {
+    public SchoolClass(String name, Integer number, SchoolShift schoolShift,  EducationalCycle educationalCycle) {
         this.name = name;
         this.schoolShift = schoolShift;
         this.number = number;
@@ -67,6 +67,14 @@ public class SchoolClass implements Serializable {
         this.name = name;
     }
 
+    public Integer getNumber() {
+        return number;
+    }
+
+    public void setNumber(Integer number) {
+        this.number = number;
+    }
+    
     public SchoolShift getSchoolShift() {
         return schoolShift;
     }
@@ -75,19 +83,16 @@ public class SchoolClass implements Serializable {
         this.schoolShift = schoolShift;
     }
 
-    public Integer getNumber() {
-        return number;
-    }
-
-    public void setNumber(Integer number) {
-        this.number = number;
-    }
-
     public EducationalCycle getEducationalCycle() {
         return educationalCycle;
     }
 
     public void setEducationalCycle(EducationalCycle educationalCycle) {
         this.educationalCycle = educationalCycle;
+    }
+    
+    @Override
+    public String toString() {
+        return "SchoolClass{" + "id=" + id + ", name=" + name + ", number=" + number + ", schoolShift=" + schoolShift + ", educationalCycle=" + educationalCycle + '}';
     }
 }
