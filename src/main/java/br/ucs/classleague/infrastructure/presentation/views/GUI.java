@@ -70,12 +70,14 @@ public class GUI extends javax.swing.JFrame {
         jLabel13 = new javax.swing.JLabel();
         jStudentClassComboBox = new javax.swing.JComboBox<>();
         jButton7 = new javax.swing.JButton();
+        jLabel5 = new javax.swing.JLabel();
+        jStudentFatherNameField = new javax.swing.JTextField();
+        jLabel6 = new javax.swing.JLabel();
+        jStudentMotherNameField = new javax.swing.JTextField();
 
         studentRegisterDialog.setAlwaysOnTop(true);
-        studentRegisterDialog.setLocationByPlatform(true);
         studentRegisterDialog.setMinimumSize(new java.awt.Dimension(500, 500));
         studentRegisterDialog.setModal(true);
-        studentRegisterDialog.setPreferredSize(new java.awt.Dimension(500, 500));
         studentRegisterDialog.setSize(new java.awt.Dimension(500, 500));
 
         javax.swing.GroupLayout studentRegisterDialogLayout = new javax.swing.GroupLayout(studentRegisterDialog.getContentPane());
@@ -321,6 +323,7 @@ public class GUI extends javax.swing.JFrame {
         gridBagConstraints.insets = new java.awt.Insets(0, 5, 0, 0);
         jPanel5.add(jLabel14, gridBagConstraints);
 
+        jClassName.setName(""); // NOI18N
         jClassName.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jClassNameActionPerformed(evt);
@@ -445,6 +448,7 @@ public class GUI extends javax.swing.JFrame {
         gridBagConstraints.insets = new java.awt.Insets(0, 5, 0, 0);
         jPanel4.add(jLabel11, gridBagConstraints);
 
+        jStudentNameField.setName(""); // NOI18N
         jStudentNameField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jStudentNameFieldActionPerformed(evt);
@@ -460,11 +464,12 @@ public class GUI extends javax.swing.JFrame {
         jLabel12.setText("Sexo");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 2;
+        gridBagConstraints.gridy = 6;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
         gridBagConstraints.insets = new java.awt.Insets(10, 5, 0, 0);
         jPanel4.add(jLabel12, gridBagConstraints);
 
+        jStudentSexField.setName(""); // NOI18N
         jStudentSexField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jStudentSexFieldActionPerformed(evt);
@@ -472,7 +477,7 @@ public class GUI extends javax.swing.JFrame {
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 3;
+        gridBagConstraints.gridy = 7;
         gridBagConstraints.gridwidth = java.awt.GridBagConstraints.REMAINDER;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_END;
@@ -482,11 +487,12 @@ public class GUI extends javax.swing.JFrame {
         jLabel13.setText("Turma");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 4;
+        gridBagConstraints.gridy = 8;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
         gridBagConstraints.insets = new java.awt.Insets(10, 5, 0, 0);
         jPanel4.add(jLabel13, gridBagConstraints);
 
+        jStudentClassComboBox.setName(""); // NOI18N
         registerController.showClassesNames();
         jStudentClassComboBox.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -495,7 +501,7 @@ public class GUI extends javax.swing.JFrame {
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 5;
+        gridBagConstraints.gridy = 9;
         gridBagConstraints.gridwidth = java.awt.GridBagConstraints.REMAINDER;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
@@ -510,12 +516,50 @@ public class GUI extends javax.swing.JFrame {
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 6;
+        gridBagConstraints.gridy = 10;
         gridBagConstraints.ipadx = 20;
         gridBagConstraints.ipady = 30;
         gridBagConstraints.weightx = 1.0;
         gridBagConstraints.insets = new java.awt.Insets(30, 0, 10, 0);
         jPanel4.add(jButton7, gridBagConstraints);
+
+        jLabel5.setText("Nome do Pai");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
+        gridBagConstraints.insets = new java.awt.Insets(10, 5, 0, 0);
+        jPanel4.add(jLabel5, gridBagConstraints);
+
+        jStudentFatherNameField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jStudentFatherNameFieldActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 3;
+        gridBagConstraints.gridwidth = java.awt.GridBagConstraints.REMAINDER;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_END;
+        gridBagConstraints.weightx = 1.0;
+        jPanel4.add(jStudentFatherNameField, gridBagConstraints);
+
+        jLabel6.setText("Nome da Mãe");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 4;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
+        gridBagConstraints.insets = new java.awt.Insets(10, 5, 0, 0);
+        jPanel4.add(jLabel6, gridBagConstraints);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 5;
+        gridBagConstraints.gridwidth = java.awt.GridBagConstraints.REMAINDER;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_END;
+        gridBagConstraints.weightx = 1.0;
+        jPanel4.add(jStudentMotherNameField, gridBagConstraints);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
@@ -608,6 +652,10 @@ public class GUI extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jClassCycleActionPerformed
 
+    private void jStudentFatherNameFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jStudentFatherNameFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jStudentFatherNameFieldActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public javax.swing.JButton addTournamentBtn;
     public javax.swing.JPanel classRegister;
@@ -632,10 +680,14 @@ public class GUI extends javax.swing.JFrame {
     public javax.swing.JLabel jLabel2;
     public javax.swing.JLabel jLabel3;
     public javax.swing.JLabel jLabel4;
+    public javax.swing.JLabel jLabel5;
+    public javax.swing.JLabel jLabel6;
     public javax.swing.JPanel jPanel1;
     public javax.swing.JPanel jPanel4;
     public javax.swing.JPanel jPanel5;
     public javax.swing.JComboBox<String> jStudentClassComboBox;
+    public javax.swing.JTextField jStudentFatherNameField;
+    public javax.swing.JTextField jStudentMotherNameField;
     public javax.swing.JTextField jStudentNameField;
     public javax.swing.JTextField jStudentSexField;
     public javax.swing.JTextField jTextField1;

@@ -1,14 +1,17 @@
 package br.ucs.classleague.domain;
 
+//import jakarta.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
 
-/**
- *
- * @author Francisco
- */
+//@Entity
+//@Table(name = "person")
 public abstract class Person implements Serializable{
+    
+    //@Id
+    //@GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    
     private String name;
     private String surname;
     private Date birthDate;
