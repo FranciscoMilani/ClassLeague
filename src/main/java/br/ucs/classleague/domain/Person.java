@@ -1,42 +1,35 @@
 package br.ucs.classleague.domain;
 
+import jakarta.persistence.MappedSuperclass;
+import jakarta.persistence.OneToOne;
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDate;
 
-/**
- *
- * @author Francisco
- */
-public abstract class Person implements Serializable{
-    private Long id;
+@MappedSuperclass
+public abstract class Person implements Serializable {
+
     private String name;
     private String surname;
-    private Date birthDate;
+    private LocalDate birthDate;
     private String gender;
     private String telephone;
     private String cpf;
-    private Address address;
+//    @OneToOne
+//    private Address address;
 
     public Person() {
     }
 
-    public Person(String name, String surname, Date birthDate, String gender, String telephone, String cpf, Address address) {
+    public Person(String name, String surname, LocalDate birthDate, String gender, String telephone, String cpf, Address address) {
         this.name = name;
         this.surname = surname;
         this.birthDate = birthDate;
         this.gender = gender;
         this.telephone = telephone;
         this.cpf = cpf;
-        this.address = address;
+//        this.address = address;
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public String getName() {
         return name;
@@ -54,11 +47,11 @@ public abstract class Person implements Serializable{
         this.surname = surname;
     }
 
-    public Date getBirthDate() {
+    public LocalDate getBirthDate() {
         return birthDate;
     }
 
-    public void setBirthDate(Date birthDate) {
+    public void setBirthDate(LocalDate birthDate) {
         this.birthDate = birthDate;
     }
 
@@ -86,11 +79,11 @@ public abstract class Person implements Serializable{
         this.cpf = cpf;
     }
 
-    public Address getAddress() {
-        return address;
-    }
-
-    public void setAddress(Address address) {
-        this.address = address;
-    }
+//    public Address getAddress() {
+//        return address;
+//    }
+//
+//    public void setAddress(Address address) {
+//        this.address = address;
+//    }
 }

@@ -11,7 +11,7 @@ public class EntityManagerProvider {
         entityManagerFactory = Persistence.createEntityManagerFactory("classleaguePU");
     }
 
-    public static EntityManager getEntityManager() {
+    public static synchronized EntityManager getEntityManager() {
         return entityManagerFactory.createEntityManager();
     }
 }

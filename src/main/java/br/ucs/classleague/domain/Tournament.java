@@ -3,10 +3,6 @@ package br.ucs.classleague.domain;
 import java.io.Serializable;
 import java.util.Date;
 
-/**
- *
- * @author Francisco
- */
 public class Tournament implements Serializable{
 
     private Long id;

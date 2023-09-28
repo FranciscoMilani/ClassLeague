@@ -1,7 +1,7 @@
 package br.ucs.classleague.domain;
 
 import jakarta.persistence.*;
-import java.util.Date;
+import java.time.LocalDate;
 
 @Entity
 @Table(name = "student")
@@ -11,6 +11,7 @@ public class Student extends Person {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     
+    @ManyToOne
     private SchoolClass schoolClass;
     private String fatherName;
     private String motherName;
@@ -19,7 +20,7 @@ public class Student extends Person {
     public Student(){
     }
 
-    public Student(SchoolClass schoolClass, String fatherName, String motherName, Integer pontos, String name, String surname, Date birthDate, String gender, String telephone, String cpf, Address address) {
+    public Student(SchoolClass schoolClass, String fatherName, String motherName, Integer pontos, String name, String surname, LocalDate birthDate, String gender, String telephone, String cpf, Address address) {
         super(name, surname, birthDate, gender, telephone, cpf, address);
         this.schoolClass = schoolClass;
         this.fatherName = fatherName;
@@ -66,4 +67,11 @@ public class Student extends Person {
     public void setPontos(Integer pontos) {
         this.pontos = pontos;
     }
+
+    @Override
+    public String toString() {
+        return "Student{" + "id=" + id + ", schoolClass=" + schoolClass + ", fatherName=" + fatherName + ", motherName=" + motherName + ", pontos=" + pontos + '}';
+    }
+    
+    
 }

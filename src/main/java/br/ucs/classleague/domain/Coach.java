@@ -1,22 +1,27 @@
 package br.ucs.classleague.domain;
 
-/**
- *
- * @author Francisco
- */
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+
+@Entity
 public class Coach extends Person {
-    private Integer coachId;
+    
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
     private String sport;
 
     public Coach() {
     }
 
-    public Integer getCoachId() {
-        return coachId;
+    public Long getCoachId() {
+        return id;
     }
 
-    public void setCoachId(Integer coachId) {
-        this.coachId = coachId;
+    public void setCoachId(Long coachId) {
+        this.id = id;
     }
 
     public String getSport() {

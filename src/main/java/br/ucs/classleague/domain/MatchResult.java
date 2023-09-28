@@ -2,10 +2,6 @@ package br.ucs.classleague.domain;
 
 import java.io.Serializable;
 
-/**
- *
- * @author Francisco
- */
 public class MatchResult implements Serializable{
 
     private Long id;
