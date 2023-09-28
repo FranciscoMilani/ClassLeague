@@ -53,7 +53,7 @@ public class GUI extends javax.swing.JFrame {
         title4 = new javax.swing.JLabel();
         jPanel5 = new javax.swing.JPanel();
         jLabel14 = new javax.swing.JLabel();
-        jClassName = new javax.swing.JTextField();
+        jClassNameField = new javax.swing.JTextField();
         jLabel15 = new javax.swing.JLabel();
         jClassNumber = new javax.swing.JTextField();
         jLabel16 = new javax.swing.JLabel();
@@ -331,9 +331,9 @@ public class GUI extends javax.swing.JFrame {
         gridBagConstraints.insets = new java.awt.Insets(0, 5, 0, 0);
         jPanel5.add(jLabel14, gridBagConstraints);
 
-        jClassName.addActionListener(new java.awt.event.ActionListener() {
+        jClassNameField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jClassNameActionPerformed(evt);
+                jClassNameFieldActionPerformed(evt);
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -341,7 +341,7 @@ public class GUI extends javax.swing.JFrame {
         gridBagConstraints.gridy = 1;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_END;
-        jPanel5.add(jClassName, gridBagConstraints);
+        jPanel5.add(jClassNameField, gridBagConstraints);
 
         jLabel15.setText("Número");
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -701,9 +701,9 @@ public class GUI extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jStudentNameFieldActionPerformed
 
-    private void jClassNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jClassNameActionPerformed
+    private void jClassNameFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jClassNameFieldActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jClassNameActionPerformed
+    }//GEN-LAST:event_jClassNameFieldActionPerformed
 
     private void jClassNumberActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jClassNumberActionPerformed
         // TODO add your handling code here:
@@ -721,21 +721,9 @@ public class GUI extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jClassCycleActionPerformed
 
-    private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
+    private void jStudentFatherNameFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jStudentFatherNameFieldActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton9ActionPerformed
-
-    private void jSchoolClassComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jSchoolClassComboBoxActionPerformed
-        registerController.updateTeamTableCells(jSchoolClassComboBox.getSelectedItem().toString());
-    }//GEN-LAST:event_jSchoolClassComboBoxActionPerformed
-
-    private void jStudentSexField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jStudentSexField1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jStudentSexField1ActionPerformed
-
-    private void jStudentNameField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jStudentNameField1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jStudentNameField1ActionPerformed
+    }//GEN-LAST:event_jStudentFatherNameFieldActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public javax.swing.JButton addTournamentBtn;
@@ -749,7 +737,7 @@ public class GUI extends javax.swing.JFrame {
     public javax.swing.JButton jButton8;
     public javax.swing.JButton jButton9;
     public javax.swing.JComboBox<SchoolClass.EducationalCycle> jClassCycle;
-    public javax.swing.JTextField jClassName;
+    public javax.swing.JTextField jClassNameField;
     public javax.swing.JTextField jClassNumber;
     public javax.swing.JComboBox<SchoolClass.SchoolShift> jClassShift;
     public javax.swing.JLabel jLabel1;

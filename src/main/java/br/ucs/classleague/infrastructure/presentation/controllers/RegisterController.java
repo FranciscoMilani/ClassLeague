@@ -40,11 +40,32 @@ public class RegisterController {
     }
     
     public Boolean registerStudent(){
-        return null;
-//        Student student = new Student(
-//        frame.jTextField8,      
-//        );
-//        studentDao.create();
+        
+        //Cria um objeto da classe schoolclass para informar no cadastro do aluno
+        SchoolClass schoolClass = new SchoolClass(
+                "",
+                0,
+                null,
+                null  
+        );
+        
+        Student student = new Student(
+                null, 
+                frame.jStudentFatherNameField.getText(), 
+                frame.jStudentMotherNameField.getText(), 
+                0, 
+                frame.jStudentNameField.getText(),
+                "",
+                null, 
+                frame.jStudentSexField.getText(),
+                "" ,
+                "",
+                null
+        );
+        
+        studentDao.create(student);
+      
+        return true;
     }
     
     public Boolean registerClass(){
