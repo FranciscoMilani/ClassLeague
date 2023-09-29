@@ -51,13 +51,13 @@ public class RegisterController {
         
         Student student = new Student(
                 null, 
-                frame.jStudentFatherNameField.getText(), 
-                frame.jStudentMotherNameField.getText(), 
+                frame.jRegisterStudentFatherNameField.getText(), 
+                frame.jRegisterStudentMotherNameField.getText(), 
                 0, 
-                frame.jStudentNameField.getText(),
+                frame.jRegisterStudentNameField.getText(),
                 "",
                 null, 
-                frame.jStudentSexField.getText(),
+                frame.jRegisterStudentGenderField.getText(),
                 "" ,
                 "",
                 null
@@ -73,7 +73,7 @@ public class RegisterController {
         int cycleIndex = frame.jClassCycle.getSelectedIndex();
         
         SchoolClass schoolClass = new SchoolClass(
-            frame.jClassName.getText(),
+            frame.jClassNameField.getText(),
             Integer.parseInt(frame.jClassNumber.getText()),
             SchoolClass.SchoolShift.values()[shiftIndex],
             SchoolClass.EducationalCycle.values()[cycleIndex]  
@@ -85,7 +85,7 @@ public class RegisterController {
     }
     
     private void resetTeamTable() {
-        JTable table = frame.jTable1;
+        JTable table = frame.jTeamRegisterStudentsTable;
         DefaultTableModel model = (DefaultTableModel) table.getModel();
         model.setRowCount(0);
         table.revalidate();
@@ -135,7 +135,7 @@ public class RegisterController {
         
         DefaultTableModel model = getTableModel(students.size());
         
-        frame.jTable1.setModel(model);
+        frame.jTeamRegisterStudentsTable.setModel(model);
         
         for (int i = 0; i < students.size(); i++) {
             System.out.println(students.get(i).toString());
