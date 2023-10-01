@@ -2,7 +2,6 @@ package br.ucs.classleague.infrastructure.data;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
-import jakarta.transaction.Transaction;
 import java.io.Serializable;
 import java.util.List;
 import java.util.Optional;
