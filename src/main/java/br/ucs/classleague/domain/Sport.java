@@ -1,10 +1,15 @@
 package br.ucs.classleague.domain;
 
-/**
- *
- * @author Francisco
- */
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+
+@Entity
 public class Sport {
+    
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private SportsEnum sport;
     private Integer matchDurationMinutes;
@@ -21,7 +26,11 @@ public class Sport {
 
         private SportsEnum(String name) {
             this.name = name;
-        } 
+        }
+        
+        public String getName(){
+            return name;
+        }
     }
 
     public Sport() {

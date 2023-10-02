@@ -23,7 +23,21 @@ public class ClassDao extends GenericDAO<SchoolClass, Long>{
             
             return query.getResultList();
         } finally {
-            entityManager.close();
+            //entityManager.close();
+        }
+    }
+    
+    public SchoolClass findByNumber(int schoolClassNumber) {
+        EntityManager entityManager = EntityManagerProvider.getEntityManager();
+        
+        try {
+            String jpql = "SELECT sc from SchoolClass sc WHERE sc.number = :schoolClassNumber";
+            TypedQuery<SchoolClass> query = entityManager.createQuery(jpql, SchoolClass.class);
+            query.setParameter("schoolClassNumber", schoolClassNumber);
+            
+            return query.getSingleResult();
+        } finally {
+            //entityManager.close();
         }
     }
 }

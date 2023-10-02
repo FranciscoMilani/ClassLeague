@@ -6,12 +6,14 @@ import jakarta.persistence.Persistence;
 
 public class EntityManagerProvider {
     private static final EntityManagerFactory entityManagerFactory;
+    private static final EntityManager entityManager;
 
     static {
         entityManagerFactory = Persistence.createEntityManagerFactory("classleaguePU");
+        entityManager = entityManagerFactory.createEntityManager();
     }
 
     public static synchronized EntityManager getEntityManager() {
-        return entityManagerFactory.createEntityManager();
+        return entityManager;
     }
 }

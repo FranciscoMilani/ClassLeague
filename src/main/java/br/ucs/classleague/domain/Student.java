@@ -2,20 +2,22 @@ package br.ucs.classleague.domain;
 
 import jakarta.persistence.*;
 import java.time.LocalDate;
+import java.util.Set;
 
 @Entity
-@Table(name = "student")
 public class Student extends Person {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    
-    @ManyToOne
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "schoolclass_id")
     private SchoolClass schoolClass;
     private String fatherName;
     private String motherName;
     private Integer pontos;
+    @OneToMany(mappedBy = "student")
+    private Set<StudentTeam> studentTeam;
     
     public Student(){
     }
@@ -68,10 +70,17 @@ public class Student extends Person {
         this.pontos = pontos;
     }
 
+    public Set<StudentTeam> getStudentTeam() {
+        return studentTeam;
+    }
+
+    public void setStudentTeam(Set<StudentTeam> studentTeam) {
+        this.studentTeam = studentTeam;
+    }
+
     @Override
     public String toString() {
         return "Student{" + "id=" + id + ", schoolClass=" + schoolClass + ", fatherName=" + fatherName + ", motherName=" + motherName + ", pontos=" + pontos + '}';
     }
-    
     
 }

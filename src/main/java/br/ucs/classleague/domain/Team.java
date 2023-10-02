@@ -1,17 +1,30 @@
 package br.ucs.classleague.domain;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.ManyToMany;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import java.io.Serializable;
+import java.util.Set;
 
-/**
- *
- * @author Francisco
- */
-public class Team implements Serializable{
+@Entity
+public class Team implements Serializable {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
     private String acronym;
+    @ManyToOne
     private SchoolClass schoolClass;
+    @OneToOne
+    private Sport sport;
+    @OneToMany(mappedBy = "team")
+    private Set<StudentTeam> studentTeam;
 
     public Team() {
     }
@@ -52,5 +65,26 @@ public class Team implements Serializable{
 
     public void setSchoolClass(SchoolClass schoolClass) {
         this.schoolClass = schoolClass;
+    }
+
+    public Sport getSport() {
+        return sport;
+    }
+
+    public void setSport(Sport sport) {
+        this.sport = sport;
+    }
+
+    public Set<StudentTeam> getStudentTeam() {
+        return studentTeam;
+    }
+
+    public void setStudentTeam(Set<StudentTeam> studentTeam) {
+        this.studentTeam = studentTeam;
+    }
+
+    @Override
+    public String toString() {
+        return "Team{" + "id=" + id + ", name=" + name + ", acronym=" + acronym + ", schoolClass=" + schoolClass + ", sport=" + sport + ", studentTeam=" + studentTeam + '}';
     }
 }

@@ -2,7 +2,6 @@ package br.ucs.classleague.infrastructure.data;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
-import jakarta.transaction.Transaction;
 import java.io.Serializable;
 import java.util.List;
 import java.util.Optional;
@@ -19,7 +18,7 @@ public class GenericDAO<T, ID extends Serializable> {
         try {
             return Optional.ofNullable(entityManager.find(entityClass, id));
         } finally {
-            entityManager.close();
+            //entityManager.close();
         }
     }
     
@@ -29,11 +28,11 @@ public class GenericDAO<T, ID extends Serializable> {
             return entityManager.createQuery("SELECT e FROM " + entityClass.getSimpleName() + " e", entityClass)
                 .getResultList();
         } finally {
-            entityManager.close();
+            //entityManager.close();
         }
     }
 
-    public void create(T entity) {;
+    public T create(T entity) {
         EntityManager entityManager = EntityManagerProvider.getEntityManager();
         EntityTransaction transaction = entityManager.getTransaction();
 
@@ -41,14 +40,18 @@ public class GenericDAO<T, ID extends Serializable> {
             transaction.begin();
             entityManager.persist(entity);
             transaction.commit();
+            
+            return entity;
         } catch (Exception e) {
             if (transaction != null && transaction.isActive()) {
                 transaction.rollback();
             }
             e.printStackTrace();
         } finally {
-            entityManager.close();
+            //entityManager.close();
         }
+        
+        return null;
     }
 
     public void deleteById(ID id) {
@@ -68,7 +71,7 @@ public class GenericDAO<T, ID extends Serializable> {
             }
             e.printStackTrace();
         } finally {
-            entityManager.close();
+            //entityManager.close();
         }
     }
 }

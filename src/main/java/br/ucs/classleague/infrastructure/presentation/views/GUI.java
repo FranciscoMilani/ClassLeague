@@ -76,13 +76,18 @@ public class GUI extends javax.swing.JFrame {
         jRegisterStudentMotherNameField = new javax.swing.JTextField();
         JStudentRegisterButton = new javax.swing.JButton();
         teamRegisterPanel = new javax.swing.JPanel();
-        innerTeamRegisterPanel = new javax.swing.JPanel();
+        jTeamRegisterTitle = new javax.swing.JLabel();
+        jInnerTeamRegisterPanel = new javax.swing.JPanel();
         jTeamRegisterNameLabel = new javax.swing.JLabel();
         jTeamRegisterNameField = new javax.swing.JTextField();
+        jTeamRegisterAcronymLabel = new javax.swing.JLabel();
+        jTeamRegisterAcronymField = new javax.swing.JTextField();
+        jTeamRegisterSportLabel = new javax.swing.JLabel();
+        jTeamRegisterSportComboBox = new javax.swing.JComboBox<>(registerController.showSportsNames());
         jTeamRegisterClassPickerLabel = new javax.swing.JLabel();
         jTeamRegisterClassPickerComboBox = new javax.swing.JComboBox<>();
         jTeamRegisterButton = new javax.swing.JButton();
-        JTeamRegisterStudentsScrollPane = new javax.swing.JScrollPane();
+        jTeamRegisterStudentsScrollPane = new javax.swing.JScrollPane();
         jTeamRegisterStudentsTable =  new javax.swing.JTable(registerController.getTableModel(0));
 
         studentRegisterDialog.setAlwaysOnTop(true);
@@ -580,18 +585,29 @@ public class GUI extends javax.swing.JFrame {
 
         teamRegisterPanel.setLayout(new java.awt.GridBagLayout());
 
-        innerTeamRegisterPanel.setBackground(new java.awt.Color(51, 51, 51));
-        innerTeamRegisterPanel.setBorder(javax.swing.BorderFactory.createEmptyBorder(10, 10, 10, 10));
-        innerTeamRegisterPanel.setLayout(new java.awt.GridBagLayout());
+        jTeamRegisterTitle.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
+        jTeamRegisterTitle.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jTeamRegisterTitle.setText("Cadastro de Time");
+        jTeamRegisterTitle.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        teamRegisterPanel.add(jTeamRegisterTitle, gridBagConstraints);
+
+        jInnerTeamRegisterPanel.setBackground(new java.awt.Color(51, 51, 51));
+        jInnerTeamRegisterPanel.setBorder(javax.swing.BorderFactory.createEmptyBorder(10, 10, 10, 10));
+        jInnerTeamRegisterPanel.setLayout(new java.awt.GridBagLayout());
 
         jTeamRegisterNameLabel.setText("Nome");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
         gridBagConstraints.weightx = 1.0;
-        gridBagConstraints.insets = new java.awt.Insets(0, 5, 0, 0);
-        innerTeamRegisterPanel.add(jTeamRegisterNameLabel, gridBagConstraints);
+        gridBagConstraints.insets = new java.awt.Insets(10, 5, 0, 0);
+        jInnerTeamRegisterPanel.add(jTeamRegisterNameLabel, gridBagConstraints);
 
         jTeamRegisterNameField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -602,16 +618,61 @@ public class GUI extends javax.swing.JFrame {
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 1;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_END;
-        innerTeamRegisterPanel.add(jTeamRegisterNameField, gridBagConstraints);
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
+        jInnerTeamRegisterPanel.add(jTeamRegisterNameField, gridBagConstraints);
+
+        jTeamRegisterAcronymLabel.setText("Sigla");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
+        gridBagConstraints.insets = new java.awt.Insets(10, 5, 0, 0);
+        jInnerTeamRegisterPanel.add(jTeamRegisterAcronymLabel, gridBagConstraints);
+
+        jTeamRegisterAcronymField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTeamRegisterAcronymFieldActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 3;
+        gridBagConstraints.gridwidth = java.awt.GridBagConstraints.REMAINDER;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
+        jInnerTeamRegisterPanel.add(jTeamRegisterAcronymField, gridBagConstraints);
+
+        jTeamRegisterSportLabel.setText("Esporte");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 4;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
+        gridBagConstraints.insets = new java.awt.Insets(10, 5, 0, 0);
+        jInnerTeamRegisterPanel.add(jTeamRegisterSportLabel, gridBagConstraints);
+
+        jTeamRegisterSportComboBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTeamRegisterSportComboBoxActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 5;
+        gridBagConstraints.gridwidth = java.awt.GridBagConstraints.REMAINDER;
+        gridBagConstraints.ipadx = 125;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
+        jInnerTeamRegisterPanel.add(jTeamRegisterSportComboBox, gridBagConstraints);
 
         jTeamRegisterClassPickerLabel.setText("Selecionar turma");
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 4;
+        gridBagConstraints.gridy = 7;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
         gridBagConstraints.insets = new java.awt.Insets(10, 5, 0, 0);
-        innerTeamRegisterPanel.add(jTeamRegisterClassPickerLabel, gridBagConstraints);
+        jInnerTeamRegisterPanel.add(jTeamRegisterClassPickerLabel, gridBagConstraints);
 
         registerController.showClassesNumbers(jTeamRegisterClassPickerComboBox);
         jTeamRegisterClassPickerComboBox.addActionListener(new java.awt.event.ActionListener() {
@@ -621,12 +682,10 @@ public class GUI extends javax.swing.JFrame {
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 5;
-        gridBagConstraints.gridwidth = java.awt.GridBagConstraints.REMAINDER;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.gridy = 8;
+        gridBagConstraints.ipadx = 125;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
-        gridBagConstraints.weightx = 1.0;
-        innerTeamRegisterPanel.add(jTeamRegisterClassPickerComboBox, gridBagConstraints);
+        jInnerTeamRegisterPanel.add(jTeamRegisterClassPickerComboBox, gridBagConstraints);
 
         jTeamRegisterButton.setText("Cadastrar");
         jTeamRegisterButton.addActionListener(new java.awt.event.ActionListener() {
@@ -636,26 +695,30 @@ public class GUI extends javax.swing.JFrame {
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 7;
+        gridBagConstraints.gridy = 10;
         gridBagConstraints.ipadx = 20;
         gridBagConstraints.ipady = 30;
         gridBagConstraints.weightx = 1.0;
         gridBagConstraints.insets = new java.awt.Insets(30, 0, 10, 0);
-        innerTeamRegisterPanel.add(jTeamRegisterButton, gridBagConstraints);
+        jInnerTeamRegisterPanel.add(jTeamRegisterButton, gridBagConstraints);
 
         jTeamRegisterStudentsTable.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        JTeamRegisterStudentsScrollPane.setViewportView(jTeamRegisterStudentsTable);
+        jTeamRegisterStudentsScrollPane.setViewportView(jTeamRegisterStudentsTable);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 6;
-        innerTeamRegisterPanel.add(JTeamRegisterStudentsScrollPane, gridBagConstraints);
+        gridBagConstraints.gridy = 9;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.ipady = 150;
+        gridBagConstraints.weighty = 1.0;
+        jInnerTeamRegisterPanel.add(jTeamRegisterStudentsScrollPane, gridBagConstraints);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 1;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        teamRegisterPanel.add(innerTeamRegisterPanel, gridBagConstraints);
+        gridBagConstraints.ipadx = 250;
+        teamRegisterPanel.add(jInnerTeamRegisterPanel, gridBagConstraints);
 
         mainTabbedPane.addTab("Cadastro de Time", teamRegisterPanel);
 
@@ -763,18 +826,26 @@ public class GUI extends javax.swing.JFrame {
     }//GEN-LAST:event_jTeamRegisterClassPickerComboBoxActionPerformed
 
     private void jTeamRegisterButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTeamRegisterButtonActionPerformed
-        // TODO add your handling code here:
+        registerController.registerTeam(
+                jTeamRegisterStudentsTable
+        );
     }//GEN-LAST:event_jTeamRegisterButtonActionPerformed
+
+    private void jTeamRegisterAcronymFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTeamRegisterAcronymFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTeamRegisterAcronymFieldActionPerformed
+
+    private void jTeamRegisterSportComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTeamRegisterSportComboBoxActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTeamRegisterSportComboBoxActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public javax.swing.JLabel JRegisterStudentClassLabel;
     public javax.swing.JLabel JRegisterStudentFatherNameLabel;
     public javax.swing.JButton JStudentRegisterButton;
-    public javax.swing.JScrollPane JTeamRegisterStudentsScrollPane;
     public javax.swing.JButton addTournamentBtn;
     public javax.swing.JPanel classRegister;
     public javax.swing.JDialog classRegisterDialog;
-    public javax.swing.JPanel innerTeamRegisterPanel;
     public javax.swing.JButton jButton1;
     public javax.swing.JButton jButton2;
     public javax.swing.JButton jButton3;
@@ -783,6 +854,7 @@ public class GUI extends javax.swing.JFrame {
     public javax.swing.JTextField jClassNameField;
     public javax.swing.JTextField jClassNumber;
     public javax.swing.JComboBox<SchoolClass.SchoolShift> jClassShift;
+    public javax.swing.JPanel jInnerTeamRegisterPanel;
     public javax.swing.JLabel jLabel1;
     public javax.swing.JLabel jLabel14;
     public javax.swing.JLabel jLabel15;
@@ -803,12 +875,18 @@ public class GUI extends javax.swing.JFrame {
     public javax.swing.JLabel jRegisterStudentNameLabel;
     public javax.swing.JPanel jStudentRegisterPanel;
     public javax.swing.JLabel jStudentRegisterTitle;
+    public javax.swing.JTextField jTeamRegisterAcronymField;
+    public javax.swing.JLabel jTeamRegisterAcronymLabel;
     public javax.swing.JButton jTeamRegisterButton;
     public javax.swing.JComboBox<String> jTeamRegisterClassPickerComboBox;
     public javax.swing.JLabel jTeamRegisterClassPickerLabel;
     public javax.swing.JTextField jTeamRegisterNameField;
     public javax.swing.JLabel jTeamRegisterNameLabel;
+    public javax.swing.JComboBox<String> jTeamRegisterSportComboBox;
+    public javax.swing.JLabel jTeamRegisterSportLabel;
+    public javax.swing.JScrollPane jTeamRegisterStudentsScrollPane;
     public javax.swing.JTable jTeamRegisterStudentsTable;
+    public javax.swing.JLabel jTeamRegisterTitle;
     public javax.swing.JTextField jTextField1;
     public javax.swing.JTextField jTextField2;
     public javax.swing.JTextField jTextField3;
