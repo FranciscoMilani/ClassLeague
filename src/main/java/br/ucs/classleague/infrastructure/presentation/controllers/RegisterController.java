@@ -2,18 +2,21 @@ package br.ucs.classleague.infrastructure.presentation.controllers;
 
 import br.ucs.classleague.application.Services.ClassService;
 import br.ucs.classleague.application.Services.TeamRegisterService;
+import br.ucs.classleague.domain.Coach;
 import br.ucs.classleague.domain.SchoolClass;
 import br.ucs.classleague.domain.Student;
 import br.ucs.classleague.domain.StudentTeam;
 import br.ucs.classleague.domain.StudentTeamKey;
 import br.ucs.classleague.domain.Team;
 import br.ucs.classleague.infrastructure.data.ClassDao;
+import br.ucs.classleague.infrastructure.data.CoachDao;
 import br.ucs.classleague.infrastructure.data.EntityManagerProvider;
 import br.ucs.classleague.infrastructure.data.StudentDao;
 import br.ucs.classleague.infrastructure.data.TeamDao;
 import br.ucs.classleague.infrastructure.presentation.views.GUI;
 import jakarta.persistence.EntityManager;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -33,6 +36,7 @@ public class RegisterController {
     private StudentDao studentDao = new StudentDao();
     private TeamDao teamDao = new TeamDao();
     private ClassService classService = new ClassService();
+    private CoachDao coachDao = new CoachDao();
     private TeamRegisterService teamRegisterService = new TeamRegisterService();
     
     public RegisterController(GUI frame){
@@ -61,11 +65,10 @@ public class RegisterController {
                 0, 
                 frame.jRegisterStudentNameField.getText(),
                 "",
-                null, 
+                LocalDate.now(), 
                 frame.jRegisterStudentGenderField.getText(),
                 "" ,
-                "",
-                null
+                ""
         );
         
         studentDao.create(student);
