@@ -13,6 +13,7 @@ import br.ucs.classleague.infrastructure.data.StudentDao;
 import br.ucs.classleague.infrastructure.data.TeamDao;
 import br.ucs.classleague.infrastructure.presentation.views.GUI;
 import jakarta.persistence.EntityManager;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -50,15 +51,6 @@ public class RegisterController {
     }
     
     public Boolean registerStudent(){
-        
-//        //Cria um objeto da classe schoolclass para informar no cadastro do aluno
-//        SchoolClass schoolClass = new SchoolClass(
-//                "",
-//                0,
-//                null,
-//                null  
-//        );
-//        
         int classNumber = Integer.parseInt(frame.jRegisterStudentClassComboBox.getSelectedItem().toString());
         SchoolClass schoolClass = classDao.findByNumber(classNumber);
         
@@ -212,5 +204,45 @@ public class RegisterController {
         }
         
         JOptionPane.showMessageDialog(frame, "Cadastrado com sucesso!");
+    }
+
+    public void createCoach() {
+        Coach coach = new Coach(this.frame.coachSportField.getText(),
+                this.frame.coachNameField.getText(),
+                this.frame.coachSurnameField1.getText(),
+                parseStringToLocalDate(this.frame.coachBirthDateField.getText()),
+                this.frame.coachGenderField.getText(),
+                this.frame.coachPhoneField.getText(),
+                this.frame.coachCPFField.getText());
+
+        //Salva o treinador no banco de dados
+        try {
+            this.coachDao.create(coach);
+            clearCoachRegisterFields();
+            JOptionPane.showMessageDialog(null, "Sucesso!", "Treinador cadastrado com sucesso.", JOptionPane.INFORMATION_MESSAGE);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Erro!", "Erro ao cadastrar treinador.", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    public LocalDate parseStringToLocalDate(String date) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        try {
+            LocalDate localDate = LocalDate.parse(date, formatter);
+            return localDate;
+        } catch (Exception e) {
+            return LocalDate.now();
+        }
+    }
+
+    public void clearCoachRegisterFields() {
+        this.frame.coachNameField.setText("");
+        this.frame.coachSurnameField1.setText("");
+        this.frame.coachGenderField.setText("");
+        this.frame.coachPhoneField.setText("");
+        this.frame.coachNameField.setText("");
+        this.frame.coachCPFField.setText("");
+        this.frame.coachBirthDateField.setText("");
+        this.frame.coachSportField.setText("");
     }
 }

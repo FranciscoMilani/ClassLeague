@@ -22,8 +22,8 @@ public class Student extends Person {
     public Student(){
     }
 
-    public Student(SchoolClass schoolClass, String fatherName, String motherName, Integer pontos, String name, String surname, LocalDate birthDate, String gender, String telephone, String cpf, Address address) {
-        super(name, surname, birthDate, gender, telephone, cpf, address);
+    public Student(SchoolClass schoolClass, String fatherName, String motherName, Integer pontos, String name, String surname, LocalDate birthDate, String gender, String telephone, String cpf) {
+        super(name, surname, birthDate, gender, telephone, cpf);
         this.schoolClass = schoolClass;
         this.fatherName = fatherName;
         this.motherName = motherName;

@@ -89,6 +89,24 @@ public class GUI extends javax.swing.JFrame {
         jTeamRegisterButton = new javax.swing.JButton();
         jTeamRegisterStudentsScrollPane = new javax.swing.JScrollPane();
         jTeamRegisterStudentsTable =  new javax.swing.JTable(registerController.getTableModel(0));
+        coachRegister = new javax.swing.JPanel();
+        jCoachRegisterTitle1 = new javax.swing.JLabel();
+        coachRegisterPanel = new javax.swing.JPanel();
+        coachSurnameLabel = new javax.swing.JLabel();
+        coachNameField = new javax.swing.JTextField();
+        coachGenderLabel = new javax.swing.JLabel();
+        coachGenderField = new javax.swing.JTextField();
+        coachNameLabel1 = new javax.swing.JLabel();
+        coachSurnameField1 = new javax.swing.JTextField();
+        coachPhoneLabel = new javax.swing.JLabel();
+        coachCPFLabel = new javax.swing.JLabel();
+        coachBirthDateLabel = new javax.swing.JLabel();
+        coachSportLabel = new javax.swing.JLabel();
+        coachSportField = new javax.swing.JTextField();
+        JCoachRegisterButton1 = new javax.swing.JButton();
+        coachBirthDateField = new javax.swing.JFormattedTextField();
+        coachCPFField = new javax.swing.JFormattedTextField();
+        coachPhoneField = new javax.swing.JFormattedTextField();
 
         studentRegisterDialog.setAlwaysOnTop(true);
         studentRegisterDialog.setMinimumSize(new java.awt.Dimension(500, 500));
@@ -722,6 +740,165 @@ public class GUI extends javax.swing.JFrame {
 
         mainTabbedPane.addTab("Cadastro de Time", teamRegisterPanel);
 
+        coachRegister.setLayout(new java.awt.GridBagLayout());
+
+        jCoachRegisterTitle1.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
+        jCoachRegisterTitle1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jCoachRegisterTitle1.setText("Cadastro de Treinadores");
+        jCoachRegisterTitle1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        coachRegister.add(jCoachRegisterTitle1, gridBagConstraints);
+
+        coachRegisterPanel.setBackground(new java.awt.Color(51, 51, 51));
+        coachRegisterPanel.setBorder(javax.swing.BorderFactory.createEmptyBorder(10, 10, 10, 10));
+
+        coachSurnameLabel.setText("Sobrenome");
+
+        coachNameField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                coachNameFieldActionPerformed(evt);
+            }
+        });
+
+        coachGenderLabel.setText("Sexo");
+
+        coachGenderField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                coachGenderFieldActionPerformed(evt);
+            }
+        });
+
+        coachNameLabel1.setText("Nome");
+
+        coachSurnameField1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                coachSurnameField1ActionPerformed(evt);
+            }
+        });
+
+        coachPhoneLabel.setText("Telefone");
+
+        coachCPFLabel.setText("CPF");
+
+        coachBirthDateLabel.setText("Data de Nascimento");
+
+        coachSportLabel.setText("Esporte");
+
+        coachSportField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                coachSportFieldActionPerformed(evt);
+            }
+        });
+
+        JCoachRegisterButton1.setText("Cadastrar");
+        JCoachRegisterButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                JCoachRegisterButton1ActionPerformed(evt);
+            }
+        });
+
+        try {
+            coachBirthDateField.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##/##/####")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+        coachBirthDateField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                coachBirthDateFieldActionPerformed(evt);
+            }
+        });
+
+        try {
+            coachCPFField.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("###.###.###-##")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+
+        try {
+            coachPhoneField.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("(##)#########")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+
+        javax.swing.GroupLayout coachRegisterPanelLayout = new javax.swing.GroupLayout(coachRegisterPanel);
+        coachRegisterPanel.setLayout(coachRegisterPanelLayout);
+        coachRegisterPanelLayout.setHorizontalGroup(
+            coachRegisterPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(coachRegisterPanelLayout.createSequentialGroup()
+                .addGroup(coachRegisterPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(coachRegisterPanelLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(coachRegisterPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(coachSurnameLabel)
+                            .addComponent(coachNameField, javax.swing.GroupLayout.PREFERRED_SIZE, 391, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(coachGenderField, javax.swing.GroupLayout.PREFERRED_SIZE, 391, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(coachNameLabel1)
+                            .addComponent(coachGenderLabel)
+                            .addComponent(coachSurnameField1, javax.swing.GroupLayout.PREFERRED_SIZE, 391, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(coachPhoneLabel)
+                            .addComponent(coachCPFLabel)
+                            .addComponent(coachBirthDateLabel)
+                            .addComponent(coachSportLabel)
+                            .addComponent(coachSportField, javax.swing.GroupLayout.PREFERRED_SIZE, 391, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(coachRegisterPanelLayout.createSequentialGroup()
+                        .addGap(140, 140, 140)
+                        .addComponent(JCoachRegisterButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(coachRegisterPanelLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(coachPhoneField, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(coachRegisterPanelLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(coachRegisterPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(coachBirthDateField, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 126, Short.MAX_VALUE)
+                            .addComponent(coachCPFField, javax.swing.GroupLayout.Alignment.LEADING))))
+                .addContainerGap())
+        );
+        coachRegisterPanelLayout.setVerticalGroup(
+            coachRegisterPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(coachRegisterPanelLayout.createSequentialGroup()
+                .addComponent(coachNameLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(coachNameField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(4, 4, 4)
+                .addComponent(coachSurnameLabel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(coachSurnameField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(3, 3, 3)
+                .addComponent(coachGenderLabel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(coachGenderField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(coachPhoneLabel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(coachPhoneField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(coachCPFLabel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(coachCPFField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(coachBirthDateLabel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(coachBirthDateField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(12, 12, 12)
+                .addComponent(coachSportLabel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(coachSportField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(JCoachRegisterButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(20, Short.MAX_VALUE))
+        );
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        coachRegister.add(coachRegisterPanel, gridBagConstraints);
+
+        mainTabbedPane.addTab("Cadastro de Treinadores", coachRegister);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -839,13 +1016,58 @@ public class GUI extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jTeamRegisterSportComboBoxActionPerformed
 
+    private void coachSurnameField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_coachSurnameField1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_coachSurnameField1ActionPerformed
+
+    private void coachGenderFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_coachGenderFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_coachGenderFieldActionPerformed
+
+    private void coachNameFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_coachNameFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_coachNameFieldActionPerformed
+
+    private void coachSportFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_coachSportFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_coachSportFieldActionPerformed
+
+    private void JCoachRegisterButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JCoachRegisterButton1ActionPerformed
+        // TODO add your handling code here:
+        this.registerController.createCoach();
+    }//GEN-LAST:event_JCoachRegisterButton1ActionPerformed
+
+    private void coachBirthDateFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_coachBirthDateFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_coachBirthDateFieldActionPerformed
+
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    public javax.swing.JButton JCoachRegisterButton1;
     public javax.swing.JLabel JRegisterStudentClassLabel;
     public javax.swing.JLabel JRegisterStudentFatherNameLabel;
     public javax.swing.JButton JStudentRegisterButton;
     public javax.swing.JButton addTournamentBtn;
     public javax.swing.JPanel classRegister;
     public javax.swing.JDialog classRegisterDialog;
+    public javax.swing.JFormattedTextField coachBirthDateField;
+    public javax.swing.JLabel coachBirthDateLabel;
+    public javax.swing.JFormattedTextField coachCPFField;
+    public javax.swing.JLabel coachCPFLabel;
+    public javax.swing.JTextField coachGenderField;
+    public javax.swing.JLabel coachGenderLabel;
+    public javax.swing.JTextField coachNameField;
+    public javax.swing.JLabel coachNameLabel1;
+    public javax.swing.JFormattedTextField coachPhoneField;
+    public javax.swing.JLabel coachPhoneLabel;
+    public javax.swing.JPanel coachRegister;
+    public javax.swing.JPanel coachRegisterPanel;
+    public javax.swing.JTextField coachSportField;
+    public javax.swing.JLabel coachSportLabel;
+    public javax.swing.JTextField coachSurnameField1;
+    public javax.swing.JLabel coachSurnameLabel;
+    public javax.swing.JPanel innerTeamRegisterPanel;
+
     public javax.swing.JButton jButton1;
     public javax.swing.JButton jButton2;
     public javax.swing.JButton jButton3;
@@ -855,6 +1077,7 @@ public class GUI extends javax.swing.JFrame {
     public javax.swing.JTextField jClassNumber;
     public javax.swing.JComboBox<SchoolClass.SchoolShift> jClassShift;
     public javax.swing.JPanel jInnerTeamRegisterPanel;
+    public javax.swing.JLabel jCoachRegisterTitle1;
     public javax.swing.JLabel jLabel1;
     public javax.swing.JLabel jLabel14;
     public javax.swing.JLabel jLabel15;
