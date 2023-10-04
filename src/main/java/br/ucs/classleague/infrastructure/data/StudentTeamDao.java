@@ -6,7 +6,7 @@ import jakarta.persistence.EntityTransaction;
 
 public class StudentTeamDao {
     
-    public StudentTeam save(StudentTeam entity) {
+    public StudentTeam create(StudentTeam entity) {
         EntityManager entityManager = EntityManagerProvider.getEntityManager();
         EntityTransaction transaction = entityManager.getTransaction();
 

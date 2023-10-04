@@ -4,6 +4,7 @@ import br.ucs.classleague.application.Services.ClassService;
 import br.ucs.classleague.application.Services.TeamRegisterService;
 import br.ucs.classleague.domain.Coach;
 import br.ucs.classleague.domain.SchoolClass;
+import br.ucs.classleague.domain.Sport;
 import br.ucs.classleague.domain.Student;
 import br.ucs.classleague.domain.StudentTeam;
 import br.ucs.classleague.domain.StudentTeamKey;
@@ -12,6 +13,7 @@ import br.ucs.classleague.infrastructure.data.ClassDao;
 import br.ucs.classleague.infrastructure.data.CoachDao;
 import br.ucs.classleague.infrastructure.data.EntityManagerProvider;
 import br.ucs.classleague.infrastructure.data.StudentDao;
+import br.ucs.classleague.infrastructure.data.StudentTeamDao;
 import br.ucs.classleague.infrastructure.data.TeamDao;
 import br.ucs.classleague.infrastructure.presentation.views.GUI;
 import jakarta.persistence.EntityManager;
@@ -38,12 +40,16 @@ public class RegisterController {
     private ClassService classService = new ClassService();
     private CoachDao coachDao = new CoachDao();
     private TeamRegisterService teamRegisterService = new TeamRegisterService();
+    private StudentTeamDao studentTeamDao = new StudentTeamDao();
     
     public RegisterController(GUI frame){
         this.frame = frame;
     }
     
-    public void showClassesNumbers(JComboBox comboBox) {
+    public void showClassesNumbers() {
+        JComboBox comboBox = frame.jRegisterStudentClassComboBox;
+        JComboBox comboBoxTeam = frame.jTeamRegisterClassPickerComboBox;
+        
         DefaultComboBoxModel model = new DefaultComboBoxModel<String>();
         List<Integer> numbers = classDao.findAll()
                 .stream()
@@ -52,6 +58,7 @@ public class RegisterController {
         
         model.addAll(numbers);
         comboBox.setModel(model);
+        comboBoxTeam.setModel(model);
     }
     
     public Boolean registerStudent(){
@@ -152,24 +159,26 @@ public class RegisterController {
         }
     }
     
+    public String[] showSportsNames(){
+        return teamRegisterService.getSportsNames();
+    }
+    
     public void registerTeam(JTable table) {
         String name = frame.jTeamRegisterNameField.getText();
         String acronym = frame.jTeamRegisterAcronymField.getText();
         String classString = frame.jTeamRegisterClassPickerComboBox.getSelectedItem().toString();
+        int sportEnumIndex = frame.jTeamRegisterSportComboBox.getSelectedIndex();
         
         Integer classNumber = Integer.parseInt(classString);
 
-        Long teamId = teamRegisterService.register(new Team(
+        Long teamId = teamRegisterService.registerTeam(new Team(
                 name,
                 acronym,
+                Sport.SportsEnum.values()[sportEnumIndex],
                 classDao.findByNumber(classNumber)
         ));
         
         assignTeamMembers(table, teamId);
-    }
-    
-    public String[] showSportsNames(){
-        return teamRegisterService.getSportsNames();
     }
     
     private void assignTeamMembers(JTable table, Long teamId) {        
@@ -201,12 +210,12 @@ public class RegisterController {
             st.setTeam(team);
             
             if (teamRegisterService.registerStudentForTeam(st) == null) {
-                JOptionPane.showMessageDialog(frame, "Erro no cadastro da relação entre aluno e time para aluno " + newMap.getValue());
+                JOptionPane.showMessageDialog(frame, "Erro no cadastro da relação entre aluno e time para aluno" + newMap.getValue());
                 return;
             }
         }
         
-        JOptionPane.showMessageDialog(frame, "Cadastrado com sucesso!");
+        JOptionPane.showMessageDialog(frame, "Cadastrado com sucesso");
     }
 
     public void createCoach() {
@@ -247,5 +256,10 @@ public class RegisterController {
         this.frame.coachCPFField.setText("");
         this.frame.coachBirthDateField.setText("");
         this.frame.coachSportField.setText("");
+    }
+    
+    public void updateComboBoxes(){
+        this.showClassesNumbers();
+        this.showSportsNames();
     }
 }

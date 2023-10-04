@@ -4,10 +4,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
-import jakarta.persistence.OneToOne;
 import java.io.Serializable;
 import java.util.Set;
 
@@ -21,17 +19,17 @@ public class Team implements Serializable {
     private String acronym;
     @ManyToOne
     private SchoolClass schoolClass;
-    @OneToOne
-    private Sport sport;
+    private Sport.SportsEnum sport;
     @OneToMany(mappedBy = "team")
     private Set<StudentTeam> studentTeam;
 
     public Team() {
     }
 
-    public Team(String name, String acronym, SchoolClass schoolClass) {
+    public Team(String name, String acronym, Sport.SportsEnum sport, SchoolClass schoolClass) {
         this.name = name;
         this.acronym = acronym;
+        this.sport = sport;
         this.schoolClass = schoolClass;
     }
 
@@ -66,14 +64,14 @@ public class Team implements Serializable {
     public void setSchoolClass(SchoolClass schoolClass) {
         this.schoolClass = schoolClass;
     }
-
-    public Sport getSport() {
-        return sport;
-    }
-
-    public void setSport(Sport sport) {
-        this.sport = sport;
-    }
+//
+//    public Sport getSport() {
+//        return sport;
+//    }
+//
+//    public void setSport(Sport sport) {
+//        this.sport = sport;
+//    }
 
     public Set<StudentTeam> getStudentTeam() {
         return studentTeam;

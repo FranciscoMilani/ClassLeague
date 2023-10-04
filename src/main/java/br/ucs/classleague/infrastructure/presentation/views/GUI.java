@@ -522,7 +522,7 @@ public class GUI extends javax.swing.JFrame {
         gridBagConstraints.insets = new java.awt.Insets(10, 5, 0, 0);
         jStudentRegisterPanel.add(JRegisterStudentClassLabel, gridBagConstraints);
 
-        registerController.showClassesNumbers(jRegisterStudentClassComboBox);
+        registerController.showClassesNumbers();
         jRegisterStudentClassComboBox.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jRegisterStudentClassComboBoxActionPerformed(evt);
@@ -678,7 +678,6 @@ public class GUI extends javax.swing.JFrame {
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 5;
-        gridBagConstraints.gridwidth = java.awt.GridBagConstraints.REMAINDER;
         gridBagConstraints.ipadx = 125;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
         jInnerTeamRegisterPanel.add(jTeamRegisterSportComboBox, gridBagConstraints);
@@ -692,7 +691,6 @@ public class GUI extends javax.swing.JFrame {
         gridBagConstraints.insets = new java.awt.Insets(10, 5, 0, 0);
         jInnerTeamRegisterPanel.add(jTeamRegisterClassPickerLabel, gridBagConstraints);
 
-        registerController.showClassesNumbers(jTeamRegisterClassPickerComboBox);
         jTeamRegisterClassPickerComboBox.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTeamRegisterClassPickerComboBoxActionPerformed(evt);
@@ -931,7 +929,7 @@ public class GUI extends javax.swing.JFrame {
     }//GEN-LAST:event_searchTournamentFieldActionPerformed
 
     private void mainTabbedPaneStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_mainTabbedPaneStateChanged
-        // TODO add your handling code here:
+        registerController.updateComboBoxes();
     }//GEN-LAST:event_mainTabbedPaneStateChanged
 
     private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
@@ -1066,8 +1064,6 @@ public class GUI extends javax.swing.JFrame {
     public javax.swing.JLabel coachSportLabel;
     public javax.swing.JTextField coachSurnameField1;
     public javax.swing.JLabel coachSurnameLabel;
-    public javax.swing.JPanel innerTeamRegisterPanel;
-
     public javax.swing.JButton jButton1;
     public javax.swing.JButton jButton2;
     public javax.swing.JButton jButton3;
@@ -1076,8 +1072,8 @@ public class GUI extends javax.swing.JFrame {
     public javax.swing.JTextField jClassNameField;
     public javax.swing.JTextField jClassNumber;
     public javax.swing.JComboBox<SchoolClass.SchoolShift> jClassShift;
-    public javax.swing.JPanel jInnerTeamRegisterPanel;
     public javax.swing.JLabel jCoachRegisterTitle1;
+    public javax.swing.JPanel jInnerTeamRegisterPanel;
     public javax.swing.JLabel jLabel1;
     public javax.swing.JLabel jLabel14;
     public javax.swing.JLabel jLabel15;

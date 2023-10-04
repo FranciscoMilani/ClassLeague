@@ -1,5 +1,6 @@
 package br.ucs.classleague.domain;
 
+import jakarta.persistence.Transient;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -9,6 +10,7 @@ public class Tournament implements Serializable{
     private String name;
     private Date startTime;
     private Date endTime;
+    @Transient
     private Sport sport;
 
     public Tournament() {

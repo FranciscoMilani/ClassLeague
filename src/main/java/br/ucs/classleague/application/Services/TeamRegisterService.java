@@ -14,8 +14,7 @@ public class TeamRegisterService {
 
     public TeamRegisterService() {
         this.teamDao = DaoFactory.getTeamDao();
-        this.studentTeamDao = DaoFactory.getStudentTeamDao();
-        
+        this.studentTeamDao = DaoFactory.getStudentTeamDao(); 
     }
     
     public String[] getSportsNames(){
@@ -28,17 +27,17 @@ public class TeamRegisterService {
         return names;
     }
     
-    public Long register(Team team){
+    public Long registerTeam(Team team){
         return teamDao.create(team).getId();
     }
     
     public void registerStudentsForTeam(List<StudentTeam> stList){
         for (StudentTeam st : stList) {
-            studentTeamDao.save(st);
+            studentTeamDao.create(st);
         }
     }
     
     public StudentTeam registerStudentForTeam(StudentTeam st){
-        return studentTeamDao.save(st);
+        return studentTeamDao.create(st);
     }
 }
