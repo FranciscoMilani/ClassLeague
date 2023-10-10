@@ -9,12 +9,14 @@ import br.ucs.classleague.domain.Student;
 import br.ucs.classleague.domain.StudentTeam;
 import br.ucs.classleague.domain.StudentTeamKey;
 import br.ucs.classleague.domain.Team;
+import br.ucs.classleague.domain.Tournament;
 import br.ucs.classleague.infrastructure.data.ClassDao;
 import br.ucs.classleague.infrastructure.data.CoachDao;
 import br.ucs.classleague.infrastructure.data.EntityManagerProvider;
 import br.ucs.classleague.infrastructure.data.StudentDao;
 import br.ucs.classleague.infrastructure.data.StudentTeamDao;
 import br.ucs.classleague.infrastructure.data.TeamDao;
+import br.ucs.classleague.infrastructure.data.TournamentDao;
 import br.ucs.classleague.infrastructure.presentation.views.GUI;
 import jakarta.persistence.EntityManager;
 import java.time.LocalDate;
@@ -41,6 +43,7 @@ public class RegisterController {
     private CoachDao coachDao = new CoachDao();
     private TeamRegisterService teamRegisterService = new TeamRegisterService();
     private StudentTeamDao studentTeamDao = new StudentTeamDao();
+    private TournamentDao tournamentDao = new TournamentDao();
     
     public RegisterController(GUI frame){
         this.frame = frame;
@@ -233,6 +236,21 @@ public class RegisterController {
             JOptionPane.showMessageDialog(null, "Sucesso!", "Treinador cadastrado com sucesso.", JOptionPane.INFORMATION_MESSAGE);
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Erro!", "Erro ao cadastrar treinador.", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+    
+    public void createTournament() {
+        Tournament tournament = new Tournament(this.frame.tournamentNameField.getText(),
+                parseStringToLocalDate(this.frame.tournamentStartDateField.getText()),
+                parseStringToLocalDate(this.frame.tournamentEndDateField.getText()),
+                this.frame.tournamentSportComboBox.getSelectedItem().toString());
+
+        //Salva o torneio no banco de dados
+        try {
+            this.tournamentDao.create(tournament);
+            JOptionPane.showMessageDialog(null, "Sucesso!", "Torneio cadastrado com sucesso.", JOptionPane.INFORMATION_MESSAGE);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Erro!", "Erro ao cadastrar torneio.", JOptionPane.ERROR_MESSAGE);
         }
     }
 
