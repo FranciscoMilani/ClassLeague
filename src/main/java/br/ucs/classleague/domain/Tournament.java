@@ -1,20 +1,27 @@
 package br.ucs.classleague.domain;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDate;
 
+@Entity
 public class Tournament implements Serializable{
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
-    private Date startTime;
-    private Date endTime;
-    private Sport sport;
+    private LocalDate startTime;
+    private LocalDate endTime;
+    private String sport;
 
     public Tournament() {
     }
 
-    public Tournament(String name, Date startTime, Date endTime, Sport sport) {
+    public Tournament(String name, LocalDate startTime, LocalDate endTime, String sport) {
         this.name = name;
         this.startTime = startTime;
         this.endTime = endTime;
@@ -37,27 +44,27 @@ public class Tournament implements Serializable{
         this.name = name;
     }
 
-    public Date getStartTime() {
-        return startTime;
-    }
-
-    public void setStartTime(Date startTime) {
-        this.startTime = startTime;
-    }
-
-    public Date getEndTime() {
-        return endTime;
-    }
-
-    public void setEndTime(Date endTime) {
-        this.endTime = endTime;
-    }
-
-    public Sport getSport() {
+    public String getSport() {
         return sport;
     }
 
-    public void setSport(Sport sport) {
+    public void setSport(String sport) {
         this.sport = sport;
+    }
+
+    public LocalDate getStartTime() {
+        return startTime;
+    }
+
+    public void setStartTime(LocalDate startTime) {
+        this.startTime = startTime;
+    }
+
+    public LocalDate getEndTime() {
+        return endTime;
+    }
+
+    public void setEndTime(LocalDate endTime) {
+        this.endTime = endTime;
     }
 }
