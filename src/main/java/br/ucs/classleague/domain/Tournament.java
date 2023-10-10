@@ -1,26 +1,36 @@
 package br.ucs.classleague.domain;
 
+import br.ucs.classleague.domain.Sport.SportsEnum;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import jakarta.persistence.Transient;
 import java.io.Serializable;
 import java.util.Date;
 
-public class Tournament implements Serializable{
+@Entity
+public class Tournament implements Serializable {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
     private Date startTime;
     private Date endTime;
+    private SportsEnum sportEnum;
+    
     @Transient
     private Sport sport;
 
     public Tournament() {
     }
 
-    public Tournament(String name, Date startTime, Date endTime, Sport sport) {
+    public Tournament(String name, Date startTime, Date endTime, SportsEnum sportEnum) {
         this.name = name;
         this.startTime = startTime;
         this.endTime = endTime;
-        this.sport = sport;
+        this.sportEnum = sportEnum;
     }
 
     public Long getId() {
@@ -60,6 +70,7 @@ public class Tournament implements Serializable{
     }
 
     public void setSport(Sport sport) {
+        this.sportEnum = sport.getSport();
         this.sport = sport;
     }
 }

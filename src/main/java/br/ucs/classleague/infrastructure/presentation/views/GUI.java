@@ -2,12 +2,16 @@ package br.ucs.classleague.infrastructure.presentation.views;
 
 import br.ucs.classleague.domain.SchoolClass;
 import br.ucs.classleague.infrastructure.presentation.controllers.RegisterController;
+import br.ucs.classleague.infrastructure.presentation.controllers.TournamentController;
 import java.awt.event.ActionEvent;
-
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
 public class GUI extends javax.swing.JFrame {
     
     private RegisterController registerController = new RegisterController(this);
+    private TournamentController tournamentController = new TournamentController(this);
+    
     public int prevClassNumber = -1;
 
     public GUI() {
@@ -29,13 +33,15 @@ public class GUI extends javax.swing.JFrame {
         mainTabbedPane = new javax.swing.JTabbedPane();
         mainPanel = new javax.swing.JPanel();
         mainTopPanel = new javax.swing.JPanel();
-        mainSeparator = new javax.swing.JSeparator();
-        mainBottomPanel = new javax.swing.JPanel();
         mainInnerTopPanel = new javax.swing.JPanel();
+        jTournamentLabel = new javax.swing.JLabel();
         searchTournamentField = new javax.swing.JTextField();
         searchTournamentBtn = new javax.swing.JButton();
         addTournamentBtn = new javax.swing.JButton();
-        jLabel1 = new javax.swing.JLabel();
+        jTournamentSelectScrollPane = new javax.swing.JScrollPane();
+        jTournamentSelectTable = new javax.swing.JTable();
+        mainSeparator = new javax.swing.JSeparator();
+        mainBottomPanel = new javax.swing.JPanel();
         mainInnerBottomPanel = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
@@ -88,7 +94,7 @@ public class GUI extends javax.swing.JFrame {
         jTeamRegisterClassPickerComboBox = new javax.swing.JComboBox<>();
         jTeamRegisterButton = new javax.swing.JButton();
         jTeamRegisterStudentsScrollPane = new javax.swing.JScrollPane();
-        jTeamRegisterStudentsTable =  new javax.swing.JTable(registerController.getTableModel(0));
+        jTeamRegisterStudentsTable =  new javax.swing.JTable(registerController.getTeamRegisterTableModel(0));
         coachRegister = new javax.swing.JPanel();
         jCoachRegisterTitle1 = new javax.swing.JLabel();
         coachRegisterPanel = new javax.swing.JPanel();
@@ -154,18 +160,43 @@ public class GUI extends javax.swing.JFrame {
         mainPanel.setLayout(new javax.swing.BoxLayout(mainPanel, javax.swing.BoxLayout.Y_AXIS));
 
         mainTopPanel.setLayout(new java.awt.GridBagLayout());
-        mainPanel.add(mainTopPanel);
-        mainPanel.add(mainSeparator);
 
-        mainBottomPanel.setLayout(new javax.swing.BoxLayout(mainBottomPanel, javax.swing.BoxLayout.Y_AXIS));
+        mainInnerTopPanel.setLayout(new java.awt.GridBagLayout());
+
+        jTournamentLabel.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
+        jTournamentLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jTournamentLabel.setText("Torneios");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.gridwidth = 3;
+        gridBagConstraints.ipadx = 878;
+        gridBagConstraints.ipady = 87;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(6, 0, 0, 0);
+        mainInnerTopPanel.add(jTournamentLabel, gridBagConstraints);
 
         searchTournamentField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 searchTournamentFieldActionPerformed(evt);
             }
         });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.ipadx = 104;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(19, 586, 0, 0);
+        mainInnerTopPanel.add(searchTournamentField, gridBagConstraints);
 
         searchTournamentBtn.setText("Pesquisar");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(19, 12, 0, 0);
+        mainInnerTopPanel.add(searchTournamentBtn, gridBagConstraints);
 
         addTournamentBtn.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         addTournamentBtn.setText("+");
@@ -174,39 +205,43 @@ public class GUI extends javax.swing.JFrame {
                 addTournamentBtnActionPerformed(evt);
             }
         });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.ipadx = 12;
+        gridBagConstraints.ipady = 12;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(6, 61, 6, 0);
+        mainInnerTopPanel.add(addTournamentBtn, gridBagConstraints);
 
-        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
-        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("Torneios");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        mainTopPanel.add(mainInnerTopPanel, gridBagConstraints);
 
-        javax.swing.GroupLayout mainInnerTopPanelLayout = new javax.swing.GroupLayout(mainInnerTopPanel);
-        mainInnerTopPanel.setLayout(mainInnerTopPanelLayout);
-        mainInnerTopPanelLayout.setHorizontalGroup(
-            mainInnerTopPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(mainInnerTopPanelLayout.createSequentialGroup()
-                .addGap(61, 61, 61)
-                .addComponent(addTournamentBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 616, Short.MAX_VALUE)
-                .addComponent(searchTournamentField, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(searchTournamentBtn)
-                .addGap(31, 31, 31))
-            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
-        mainInnerTopPanelLayout.setVerticalGroup(
-            mainInnerTopPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, mainInnerTopPanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(mainInnerTopPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(searchTournamentField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(searchTournamentBtn)
-                    .addComponent(addTournamentBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap())
-        );
+        jTournamentSelectTable.setModel(tournamentController.getTournamentListTableModel(0));
+        jTournamentSelectTable.getSelectionModel().addListSelectionListener(new ListSelectionListener(){
+            @Override
+            public void valueChanged(ListSelectionEvent e){
+                if (!e.getValueIsAdjusting()){
+                    System.out.println(jTournamentSelectTable.getSelectedRow());
+                }
+            }
+        });
+        jTournamentSelectScrollPane.setViewportView(jTournamentSelectTable);
 
-        mainBottomPanel.add(mainInnerTopPanel);
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.weighty = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(15, 50, 15, 50);
+        mainTopPanel.add(jTournamentSelectScrollPane, gridBagConstraints);
+
+        mainPanel.add(mainTopPanel);
+        mainPanel.add(mainSeparator);
+
+        mainBottomPanel.setLayout(new javax.swing.BoxLayout(mainBottomPanel, javax.swing.BoxLayout.Y_AXIS));
 
         mainInnerBottomPanel.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.CENTER, 50, 50));
 
@@ -1074,7 +1109,6 @@ public class GUI extends javax.swing.JFrame {
     public javax.swing.JComboBox<SchoolClass.SchoolShift> jClassShift;
     public javax.swing.JLabel jCoachRegisterTitle1;
     public javax.swing.JPanel jInnerTeamRegisterPanel;
-    public javax.swing.JLabel jLabel1;
     public javax.swing.JLabel jLabel14;
     public javax.swing.JLabel jLabel15;
     public javax.swing.JLabel jLabel16;
@@ -1109,6 +1143,9 @@ public class GUI extends javax.swing.JFrame {
     public javax.swing.JTextField jTextField1;
     public javax.swing.JTextField jTextField2;
     public javax.swing.JTextField jTextField3;
+    public javax.swing.JLabel jTournamentLabel;
+    public javax.swing.JScrollPane jTournamentSelectScrollPane;
+    public javax.swing.JTable jTournamentSelectTable;
     public javax.swing.JPanel mainBottomPanel;
     public javax.swing.JPanel mainInnerBottomPanel;
     public javax.swing.JPanel mainInnerTopPanel;

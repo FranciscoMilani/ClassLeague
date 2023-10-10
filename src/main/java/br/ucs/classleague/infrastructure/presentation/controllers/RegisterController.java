@@ -99,14 +99,13 @@ public class RegisterController {
         return true;
     }
     
-    private void resetTeamTable() {
-        JTable table = frame.jTeamRegisterStudentsTable;
+    private void resetTable(JTable table) {
         DefaultTableModel model = (DefaultTableModel) table.getModel();
         model.setRowCount(0);
         table.revalidate();
     }
     
-    public DefaultTableModel getTableModel(int rowCount) {
+    public DefaultTableModel getTeamRegisterTableModel(int rowCount) {
         String[] columnHeaders = new String[] {"ID", "Nome", ""};
 
         DefaultTableModel teamRegisterTableModel = new DefaultTableModel(columnHeaders, rowCount) {
@@ -141,14 +140,14 @@ public class RegisterController {
             students = new ArrayList<>();
             frame.prevClassNumber = n;
             
-            resetTeamTable();
+            resetTable(frame.jTeamRegisterStudentsTable);
             students = classDao.getStudentsByClassNumber(n);
         } catch (Exception e){
             e.printStackTrace();
             return;
         }
         
-        DefaultTableModel model = getTableModel(students.size());
+        DefaultTableModel model = getTeamRegisterTableModel(students.size());
         
         frame.jTeamRegisterStudentsTable.setModel(model);
         
