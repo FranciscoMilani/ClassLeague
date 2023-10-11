@@ -1,5 +1,6 @@
 package br.ucs.classleague.domain;
 
+import br.ucs.classleague.domain.Sport.SportsEnum;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -15,9 +16,14 @@ public class Tournament implements Serializable{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
+    
+    @Transient
+    private Sport sport;
+
     private LocalDate startTime;
     private LocalDate endTime;
-    private String sport;
+    private String sportString;
+    private SportsEnum sportEnum;
 
     public Tournament() {
     }
@@ -26,7 +32,7 @@ public class Tournament implements Serializable{
         this.name = name;
         this.startTime = startTime;
         this.endTime = endTime;
-        this.sport = sport;
+        this.sportEnum = sportEnum;
     }
 
     public Long getId() {
@@ -46,11 +52,15 @@ public class Tournament implements Serializable{
     }
 
     public String getSport() {
-        return sport;
+        return sportString;
     }
 
-    public void setSport(String sport) {
-        this.sport = sport;
+    public void setSport(Sport sport) {
+        this.sportEnum = sport.getSport();
+    }
+    
+    public void setSport(String sportString) {
+        this.sportString = sportString;
     }
 
     public LocalDate getStartTime() {

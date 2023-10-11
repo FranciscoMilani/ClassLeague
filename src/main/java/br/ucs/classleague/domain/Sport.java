@@ -1,6 +1,6 @@
 package br.ucs.classleague.domain;
 
-public class Sport {
+public abstract class Sport {
     
     private SportsEnum sport;
     private Integer matchDurationMinutes;
@@ -13,7 +13,7 @@ public class Sport {
         BASKETBALL("Basquete"),
         FUTSAL("Futsal");
 
-        private String name;
+        private final String name;
 
         private SportsEnum(String name) {
             this.name = name;
@@ -27,8 +27,9 @@ public class Sport {
     public Sport() {
     }
 
-    public Sport(Integer matchDurationMinutes, Integer halfAmount, 
+    public Sport(SportsEnum sport, Integer matchDurationMinutes, Integer halfAmount, 
             Boolean pointsPerPlayer) {
+        this.sport = sport;
         this.matchDurationMinutes = matchDurationMinutes;
         this.halfAmount = halfAmount;
         this.pointsPerPlayer = pointsPerPlayer;
