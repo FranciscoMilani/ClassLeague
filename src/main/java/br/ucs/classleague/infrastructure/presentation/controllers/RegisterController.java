@@ -101,67 +101,13 @@ public class RegisterController {
 
         return true;
     }
-
+    
     private void resetTable(JTable table) {
         DefaultTableModel model = (DefaultTableModel) table.getModel();
         model.setRowCount(0);
         table.revalidate();
     }
-
-    public DefaultTableModel getTableModel(int rowCount) {
-        String[] columnHeaders = new String[]{"ID", "Nome", ""};
-
-        DefaultTableModel teamRegisterTableModel = new DefaultTableModel(columnHeaders, rowCount) {
-
-            // Apenas última coluna editável (checkbox)
-            public boolean isCellEditable(int row, int column) {
-                return column == 2;
-            }
-
-            // Cria colunas de tipos diferentes (última é Bool p/ checkbox)
-            public Class<?> getColumnClass(int column) {
-                if (column == 2) {
-                    return Boolean.class;
-                } else {
-                    return String.class;
-                }
-            }
-        };
-
-        return teamRegisterTableModel;
-    }
-
-    public void updateTeamTableCells(String number) {
-        List<Student> students;
-
-        try {
-            Integer n = Integer.parseInt(number);
-
-            if (n == frame.prevClassNumber) {
-                return;
-            }
-
-            students = new ArrayList<>();
-            frame.prevClassNumber = n;
-
-            resetTable(frame.jTeamRegisterStudentsTable);
-            students = classDao.getStudentsByClassNumber(n);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return;
-        }
-
-        DefaultTableModel model = getTeamRegisterTableModel(students.size());
-
-        frame.jTeamRegisterStudentsTable.setModel(model);
-
-        for (int i = 0; i < students.size(); i++) {
-            System.out.println(students.get(i).toString());
-            model.setValueAt(students.get(i).getId(), i, 0);
-            model.setValueAt(students.get(i).getName(), i, 1);
-        }
-    }
-
+    
     public DefaultTableModel getTeamRegisterTableModel(int rowCount) {
         String[] columnHeaders = new String[] {"ID", "Nome", ""};
 
@@ -184,7 +130,38 @@ public class RegisterController {
         return teamRegisterTableModel;
     }
     
-    public String[] showSportsNames() {
+    public void updateTeamTableCells(String number) {
+        List<Student> students;
+        
+        try {
+            Integer n = Integer.parseInt(number);
+            
+            if (n == frame.prevClassNumber) {
+                return; 
+            }
+            
+            students = new ArrayList<>();
+            frame.prevClassNumber = n;
+            
+            resetTable(frame.jTeamRegisterStudentsTable);
+            students = classDao.getStudentsByClassNumber(n);
+        } catch (Exception e){
+            e.printStackTrace();
+            return;
+        }
+        
+        DefaultTableModel model = getTeamRegisterTableModel(students.size());
+        
+        frame.jTeamRegisterStudentsTable.setModel(model);
+        
+        for (int i = 0; i < students.size(); i++) {
+            System.out.println(students.get(i).toString());
+            model.setValueAt(students.get(i).getId(), i, 0);
+            model.setValueAt(students.get(i).getName(), i, 1);
+        }
+    }
+    
+    public String[] showSportsNames(){
         return teamRegisterService.getSportsNames();
     }
 
@@ -261,7 +238,7 @@ public class RegisterController {
             JOptionPane.showMessageDialog(null, "Erro!", "Erro ao cadastrar treinador.", JOptionPane.ERROR_MESSAGE);
         }
     }
-
+    
     public void createTournament() {
         Tournament tournament = new Tournament(this.frame.tournamentNameField.getText(),
                 parseStringToLocalDate(this.frame.tournamentStartDateField.getText()),
