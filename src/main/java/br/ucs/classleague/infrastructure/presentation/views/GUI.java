@@ -166,42 +166,17 @@ public class GUI extends javax.swing.JFrame {
 
         mainTopPanel.setLayout(new java.awt.GridBagLayout());
 
-        mainInnerTopPanel.setLayout(new java.awt.GridBagLayout());
-
         jTournamentLabel.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
         jTournamentLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jTournamentLabel.setText("Torneios");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.gridwidth = 3;
-        gridBagConstraints.ipadx = 878;
-        gridBagConstraints.ipady = 87;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(6, 0, 0, 0);
-        mainInnerTopPanel.add(jTournamentLabel, gridBagConstraints);
 
         searchTournamentField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 searchTournamentFieldActionPerformed(evt);
             }
         });
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 1;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.ipadx = 104;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(19, 586, 0, 0);
-        mainInnerTopPanel.add(searchTournamentField, gridBagConstraints);
 
         searchTournamentBtn.setText("Pesquisar");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 2;
-        gridBagConstraints.gridy = 1;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(19, 12, 0, 0);
-        mainInnerTopPanel.add(searchTournamentBtn, gridBagConstraints);
 
         addTournamentBtn.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         addTournamentBtn.setText("+");
@@ -210,14 +185,33 @@ public class GUI extends javax.swing.JFrame {
                 addTournamentBtnActionPerformed(evt);
             }
         });
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 1;
-        gridBagConstraints.ipadx = 12;
-        gridBagConstraints.ipady = 12;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(6, 61, 6, 0);
-        mainInnerTopPanel.add(addTournamentBtn, gridBagConstraints);
+
+        javax.swing.GroupLayout mainInnerTopPanelLayout = new javax.swing.GroupLayout(mainInnerTopPanel);
+        mainInnerTopPanel.setLayout(mainInnerTopPanelLayout);
+        mainInnerTopPanelLayout.setHorizontalGroup(
+            mainInnerTopPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(mainInnerTopPanelLayout.createSequentialGroup()
+                .addGap(61, 61, 61)
+                .addComponent(addTournamentBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 626, Short.MAX_VALUE)
+                .addComponent(searchTournamentField, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(searchTournamentBtn)
+                .addGap(31, 31, 31))
+            .addComponent(jTournamentLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+        mainInnerTopPanelLayout.setVerticalGroup(
+            mainInnerTopPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, mainInnerTopPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jTournamentLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(mainInnerTopPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(searchTournamentField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(searchTournamentBtn)
+                    .addComponent(addTournamentBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap())
+        );
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
@@ -233,32 +227,6 @@ public class GUI extends javax.swing.JFrame {
             }
         });
         jTournamentSelectScrollPane.setViewportView(jTournamentSelectTable);
-        javax.swing.GroupLayout mainInnerTopPanelLayout = new javax.swing.GroupLayout(mainInnerTopPanel);
-        mainInnerTopPanel.setLayout(mainInnerTopPanelLayout);
-        mainInnerTopPanelLayout.setHorizontalGroup(
-            mainInnerTopPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(mainInnerTopPanelLayout.createSequentialGroup()
-                .addGap(61, 61, 61)
-                .addComponent(addTournamentBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 626, Short.MAX_VALUE)
-                .addComponent(searchTournamentField, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(searchTournamentBtn)
-                .addGap(31, 31, 31))
-            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
-        mainInnerTopPanelLayout.setVerticalGroup(
-            mainInnerTopPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, mainInnerTopPanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(mainInnerTopPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(searchTournamentField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(searchTournamentBtn)
-                    .addComponent(addTournamentBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap())
-        );
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
@@ -1208,9 +1176,6 @@ public class GUI extends javax.swing.JFrame {
     public javax.swing.JScrollPane jTeamRegisterStudentsScrollPane;
     public javax.swing.JTable jTeamRegisterStudentsTable;
     public javax.swing.JLabel jTeamRegisterTitle;
-    public javax.swing.JTextField jTextField1;
-    public javax.swing.JTextField jTextField2;
-    public javax.swing.JTextField jTextField3;
     public javax.swing.JLabel jTournamentLabel;
     public javax.swing.JScrollPane jTournamentSelectScrollPane;
     public javax.swing.JTable jTournamentSelectTable;

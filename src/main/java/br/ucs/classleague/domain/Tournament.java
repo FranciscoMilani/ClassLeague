@@ -22,7 +22,7 @@ public class Tournament implements Serializable{
 
     private LocalDate startTime;
     private LocalDate endTime;
-    private String sport;
+    private String sportString;
     private SportsEnum sportEnum;
 
     public Tournament() {
@@ -52,15 +52,15 @@ public class Tournament implements Serializable{
     }
 
     public String getSport() {
-        return sport;
+        return sportString;
     }
 
     public void setSport(Sport sport) {
         this.sportEnum = sport.getSport();
     }
     
-    public void setSport(String sport) {
-        this.sport = sport;
+    public void setSport(String sportString) {
+        this.sportString = sportString;
     }
 
     public LocalDate getStartTime() {
