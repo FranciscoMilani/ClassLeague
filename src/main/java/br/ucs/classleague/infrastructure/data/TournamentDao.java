@@ -6,8 +6,9 @@ package br.ucs.classleague.infrastructure.data;
 
 import br.ucs.classleague.domain.Tournament;
 
-public class TournamentDao extends GenericDAO<Tournament, Long>{
-        public TournamentDao() {
+public class TournamentDao extends GenericDAO<Tournament, Long> {
+
+    public TournamentDao() {
         super(Tournament.class);
     }
 }
