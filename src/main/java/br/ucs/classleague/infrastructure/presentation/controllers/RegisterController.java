@@ -74,15 +74,20 @@ public class RegisterController {
                 frame.jRegisterStudentMotherNameField.getText(), 
                 0, 
                 frame.jRegisterStudentNameField.getText(),
-                "",
-                LocalDate.now(), 
+                frame.jRegisterStudentSurnameField.getText(),
+                parseStringToLocalDate(frame.jRegisterStudentBirthdateField.getText()),
                 frame.jRegisterStudentGenderField.getText(),
-                "" ,
-                ""
+                frame.jRegisterStudentTelephoneField.getText(),
+                frame.jRegisterStudentCPFField.getText()
         );
         
-        studentDao.create(student);
-      
+        try {
+            studentDao.create(student);
+            clearStudentRegisterFields();
+            JOptionPane.showMessageDialog(null, "Sucesso!", "Aluno cadastrado com sucesso.", JOptionPane.INFORMATION_MESSAGE);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Erro!", "Erro ao cadastrar aluno.", JOptionPane.ERROR_MESSAGE);
+        }      
         return true;
     }
     
@@ -273,6 +278,18 @@ public class RegisterController {
         this.frame.coachCPFField.setText("");
         this.frame.coachBirthDateField.setText("");
         this.frame.coachSportField.setText("");
+    }
+    
+    public void clearStudentRegisterFields() {
+        this.frame.jRegisterStudentNameField.setText("");
+        this.frame.jRegisterStudentSurnameField.setText("");
+        this.frame.jRegisterStudentBirthdateField.setText("");
+        this.frame.jRegisterStudentCPFField.setText("");
+        this.frame.jRegisterStudentGenderField.setText("");
+        this.frame.jRegisterStudentFatherNameField.setText("");
+        this.frame.jRegisterStudentMotherNameField.setText("");
+        this.frame.jRegisterStudentTelephoneField.setText("");
+        //this.frame.jRegisterStudentClassComboBox.setSelectedIndex(-1);
     }
     
     public void updateComboBoxes(){
