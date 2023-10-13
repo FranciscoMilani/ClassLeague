@@ -86,6 +86,14 @@ public class GUI extends javax.swing.JFrame {
         jRegisterStudentMotherNameLabel = new javax.swing.JLabel();
         jRegisterStudentMotherNameField = new javax.swing.JTextField();
         JStudentRegisterButton = new javax.swing.JButton();
+        jRegisterStudentBirthdateLabel = new javax.swing.JLabel();
+        jRegisterStudentSurnameLabel = new javax.swing.JLabel();
+        jRegisterStudentSurnameField = new javax.swing.JTextField();
+        jRegisterStudentCPFLabel = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
+        jRegisterStudentTelephoneField = new javax.swing.JFormattedTextField();
+        jRegisterStudentBirthdateField = new javax.swing.JFormattedTextField();
+        jRegisterStudentCPFField = new javax.swing.JFormattedTextField();
         teamRegisterPanel = new javax.swing.JPanel();
         jTeamRegisterTitle = new javax.swing.JLabel();
         jInnerTeamRegisterPanel = new javax.swing.JPanel();
@@ -542,58 +550,25 @@ public class GUI extends javax.swing.JFrame {
 
         jStudentRegisterPanel.setBackground(new java.awt.Color(51, 51, 51));
         jStudentRegisterPanel.setBorder(javax.swing.BorderFactory.createEmptyBorder(10, 10, 10, 10));
-        jStudentRegisterPanel.setLayout(new java.awt.GridBagLayout());
+        jStudentRegisterPanel.setPreferredSize(new java.awt.Dimension(328, 480));
 
         jRegisterStudentNameLabel.setText("Nome");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
-        gridBagConstraints.weightx = 1.0;
-        gridBagConstraints.insets = new java.awt.Insets(0, 5, 0, 0);
-        jStudentRegisterPanel.add(jRegisterStudentNameLabel, gridBagConstraints);
 
         jRegisterStudentNameField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jRegisterStudentNameFieldActionPerformed(evt);
             }
         });
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 1;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_END;
-        jStudentRegisterPanel.add(jRegisterStudentNameField, gridBagConstraints);
 
         jRegisterStudentGenderLabel.setText("Sexo");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 2;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
-        gridBagConstraints.insets = new java.awt.Insets(10, 5, 0, 0);
-        jStudentRegisterPanel.add(jRegisterStudentGenderLabel, gridBagConstraints);
 
         jRegisterStudentGenderField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jRegisterStudentGenderFieldActionPerformed(evt);
             }
         });
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 3;
-        gridBagConstraints.gridwidth = java.awt.GridBagConstraints.REMAINDER;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_END;
-        gridBagConstraints.weightx = 1.0;
-        jStudentRegisterPanel.add(jRegisterStudentGenderField, gridBagConstraints);
 
         JRegisterStudentClassLabel.setText("Turma");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 8;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
-        gridBagConstraints.insets = new java.awt.Insets(10, 5, 0, 0);
-        jStudentRegisterPanel.add(JRegisterStudentClassLabel, gridBagConstraints);
 
         registerController.showClassesNumbers();
         jRegisterStudentClassComboBox.addActionListener(new java.awt.event.ActionListener() {
@@ -601,55 +576,22 @@ public class GUI extends javax.swing.JFrame {
                 jRegisterStudentClassComboBoxActionPerformed(evt);
             }
         });
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 9;
-        gridBagConstraints.gridwidth = java.awt.GridBagConstraints.REMAINDER;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
-        gridBagConstraints.weightx = 1.0;
-        jStudentRegisterPanel.add(jRegisterStudentClassComboBox, gridBagConstraints);
 
         JRegisterStudentFatherNameLabel.setText("Nome do pai");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 4;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
-        gridBagConstraints.insets = new java.awt.Insets(10, 5, 0, 0);
-        jStudentRegisterPanel.add(JRegisterStudentFatherNameLabel, gridBagConstraints);
 
         jRegisterStudentFatherNameField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jRegisterStudentFatherNameFieldActionPerformed(evt);
             }
         });
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 5;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
-        jStudentRegisterPanel.add(jRegisterStudentFatherNameField, gridBagConstraints);
 
         jRegisterStudentMotherNameLabel.setText("Nome da mãe");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 6;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
-        gridBagConstraints.insets = new java.awt.Insets(10, 5, 0, 0);
-        jStudentRegisterPanel.add(jRegisterStudentMotherNameLabel, gridBagConstraints);
 
         jRegisterStudentMotherNameField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jRegisterStudentMotherNameFieldActionPerformed(evt);
             }
         });
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 7;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
-        jStudentRegisterPanel.add(jRegisterStudentMotherNameField, gridBagConstraints);
 
         JStudentRegisterButton.setText("Cadastrar");
         JStudentRegisterButton.addActionListener(new java.awt.event.ActionListener() {
@@ -657,14 +599,127 @@ public class GUI extends javax.swing.JFrame {
                 JStudentRegisterButtonActionPerformed(evt);
             }
         });
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 10;
-        gridBagConstraints.ipadx = 20;
-        gridBagConstraints.ipady = 30;
-        gridBagConstraints.weightx = 1.0;
-        gridBagConstraints.insets = new java.awt.Insets(30, 0, 10, 0);
-        jStudentRegisterPanel.add(JStudentRegisterButton, gridBagConstraints);
+
+        jRegisterStudentBirthdateLabel.setText("Data de nascimento");
+
+        jRegisterStudentSurnameLabel.setText("Sobrenome");
+
+        jRegisterStudentCPFLabel.setText("CPF");
+
+        jLabel1.setText("Telefone");
+
+        try {
+            jRegisterStudentTelephoneField.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("(##)#########")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+
+        try {
+            jRegisterStudentBirthdateField.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##/##/####")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+        jRegisterStudentBirthdateField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jRegisterStudentBirthdateFieldActionPerformed(evt);
+            }
+        });
+
+        try {
+            jRegisterStudentCPFField.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("###.###.###-##")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+
+        javax.swing.GroupLayout jStudentRegisterPanelLayout = new javax.swing.GroupLayout(jStudentRegisterPanel);
+        jStudentRegisterPanel.setLayout(jStudentRegisterPanelLayout);
+        jStudentRegisterPanelLayout.setHorizontalGroup(
+            jStudentRegisterPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jStudentRegisterPanelLayout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addGroup(jStudentRegisterPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jStudentRegisterPanelLayout.createSequentialGroup()
+                        .addGroup(jStudentRegisterPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(JRegisterStudentFatherNameLabel)
+                            .addComponent(jRegisterStudentGenderLabel)
+                            .addComponent(jRegisterStudentGenderField, javax.swing.GroupLayout.PREFERRED_SIZE, 308, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jRegisterStudentFatherNameField, javax.swing.GroupLayout.PREFERRED_SIZE, 308, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jRegisterStudentMotherNameLabel)
+                            .addComponent(jRegisterStudentMotherNameField, javax.swing.GroupLayout.PREFERRED_SIZE, 308, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addContainerGap())
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jStudentRegisterPanelLayout.createSequentialGroup()
+                        .addComponent(jRegisterStudentClassComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 308, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap())
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jStudentRegisterPanelLayout.createSequentialGroup()
+                        .addComponent(JStudentRegisterButton, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(105, 105, 105))))
+            .addGroup(jStudentRegisterPanelLayout.createSequentialGroup()
+                .addGroup(jStudentRegisterPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jStudentRegisterPanelLayout.createSequentialGroup()
+                        .addGroup(jStudentRegisterPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jRegisterStudentBirthdateLabel)
+                            .addComponent(jRegisterStudentBirthdateField, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(jStudentRegisterPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jRegisterStudentCPFField, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jRegisterStudentCPFLabel)))
+                    .addGroup(jStudentRegisterPanelLayout.createSequentialGroup()
+                        .addGroup(jStudentRegisterPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jRegisterStudentNameField, javax.swing.GroupLayout.PREFERRED_SIZE, 308, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jRegisterStudentNameLabel)
+                            .addComponent(jLabel1)
+                            .addComponent(jRegisterStudentSurnameLabel)
+                            .addComponent(jRegisterStudentSurnameField, javax.swing.GroupLayout.PREFERRED_SIZE, 308, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(JRegisterStudentClassLabel)
+                            .addComponent(jRegisterStudentTelephoneField, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
+        );
+        jStudentRegisterPanelLayout.setVerticalGroup(
+            jStudentRegisterPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jStudentRegisterPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jRegisterStudentNameLabel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jRegisterStudentNameField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jRegisterStudentSurnameLabel)
+                .addGap(4, 4, 4)
+                .addComponent(jRegisterStudentSurnameField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jStudentRegisterPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jStudentRegisterPanelLayout.createSequentialGroup()
+                        .addGroup(jStudentRegisterPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jRegisterStudentBirthdateLabel)
+                            .addComponent(jRegisterStudentCPFLabel))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jRegisterStudentBirthdateField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jStudentRegisterPanelLayout.createSequentialGroup()
+                        .addGap(22, 22, 22)
+                        .addComponent(jRegisterStudentCPFField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jRegisterStudentGenderLabel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jRegisterStudentGenderField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(JRegisterStudentFatherNameLabel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jRegisterStudentFatherNameField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jRegisterStudentMotherNameLabel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jRegisterStudentMotherNameField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jRegisterStudentTelephoneField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(JRegisterStudentClassLabel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jRegisterStudentClassComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(JStudentRegisterButton, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(16, Short.MAX_VALUE))
+        );
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
@@ -1114,6 +1169,10 @@ public class GUI extends javax.swing.JFrame {
         this.registerController.createTournament();
     }//GEN-LAST:event_tournamentRegisterButtonActionPerformed
 
+    private void jRegisterStudentBirthdateFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRegisterStudentBirthdateFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jRegisterStudentBirthdateFieldActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public javax.swing.JButton JCoachRegisterButton1;
@@ -1149,11 +1208,16 @@ public class GUI extends javax.swing.JFrame {
     public javax.swing.JComboBox<SchoolClass.SchoolShift> jClassShift;
     public javax.swing.JLabel jCoachRegisterTitle1;
     public javax.swing.JPanel jInnerTeamRegisterPanel;
+    public javax.swing.JLabel jLabel1;
     public javax.swing.JLabel jLabel14;
     public javax.swing.JLabel jLabel15;
     public javax.swing.JLabel jLabel16;
     public javax.swing.JLabel jLabel17;
     public javax.swing.JPanel jPanel5;
+    public javax.swing.JFormattedTextField jRegisterStudentBirthdateField;
+    public javax.swing.JLabel jRegisterStudentBirthdateLabel;
+    public javax.swing.JFormattedTextField jRegisterStudentCPFField;
+    public javax.swing.JLabel jRegisterStudentCPFLabel;
     public javax.swing.JComboBox<String> jRegisterStudentClassComboBox;
     public javax.swing.JTextField jRegisterStudentFatherNameField;
     public javax.swing.JTextField jRegisterStudentGenderField;
@@ -1162,6 +1226,9 @@ public class GUI extends javax.swing.JFrame {
     public javax.swing.JLabel jRegisterStudentMotherNameLabel;
     public javax.swing.JTextField jRegisterStudentNameField;
     public javax.swing.JLabel jRegisterStudentNameLabel;
+    public javax.swing.JTextField jRegisterStudentSurnameField;
+    public javax.swing.JLabel jRegisterStudentSurnameLabel;
+    public javax.swing.JFormattedTextField jRegisterStudentTelephoneField;
     public javax.swing.JPanel jStudentRegisterPanel;
     public javax.swing.JLabel jStudentRegisterTitle;
     public javax.swing.JTextField jTeamRegisterAcronymField;
