@@ -217,7 +217,12 @@ public class GUI extends javax.swing.JFrame {
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         mainTopPanel.add(mainInnerTopPanel, gridBagConstraints);
 
-        jTournamentSelectTable.setModel(tournamentController.getTournamentListTableModel(0));
+        jTournamentSelectTable.setModel(tournamentController.updateTournamentListCells());
+        jTournamentSelectTable.setRowHeight(40);
+        jTournamentSelectTable.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        jTournamentSelectTable.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        jTournamentSelectTable.setShowGrid(false);
+        jTournamentSelectTable.setShowHorizontalLines(true);
         jTournamentSelectTable.getSelectionModel().addListSelectionListener(new ListSelectionListener(){
             @Override
             public void valueChanged(ListSelectionEvent e){

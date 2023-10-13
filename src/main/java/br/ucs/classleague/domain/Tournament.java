@@ -32,7 +32,7 @@ public class Tournament implements Serializable{
         this.name = name;
         this.startTime = startTime;
         this.endTime = endTime;
-        this.sportEnum = sportEnum;
+        this.sportString = sport;
     }
 
     public Long getId() {

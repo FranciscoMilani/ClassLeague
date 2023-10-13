@@ -8,12 +8,14 @@ public class DaoFactory {
     private static StudentDao studentDao;
     private static TeamDao teamDao;
     private static StudentTeamDao studentTeamDao;
+    private static TournamentDao tournamentDao;
     
     static {
         classDao = new ClassDao();
         studentDao = new StudentDao();
         teamDao = new TeamDao();
         studentTeamDao = new StudentTeamDao();
+        tournamentDao = new TournamentDao();
     }
     
     public static ClassDao getClassDao() {
@@ -30,5 +32,9 @@ public class DaoFactory {
     
     public static StudentTeamDao getStudentTeamDao(){
         return studentTeamDao;
+    }
+    
+    public static TournamentDao getTournamentDao() {
+        return tournamentDao;
     }
 }
