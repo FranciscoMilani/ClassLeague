@@ -432,6 +432,11 @@ public class GUI extends javax.swing.JFrame {
         });
 
         searchTournamentBtn.setText("Pesquisar");
+        searchTournamentBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                searchTournamentBtnActionPerformed(evt);
+            }
+        });
 
         addTournamentBtn.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         addTournamentBtn.setText("+");
@@ -448,11 +453,11 @@ public class GUI extends javax.swing.JFrame {
             .addGroup(mainInnerTopPanelLayout.createSequentialGroup()
                 .addGap(61, 61, 61)
                 .addComponent(addTournamentBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 618, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 593, Short.MAX_VALUE)
                 .addComponent(searchTournamentField, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(searchTournamentBtn)
-                .addGap(31, 31, 31))
+                .addGap(56, 56, 56))
             .addComponent(jTournamentLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         mainInnerTopPanelLayout.setVerticalGroup(
@@ -472,7 +477,8 @@ public class GUI extends javax.swing.JFrame {
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         mainTopPanel.add(mainInnerTopPanel, gridBagConstraints);
 
-        jTournamentSelectTable.setModel(tournamentController.updateTournamentListCells());
+        jTournamentSelectTable.setModel(tournamentController.getTournamentListTableModel(0));
+        tournamentController.getFullTableModel();
         jTournamentSelectTable.setRowHeight(40);
         jTournamentSelectTable.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         jTournamentSelectTable.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
@@ -1434,11 +1440,16 @@ public class GUI extends javax.swing.JFrame {
 
     private void tournamentDialogWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_tournamentDialogWindowActivated
         tournamentController.fillTournamentData();
+        cl.first(tournamentDialogMainPanel);
     }//GEN-LAST:event_tournamentDialogWindowActivated
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         cl.show(tournamentDialogMainPanel, "card1");
     }//GEN-LAST:event_jButton5ActionPerformed
+
+    private void searchTournamentBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchTournamentBtnActionPerformed
+        tournamentController.getQueriedTableModel(searchTournamentField.getText());
+    }//GEN-LAST:event_searchTournamentBtnActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

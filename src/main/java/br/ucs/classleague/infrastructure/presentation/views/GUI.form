@@ -511,11 +511,11 @@
                           <Group type="102" attributes="0">
                               <EmptySpace min="-2" pref="61" max="-2" attributes="0"/>
                               <Component id="addTournamentBtn" min="-2" pref="48" max="-2" attributes="0"/>
-                              <EmptySpace pref="618" max="32767" attributes="0"/>
+                              <EmptySpace pref="593" max="32767" attributes="0"/>
                               <Component id="searchTournamentField" min="-2" pref="172" max="-2" attributes="0"/>
                               <EmptySpace type="unrelated" max="-2" attributes="0"/>
                               <Component id="searchTournamentBtn" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace min="-2" pref="31" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="56" max="-2" attributes="0"/>
                           </Group>
                           <Component id="jTournamentLabel" alignment="0" max="32767" attributes="0"/>
                       </Group>
@@ -555,6 +555,9 @@
                       <Properties>
                         <Property name="text" type="java.lang.String" value="Pesquisar"/>
                       </Properties>
+                      <Events>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="searchTournamentBtnActionPerformed"/>
+                      </Events>
                     </Component>
                     <Component class="javax.swing.JButton" name="addTournamentBtn">
                       <Properties>
@@ -583,8 +586,8 @@
                   <SubComponents>
                     <Component class="javax.swing.JTable" name="jTournamentSelectTable">
                       <Properties>
-                        <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-                          <Connection code="tournamentController.updateTournamentListCells()" type="code"/>
+                        <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.RADConnectionPropertyEditor" postCode="tournamentController.getFullTableModel();">
+                          <Connection code="tournamentController.getTournamentListTableModel(0)" type="code"/>
                         </Property>
                         <Property name="rowHeight" type="int" value="40"/>
                         <Property name="selectionMode" type="int" value="0"/>

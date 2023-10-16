@@ -4,7 +4,6 @@ import br.ucs.classleague.domain.Tournament;
 import br.ucs.classleague.infrastructure.data.DaoFactory;
 import br.ucs.classleague.infrastructure.data.TournamentDao;
 import br.ucs.classleague.infrastructure.presentation.views.GUI;
-import java.util.ArrayList;
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
 
@@ -29,33 +28,33 @@ public class TournamentController {
         }
     }
     
-    public DefaultTableModel updateTournamentListCells() {
-        List<Tournament> tournaments = new ArrayList<>();
-        
+    public DefaultTableModel getFullTableModel(){
         try {
-            tournaments = tournamentDao.findAll();
+            List<Tournament> tournaments = tournamentDao.findAll();
+            return fillTournamentListTableData(tournaments);
         } catch (Exception e){  
             e.printStackTrace();
             return getTournamentListTableModel(0);
         }
+    }
+    
+    public DefaultTableModel getQueriedTableModel(String name) {
+        UtilityController.resetTable(frame.jTournamentSelectTable);
+        name = name.trim();
         
-        DefaultTableModel model = getTournamentListTableModel(tournaments.size());
-                            
-        for (int i = 0; i < tournaments.size(); i++) {
-            model.setValueAt(tournaments.get(i).getId(), i, 0);
-            model.setValueAt(tournaments.get(i).getSport(), i, 1);
-            model.setValueAt(tournaments.get(i).getName(), i, 2);
-            model.setValueAt(tournaments.get(i).getStartTime(), i, 3);
+        try {
+            List<Tournament> tournaments = tournamentDao.findByName(name);
+            return fillTournamentListTableData(tournaments);
+        } catch (Exception e){  
+            e.printStackTrace();
+            return getTournamentListTableModel(0);
         }
-        
-        return model;
     }
         
-    private DefaultTableModel getTournamentListTableModel(int rowCount) {
+    public DefaultTableModel getTournamentListTableModel(int rowCount) {
         String[] columnHeaders = new String[] {"ID", "Esporte", "Nome", "Data de início"};
 
-        DefaultTableModel tournamentListModel = new DefaultTableModel(columnHeaders, rowCount) {
-            
+        DefaultTableModel tournamentListModel = new DefaultTableModel(columnHeaders, rowCount) {           
             @Override
             public boolean isCellEditable(int row, int column) {
                 return false;
@@ -63,5 +62,20 @@ public class TournamentController {
         };
         
         return tournamentListModel;
+    }
+    
+    private DefaultTableModel fillTournamentListTableData(List<Tournament> tournaments) {
+        DefaultTableModel model = (DefaultTableModel) frame.jTournamentSelectTable.getModel();
+                            
+        for (int i = 0; i < tournaments.size(); i++) {
+            model.addRow(new Object[]{ 
+                tournaments.get(i).getId(), 
+                tournaments.get(i).getSport(), 
+                tournaments.get(i).getName(),
+                tournaments.get(i).getStartTime()
+            });
+        }
+        
+        return model;
     }
 }
