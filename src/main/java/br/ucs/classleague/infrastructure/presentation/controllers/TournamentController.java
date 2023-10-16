@@ -39,7 +39,7 @@ public class TournamentController {
     }
     
     public DefaultTableModel getQueriedTableModel(String name) {
-        UtilityController.resetTable(frame.jTournamentSelectTable);
+        ControllerUtilities.resetTable(frame.jTournamentSelectTable);
         name = name.trim();
         
         try {

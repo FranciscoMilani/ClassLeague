@@ -3,7 +3,7 @@ package br.ucs.classleague.infrastructure.presentation.controllers;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
-public class UtilityController {
+public class ControllerUtilities {
     
     public static void resetTable(JTable table) {
         DefaultTableModel model = (DefaultTableModel) table.getModel();
