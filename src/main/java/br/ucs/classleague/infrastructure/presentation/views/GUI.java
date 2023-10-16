@@ -3,18 +3,22 @@ package br.ucs.classleague.infrastructure.presentation.views;
 import br.ucs.classleague.domain.SchoolClass;
 import br.ucs.classleague.infrastructure.presentation.controllers.RegisterController;
 import br.ucs.classleague.infrastructure.presentation.controllers.TournamentController;
+import java.awt.CardLayout;
 import java.awt.event.ActionEvent;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 public class GUI extends javax.swing.JFrame {
     
-    private RegisterController registerController = new RegisterController(this);
-    private TournamentController tournamentController = new TournamentController(this);
+    private RegisterController registerController;
+    private TournamentController tournamentController;
     
     public int prevClassNumber = -1;
+    private CardLayout cl = new CardLayout();
 
     public GUI() {
+        this.registerController = new RegisterController(this);
+        this.tournamentController = new TournamentController(this);   
         initComponents();
     }
 
@@ -28,8 +32,30 @@ public class GUI extends javax.swing.JFrame {
     private void initComponents() {
         java.awt.GridBagConstraints gridBagConstraints;
 
-        studentRegisterDialog = new javax.swing.JDialog();
-        classRegisterDialog = new javax.swing.JDialog();
+        tournamentDialog = new javax.swing.JDialog();
+        tournamentDialogMainPanel = new javax.swing.JPanel();
+        tournamentMainPanel = new javax.swing.JPanel();
+        tournamentInfoPanel = new javax.swing.JPanel();
+        tournamentDialogInfoTitleLabel = new javax.swing.JLabel();
+        tournamentDialogSportTypeLabel = new javax.swing.JLabel();
+        tournamentDialogPhaseLabel = new javax.swing.JLabel();
+        tournamentDialogEndDateField = new javax.swing.JLabel();
+        tournamentDialogStartDateField = new javax.swing.JLabel();
+        tournamentDialogInfoIcon = new javax.swing.JLabel();
+        tournamentDialogSportTypeInfoData = new javax.swing.JLabel();
+        tournamentDialogPhaseInfoData = new javax.swing.JLabel();
+        tournamentDialogStartDateInfoData = new javax.swing.JLabel();
+        tournamentDialogEndInfoData = new javax.swing.JLabel();
+        tournamentDialogNameData = new javax.swing.JLabel();
+        tournamentMatchPanel = new javax.swing.JPanel();
+        tournamentNextMatchesTable = new javax.swing.JLabel();
+        tournamentMatchesTableScrollPane = new javax.swing.JScrollPane();
+        tournamentMatchesTable = new javax.swing.JTable();
+        tournamentSidePanel = new javax.swing.JPanel();
+        viewTeamsButton = new javax.swing.JButton();
+        startNewMatchButton = new javax.swing.JButton();
+        matchMainPanel = new javax.swing.JPanel();
+        jButton5 = new javax.swing.JButton();
         mainTabbedPane = new javax.swing.JTabbedPane();
         mainPanel = new javax.swing.JPanel();
         mainTopPanel = new javax.swing.JPanel();
@@ -127,35 +153,256 @@ public class GUI extends javax.swing.JFrame {
         coachCPFField = new javax.swing.JFormattedTextField();
         coachPhoneField = new javax.swing.JFormattedTextField();
 
-        studentRegisterDialog.setAlwaysOnTop(true);
-        studentRegisterDialog.setMinimumSize(new java.awt.Dimension(500, 500));
-        studentRegisterDialog.setModal(true);
-        studentRegisterDialog.setSize(new java.awt.Dimension(500, 500));
+        tournamentDialog.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        tournamentDialog.setTitle("Torneios");
+        tournamentDialog.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        tournamentDialog.setMinimumSize(new java.awt.Dimension(1008, 760));
+        tournamentDialog.setSize(new java.awt.Dimension(1008, 760));
+        tournamentDialog.addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowActivated(java.awt.event.WindowEvent evt) {
+                tournamentDialogWindowActivated(evt);
+            }
+        });
 
-        javax.swing.GroupLayout studentRegisterDialogLayout = new javax.swing.GroupLayout(studentRegisterDialog.getContentPane());
-        studentRegisterDialog.getContentPane().setLayout(studentRegisterDialogLayout);
-        studentRegisterDialogLayout.setHorizontalGroup(
-            studentRegisterDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 500, Short.MAX_VALUE)
+        tournamentDialogMainPanel.setLayout(new java.awt.CardLayout());
+        tournamentDialogMainPanel.setLayout(cl);
+
+        tournamentMainPanel.setPreferredSize(new java.awt.Dimension(1024, 768));
+
+        tournamentInfoPanel.setBackground(java.awt.Color.darkGray);
+        tournamentInfoPanel.setPreferredSize(new java.awt.Dimension(693, 212));
+
+        tournamentDialogInfoTitleLabel.setFont(new java.awt.Font("Segoe UI Semibold", 0, 24)); // NOI18N
+        tournamentDialogInfoTitleLabel.setText("Informações");
+
+        tournamentDialogSportTypeLabel.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        tournamentDialogSportTypeLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/info-24.png"))); // NOI18N
+        tournamentDialogSportTypeLabel.setText("Tipo do esporte:");
+
+        tournamentDialogPhaseLabel.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        tournamentDialogPhaseLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/info-24.png"))); // NOI18N
+        tournamentDialogPhaseLabel.setText("Fase da competição:");
+
+        tournamentDialogEndDateField.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        tournamentDialogEndDateField.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/info-24.png"))); // NOI18N
+        tournamentDialogEndDateField.setText("Data de fim: ");
+
+        tournamentDialogStartDateField.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        tournamentDialogStartDateField.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/info-24.png"))); // NOI18N
+        tournamentDialogStartDateField.setText("Data de início: ");
+
+        tournamentDialogInfoIcon.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        tournamentDialogInfoIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/info-24.png"))); // NOI18N
+
+        tournamentDialogSportTypeInfoData.setText("jLabel8");
+
+        tournamentDialogPhaseInfoData.setText("jLabel8");
+
+        tournamentDialogStartDateInfoData.setText("jLabel8");
+
+        tournamentDialogEndInfoData.setText("jLabel8");
+
+        tournamentDialogNameData.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        tournamentDialogNameData.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        tournamentDialogNameData.setText("jLabel2");
+
+        javax.swing.GroupLayout tournamentInfoPanelLayout = new javax.swing.GroupLayout(tournamentInfoPanel);
+        tournamentInfoPanel.setLayout(tournamentInfoPanelLayout);
+        tournamentInfoPanelLayout.setHorizontalGroup(
+            tournamentInfoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(tournamentInfoPanelLayout.createSequentialGroup()
+                .addGap(30, 30, 30)
+                .addGroup(tournamentInfoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(tournamentInfoPanelLayout.createSequentialGroup()
+                        .addGroup(tournamentInfoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(tournamentDialogPhaseLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 157, Short.MAX_VALUE)
+                            .addComponent(tournamentDialogSportTypeLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(tournamentInfoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(tournamentDialogPhaseInfoData, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(tournamentDialogSportTypeInfoData, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(tournamentDialogInfoTitleLabel))
+                .addGap(100, 100, 100)
+                .addGroup(tournamentInfoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(tournamentInfoPanelLayout.createSequentialGroup()
+                        .addGroup(tournamentInfoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(tournamentInfoPanelLayout.createSequentialGroup()
+                                .addComponent(tournamentDialogEndDateField, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(tournamentDialogEndInfoData, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(tournamentInfoPanelLayout.createSequentialGroup()
+                                .addComponent(tournamentDialogStartDateField)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(tournamentDialogStartDateInfoData, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addContainerGap(165, Short.MAX_VALUE))
+                    .addGroup(tournamentInfoPanelLayout.createSequentialGroup()
+                        .addComponent(tournamentDialogNameData, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(tournamentDialogInfoIcon)
+                        .addGap(31, 31, 31))))
         );
-        studentRegisterDialogLayout.setVerticalGroup(
-            studentRegisterDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 500, Short.MAX_VALUE)
+        tournamentInfoPanelLayout.setVerticalGroup(
+            tournamentInfoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(tournamentInfoPanelLayout.createSequentialGroup()
+                .addGap(30, 30, 30)
+                .addGroup(tournamentInfoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(tournamentInfoPanelLayout.createSequentialGroup()
+                        .addComponent(tournamentDialogNameData, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(3, 3, 3))
+                    .addComponent(tournamentDialogInfoIcon, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(tournamentDialogInfoTitleLabel))
+                .addGap(26, 26, 26)
+                .addGroup(tournamentInfoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(tournamentDialogSportTypeLabel)
+                    .addComponent(tournamentDialogStartDateField)
+                    .addComponent(tournamentDialogSportTypeInfoData, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(tournamentDialogStartDateInfoData, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(40, 40, 40)
+                .addGroup(tournamentInfoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(tournamentDialogPhaseLabel)
+                    .addComponent(tournamentDialogEndDateField)
+                    .addComponent(tournamentDialogPhaseInfoData, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(tournamentDialogEndInfoData, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(36, Short.MAX_VALUE))
         );
 
-        classRegisterDialog.setAlwaysOnTop(true);
-        classRegisterDialog.setMinimumSize(new java.awt.Dimension(500, 500));
-        classRegisterDialog.setSize(new java.awt.Dimension(500, 500));
+        tournamentMatchPanel.setBackground(java.awt.Color.darkGray);
+        tournamentMatchPanel.setPreferredSize(new java.awt.Dimension(693, 417));
 
-        javax.swing.GroupLayout classRegisterDialogLayout = new javax.swing.GroupLayout(classRegisterDialog.getContentPane());
-        classRegisterDialog.getContentPane().setLayout(classRegisterDialogLayout);
-        classRegisterDialogLayout.setHorizontalGroup(
-            classRegisterDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 500, Short.MAX_VALUE)
+        tournamentNextMatchesTable.setFont(new java.awt.Font("Segoe UI Semibold", 0, 24)); // NOI18N
+        tournamentNextMatchesTable.setText("Próximas partidas");
+
+        tournamentMatchesTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        tournamentMatchesTableScrollPane.setViewportView(tournamentMatchesTable);
+
+        javax.swing.GroupLayout tournamentMatchPanelLayout = new javax.swing.GroupLayout(tournamentMatchPanel);
+        tournamentMatchPanel.setLayout(tournamentMatchPanelLayout);
+        tournamentMatchPanelLayout.setHorizontalGroup(
+            tournamentMatchPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(tournamentMatchPanelLayout.createSequentialGroup()
+                .addGap(30, 30, 30)
+                .addGroup(tournamentMatchPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(tournamentNextMatchesTable, javax.swing.GroupLayout.PREFERRED_SIZE, 651, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(tournamentMatchesTableScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 651, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(29, Short.MAX_VALUE))
         );
-        classRegisterDialogLayout.setVerticalGroup(
-            classRegisterDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 500, Short.MAX_VALUE)
+        tournamentMatchPanelLayout.setVerticalGroup(
+            tournamentMatchPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(tournamentMatchPanelLayout.createSequentialGroup()
+                .addGap(30, 30, 30)
+                .addComponent(tournamentNextMatchesTable)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(tournamentMatchesTableScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 320, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(29, Short.MAX_VALUE))
+        );
+
+        tournamentSidePanel.setBackground(java.awt.Color.darkGray);
+
+        viewTeamsButton.setText("Visualizar Times");
+
+        startNewMatchButton.setText("<html><body style='text-align: center'>Iniciar <br> nova partida <br></body></html>");
+        startNewMatchButton.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        startNewMatchButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        startNewMatchButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                startNewMatchButtonActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout tournamentSidePanelLayout = new javax.swing.GroupLayout(tournamentSidePanel);
+        tournamentSidePanel.setLayout(tournamentSidePanelLayout);
+        tournamentSidePanelLayout.setHorizontalGroup(
+            tournamentSidePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, tournamentSidePanelLayout.createSequentialGroup()
+                .addContainerGap(45, Short.MAX_VALUE)
+                .addGroup(tournamentSidePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(startNewMatchButton, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(viewTeamsButton, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(42, 42, 42))
+        );
+        tournamentSidePanelLayout.setVerticalGroup(
+            tournamentSidePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, tournamentSidePanelLayout.createSequentialGroup()
+                .addGap(66, 66, 66)
+                .addComponent(startNewMatchButton, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(viewTeamsButton, javax.swing.GroupLayout.PREFERRED_SIZE, 245, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(91, 91, 91))
+        );
+
+        javax.swing.GroupLayout tournamentMainPanelLayout = new javax.swing.GroupLayout(tournamentMainPanel);
+        tournamentMainPanel.setLayout(tournamentMainPanelLayout);
+        tournamentMainPanelLayout.setHorizontalGroup(
+            tournamentMainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(tournamentMainPanelLayout.createSequentialGroup()
+                .addGap(30, 30, 30)
+                .addGroup(tournamentMainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(tournamentMatchPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 710, Short.MAX_VALUE)
+                    .addComponent(tournamentInfoPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 710, Short.MAX_VALUE))
+                .addGap(30, 30, 30)
+                .addComponent(tournamentSidePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(27, Short.MAX_VALUE))
+        );
+        tournamentMainPanelLayout.setVerticalGroup(
+            tournamentMainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(tournamentMainPanelLayout.createSequentialGroup()
+                .addGap(30, 30, 30)
+                .addGroup(tournamentMainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(tournamentSidePanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(tournamentMainPanelLayout.createSequentialGroup()
+                        .addComponent(tournamentInfoPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(30, 30, 30)
+                        .addComponent(tournamentMatchPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap())
+        );
+
+        tournamentDialogMainPanel.add(tournamentMainPanel, "card1");
+
+        jButton5.setText("VOLTAR");
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout matchMainPanelLayout = new javax.swing.GroupLayout(matchMainPanel);
+        matchMainPanel.setLayout(matchMainPanelLayout);
+        matchMainPanelLayout.setHorizontalGroup(
+            matchMainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(matchMainPanelLayout.createSequentialGroup()
+                .addGap(416, 416, 416)
+                .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(379, Short.MAX_VALUE))
+        );
+        matchMainPanelLayout.setVerticalGroup(
+            matchMainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(matchMainPanelLayout.createSequentialGroup()
+                .addGap(293, 293, 293)
+                .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(252, Short.MAX_VALUE))
+        );
+
+        tournamentDialogMainPanel.add(matchMainPanel, "card2");
+
+        javax.swing.GroupLayout tournamentDialogLayout = new javax.swing.GroupLayout(tournamentDialog.getContentPane());
+        tournamentDialog.getContentPane().setLayout(tournamentDialogLayout);
+        tournamentDialogLayout.setHorizontalGroup(
+            tournamentDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(tournamentDialogMainPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+        );
+        tournamentDialogLayout.setVerticalGroup(
+            tournamentDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(tournamentDialogMainPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -201,7 +448,7 @@ public class GUI extends javax.swing.JFrame {
             .addGroup(mainInnerTopPanelLayout.createSequentialGroup()
                 .addGap(61, 61, 61)
                 .addComponent(addTournamentBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 626, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 618, Short.MAX_VALUE)
                 .addComponent(searchTournamentField, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(searchTournamentBtn)
@@ -234,8 +481,11 @@ public class GUI extends javax.swing.JFrame {
         jTournamentSelectTable.getSelectionModel().addListSelectionListener(new ListSelectionListener(){
             @Override
             public void valueChanged(ListSelectionEvent e){
-                if (!e.getValueIsAdjusting()){
-                    System.out.println(jTournamentSelectTable.getSelectedRow());
+                if (!e.getValueIsAdjusting() && jTournamentSelectTable.getSelectedRow() != -1){
+                    Long tournamentId = Long.parseLong(jTournamentSelectTable.getValueAt(jTournamentSelectTable.getSelectedRow(), 0).toString());
+                    jTournamentSelectTable.getSelectionModel().clearSelection();
+                    TournamentController.curTournamentId = tournamentId;
+                    tournamentDialog.setVisible(true);
                 }
             }
         });
@@ -723,7 +973,7 @@ public class GUI extends javax.swing.JFrame {
                 .addComponent(jRegisterStudentClassComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(JStudentRegisterButton, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(16, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -1178,6 +1428,18 @@ public class GUI extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jRegisterStudentBirthdateFieldActionPerformed
 
+    private void startNewMatchButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_startNewMatchButtonActionPerformed
+        cl.show(tournamentDialogMainPanel, "card2");
+    }//GEN-LAST:event_startNewMatchButtonActionPerformed
+
+    private void tournamentDialogWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_tournamentDialogWindowActivated
+        tournamentController.fillTournamentData();
+    }//GEN-LAST:event_tournamentDialogWindowActivated
+
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        cl.show(tournamentDialogMainPanel, "card1");
+    }//GEN-LAST:event_jButton5ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public javax.swing.JButton JCoachRegisterButton1;
@@ -1186,7 +1448,6 @@ public class GUI extends javax.swing.JFrame {
     public javax.swing.JButton JStudentRegisterButton;
     public javax.swing.JButton addTournamentBtn;
     public javax.swing.JPanel classRegister;
-    public javax.swing.JDialog classRegisterDialog;
     public javax.swing.JFormattedTextField coachBirthDateField;
     public javax.swing.JLabel coachBirthDateLabel;
     public javax.swing.JFormattedTextField coachCPFField;
@@ -1206,6 +1467,7 @@ public class GUI extends javax.swing.JFrame {
     public javax.swing.JButton jButton1;
     public javax.swing.JButton jButton2;
     public javax.swing.JButton jButton3;
+    public javax.swing.JButton jButton5;
     public javax.swing.JButton jButton8;
     public javax.swing.JComboBox<SchoolClass.EducationalCycle> jClassCycle;
     public javax.swing.JTextField jClassNameField;
@@ -1258,25 +1520,48 @@ public class GUI extends javax.swing.JFrame {
     public javax.swing.JSeparator mainSeparator;
     public javax.swing.JTabbedPane mainTabbedPane;
     public javax.swing.JPanel mainTopPanel;
+    public javax.swing.JPanel matchMainPanel;
     public javax.swing.JButton searchTournamentBtn;
     public javax.swing.JTextField searchTournamentField;
+    public javax.swing.JButton startNewMatchButton;
     public javax.swing.JPanel studentRegister2;
-    public javax.swing.JDialog studentRegisterDialog;
     public javax.swing.JPanel teamRegisterPanel;
     public javax.swing.JLabel title;
     public javax.swing.JLabel title4;
+    public javax.swing.JDialog tournamentDialog;
+    public javax.swing.JLabel tournamentDialogEndDateField;
+    public javax.swing.JLabel tournamentDialogEndInfoData;
+    public javax.swing.JLabel tournamentDialogInfoIcon;
+    public javax.swing.JLabel tournamentDialogInfoTitleLabel;
+    public javax.swing.JPanel tournamentDialogMainPanel;
+    public javax.swing.JLabel tournamentDialogNameData;
+    public javax.swing.JLabel tournamentDialogPhaseInfoData;
+    public javax.swing.JLabel tournamentDialogPhaseLabel;
+    public javax.swing.JLabel tournamentDialogSportTypeInfoData;
+    public javax.swing.JLabel tournamentDialogSportTypeLabel;
+    public javax.swing.JLabel tournamentDialogStartDateField;
+    public javax.swing.JLabel tournamentDialogStartDateInfoData;
     public javax.swing.JFormattedTextField tournamentEndDateField;
     public javax.swing.JLabel tournamentEndDateLabel;
+    public javax.swing.JPanel tournamentInfoPanel;
+    public javax.swing.JPanel tournamentMainPanel;
+    public javax.swing.JPanel tournamentMatchPanel;
+    public javax.swing.JTable tournamentMatchesTable;
+    public javax.swing.JScrollPane tournamentMatchesTableScrollPane;
     public javax.swing.JTextField tournamentNameField;
     public javax.swing.JLabel tournamentNameLabel;
+    public javax.swing.JLabel tournamentNextMatchesTable;
     public javax.swing.JPanel tournamentRegister;
     public javax.swing.JButton tournamentRegisterButton;
     public javax.swing.JPanel tournamentRegisterPanel;
     public java.awt.ScrollPane tournamentScrollPane;
+    public javax.swing.JPanel tournamentSidePanel;
     public javax.swing.JComboBox<String> tournamentSportComboBox;
     public javax.swing.JLabel tournamentSportLabel;
     public javax.swing.JFormattedTextField tournamentStartDateField;
     public javax.swing.JLabel tournamentStartDateLabel;
     public javax.swing.JLabel tournamentTeamsLabel;
+    public javax.swing.JButton viewTeamsButton;
     // End of variables declaration//GEN-END:variables
+
 }

@@ -12,9 +12,21 @@ public class TournamentController {
     
     private GUI frame;
     private TournamentDao tournamentDao = DaoFactory.getTournamentDao();
+    public static Long curTournamentId = -1L;
     
     public TournamentController(GUI frame) {
         this.frame = frame;
+    }
+    
+    public void fillTournamentData() {
+        if (curTournamentId != -1){
+            Tournament t = tournamentDao.findById(curTournamentId).get();
+            
+            frame.tournamentDialogNameData.setText(t.getName());
+            frame.tournamentDialogSportTypeInfoData.setText(t.getSport());
+            frame.tournamentDialogStartDateInfoData.setText(t.getStartTime().toString());
+            frame.tournamentDialogEndInfoData.setText(t.getEndTime().toString());
+        }
     }
     
     public DefaultTableModel updateTournamentListCells() {
