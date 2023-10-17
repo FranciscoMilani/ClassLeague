@@ -34,7 +34,7 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 public class RegisterController {
-    
+
     private GUI frame;
     private ClassDao classDao = new ClassDao();
     private StudentDao studentDao = new StudentDao();
@@ -44,35 +44,35 @@ public class RegisterController {
     private TeamRegisterService teamRegisterService = new TeamRegisterService();
     private StudentTeamDao studentTeamDao = new StudentTeamDao();
     private TournamentDao tournamentDao = new TournamentDao();
-    
-    public RegisterController(GUI frame){
+
+    public RegisterController(GUI frame) {
         this.frame = frame;
     }
-    
+
     public void showClassesNumbers() {
         JComboBox comboBox = frame.jRegisterStudentClassComboBox;
         JComboBox comboBoxTeam = frame.jTeamRegisterClassPickerComboBox;
-        
+
         DefaultComboBoxModel model = new DefaultComboBoxModel<String>();
         List<Integer> numbers = classDao.findAll()
                 .stream()
                 .map(SchoolClass::getNumber)
                 .collect(Collectors.toList());
-        
+
         model.addAll(numbers);
         comboBox.setModel(model);
         comboBoxTeam.setModel(model);
     }
-    
-    public Boolean registerStudent(){
+
+    public Boolean registerStudent() {
         int classNumber = Integer.parseInt(frame.jRegisterStudentClassComboBox.getSelectedItem().toString());
         SchoolClass schoolClass = classDao.findByNumber(classNumber);
-        
+
         Student student = new Student(
-                schoolClass, 
-                frame.jRegisterStudentFatherNameField.getText(), 
-                frame.jRegisterStudentMotherNameField.getText(), 
-                0, 
+                schoolClass,
+                frame.jRegisterStudentFatherNameField.getText(),
+                frame.jRegisterStudentMotherNameField.getText(),
+                0,
                 frame.jRegisterStudentNameField.getText(),
                 frame.jRegisterStudentSurnameField.getText(),
                 parseStringToLocalDate(frame.jRegisterStudentBirthdateField.getText()),
@@ -90,20 +90,20 @@ public class RegisterController {
         }      
         return true;
     }
-    
-    public Boolean registerClass(){
+
+    public Boolean registerClass() {
         int shiftIndex = frame.jClassShift.getSelectedIndex();
         int cycleIndex = frame.jClassCycle.getSelectedIndex();
-        
+
         SchoolClass schoolClass = new SchoolClass(
-            frame.jClassNameField.getText(),
-            Integer.parseInt(frame.jClassNumber.getText()),
-            SchoolClass.SchoolShift.values()[shiftIndex],
-            SchoolClass.EducationalCycle.values()[cycleIndex]  
+                frame.jClassNameField.getText(),
+                Integer.parseInt(frame.jClassNumber.getText()),
+                SchoolClass.SchoolShift.values()[shiftIndex],
+                SchoolClass.EducationalCycle.values()[cycleIndex]
         );
-        
+
         classService.registerClass(schoolClass);
-       
+
         return true;
     }
     
@@ -169,13 +169,13 @@ public class RegisterController {
     public String[] showSportsNames(){
         return teamRegisterService.getSportsNames();
     }
-    
+
     public void registerTeam(JTable table) {
         String name = frame.jTeamRegisterNameField.getText();
         String acronym = frame.jTeamRegisterAcronymField.getText();
         String classString = frame.jTeamRegisterClassPickerComboBox.getSelectedItem().toString();
         int sportEnumIndex = frame.jTeamRegisterSportComboBox.getSelectedIndex();
-        
+
         Integer classNumber = Integer.parseInt(classString);
 
         Long teamId = teamRegisterService.registerTeam(new Team(
@@ -184,44 +184,44 @@ public class RegisterController {
                 Sport.SportsEnum.values()[sportEnumIndex],
                 classDao.findByNumber(classNumber)
         ));
-        
+
         assignTeamMembers(table, teamId);
     }
-    
-    private void assignTeamMembers(JTable table, Long teamId) {        
+
+    private void assignTeamMembers(JTable table, Long teamId) {
         HashMap teamMembersMap = new HashMap<Long, Boolean>();
         Team team = teamDao.findById(teamId).get();
 
-        for (int i = 0; i < table.getRowCount(); i++){
-            if (table.getValueAt(i, 2) != null && (Boolean) table.getValueAt(i, 2)){
+        for (int i = 0; i < table.getRowCount(); i++) {
+            if (table.getValueAt(i, 2) != null && (Boolean) table.getValueAt(i, 2)) {
                 teamMembersMap.put(table.getValueAt(i, 0), table.getValueAt(i, 2));
             }
         }
-        
+
         Iterator itr = teamMembersMap.entrySet().iterator();
-                
+
         if (!itr.hasNext()) {
             JOptionPane.showMessageDialog(frame, "Marque ao menos um aluno");
             return;
         }
-        
-        while (itr.hasNext()){
+
+        while (itr.hasNext()) {
             Map.Entry<Long, Boolean> newMap = (Map.Entry<Long, Boolean>) itr.next();
-            
+
             StudentTeam st = new StudentTeam();
             EntityManager em = EntityManagerProvider.getEntityManager();
             Student student = em.find(Student.class, newMap.getKey());
-            
+
             st.setStudentTeamKey(new StudentTeamKey(newMap.getKey(), teamId));
             st.setStudent(student);
             st.setTeam(team);
-            
+
             if (teamRegisterService.registerStudentForTeam(st) == null) {
                 JOptionPane.showMessageDialog(frame, "Erro no cadastro da relação entre aluno e time para aluno" + newMap.getValue());
                 return;
             }
         }
-        
+
         JOptionPane.showMessageDialog(frame, "Cadastrado com sucesso");
     }
 
@@ -245,10 +245,11 @@ public class RegisterController {
     }
     
     public void createTournament() {
+        int sportEnumIndex = frame.jTeamRegisterSportComboBox.getSelectedIndex();
         Tournament tournament = new Tournament(this.frame.tournamentNameField.getText(),
                 parseStringToLocalDate(this.frame.tournamentStartDateField.getText()),
                 parseStringToLocalDate(this.frame.tournamentEndDateField.getText()),
-                this.frame.tournamentSportComboBox.getSelectedItem().toString());
+                Sport.SportsEnum.values()[sportEnumIndex]);
 
         //Salva o torneio no banco de dados
         try {
@@ -256,6 +257,46 @@ public class RegisterController {
             JOptionPane.showMessageDialog(null, "Sucesso!", "Torneio cadastrado com sucesso.", JOptionPane.INFORMATION_MESSAGE);
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Erro!", "Erro ao cadastrar torneio.", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+    
+        public DefaultTableModel getTableModel(int rowCount) {
+        String[] columnHeaders = new String[] {"ID", "Nome", ""};
+
+        DefaultTableModel teamRegisterTableModel = new DefaultTableModel(columnHeaders, rowCount) {
+
+            // Apenas última coluna editável (checkbox)
+            public boolean isCellEditable(int row, int column) {
+                return column == 2;
+            }
+
+            // Cria colunas de tipos diferentes (última é Bool p/ checkbox)
+            public Class<?> getColumnClass(int column) {
+                if (column == 2)
+                    return Boolean.class;
+                else
+                    return String.class;
+            }
+        };
+
+        return teamRegisterTableModel;
+    }
+
+    public void updateTournamentTableCells() {
+        List<Team> teams = new ArrayList<>();
+        try {
+            teams = teamDao.findAll();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return;
+        }
+        DefaultTableModel model = getTableModel(teams.size());
+        frame.jTournamentRegisterTeamsTable.setModel(model);
+
+        for (int i = 0; i < teams.size(); i++) {
+            System.out.println(teams.get(i).toString());
+            model.setValueAt(teams.get(i).getId(), i, 0);
+            model.setValueAt(teams.get(i).getName(), i, 1);
         }
     }
 
