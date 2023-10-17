@@ -16,14 +16,6 @@ public class TournamentController {
     public TournamentController(GUI frame) {
         this.frame = frame;
     }
-    
-    public DefaultTableModel getTournamentListTableModel(int rowCount) {
-        String[] columnHeaders = new String[] {"ID", "Esporte", "Nome", "Data de início"};
-
-        DefaultTableModel tournamentListModel = new DefaultTableModel(columnHeaders, rowCount);
-        
-        return tournamentListModel;
-    }
 
     public void fillTournamentData() {
         if (curTournamentId != -1){
