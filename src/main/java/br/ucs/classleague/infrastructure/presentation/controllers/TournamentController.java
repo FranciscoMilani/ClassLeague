@@ -1,5 +1,6 @@
 package br.ucs.classleague.infrastructure.presentation.controllers;
 
+import br.ucs.classleague.domain.Match;
 import br.ucs.classleague.domain.Tournament;
 import br.ucs.classleague.infrastructure.data.DaoFactory;
 import br.ucs.classleague.infrastructure.data.TournamentDao;
@@ -77,5 +78,32 @@ public class TournamentController {
         }
         
         return model;
+    }
+    
+    private DefaultTableModel fillTournamentMatchTableData(List<Match> matches) {
+        DefaultTableModel model = (DefaultTableModel) frame.tournamentMatchesTable.getModel();
+                            
+        for (int i = 0; i < matches.size(); i++) {
+            model.addRow(new Object[]{ 
+                matches.get(i).getId(), 
+                matches.get(i).getTeam(0).getName(),
+                matches.get(i).getTeam(1).getName(),
+            });
+        }
+        
+        return model;
+    }
+    
+    public DefaultTableModel getTournamentMatchTableModel(int rowCount){
+        String[] columnHeaders = new String[] {"ID", "Time 1", "Time 2"};
+
+        DefaultTableModel tournamentMatchModel = new DefaultTableModel(columnHeaders, rowCount) {           
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
+        
+        return tournamentMatchModel;
     }
 }
