@@ -28,11 +28,11 @@ public class Tournament implements Serializable{
     public Tournament() {
     }
 
-    public Tournament(String name, LocalDate startTime, LocalDate endTime, String sport) {
+    public Tournament(String name, LocalDate startTime, LocalDate endTime, SportsEnum sport) {
         this.name = name;
         this.startTime = startTime;
         this.endTime = endTime;
-        this.sportEnum = sportEnum;
+        this.sportEnum = sport;
     }
 
     public Long getId() {
@@ -77,5 +77,21 @@ public class Tournament implements Serializable{
 
     public void setEndTime(LocalDate endTime) {
         this.endTime = endTime;
+    }
+
+    public String getSportString() {
+        return sportString;
+    }
+
+    public void setSportString(String sportString) {
+        this.sportString = sportString;
+    }
+
+    public SportsEnum getSportEnum() {
+        return sportEnum;
+    }
+
+    public void setSportEnum(SportsEnum sportEnum) {
+        this.sportEnum = sportEnum;
     }
 }

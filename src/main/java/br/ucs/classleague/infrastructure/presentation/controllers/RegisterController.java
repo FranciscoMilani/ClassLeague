@@ -240,10 +240,11 @@ public class RegisterController {
     }
     
     public void createTournament() {
+        int sportEnumIndex = frame.jTeamRegisterSportComboBox.getSelectedIndex();
         Tournament tournament = new Tournament(this.frame.tournamentNameField.getText(),
                 parseStringToLocalDate(this.frame.tournamentStartDateField.getText()),
                 parseStringToLocalDate(this.frame.tournamentEndDateField.getText()),
-                this.frame.tournamentSportComboBox.getSelectedItem().toString());
+                Sport.SportsEnum.values()[sportEnumIndex]);
 
         //Salva o torneio no banco de dados
         try {
@@ -252,6 +253,28 @@ public class RegisterController {
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Erro!", "Erro ao cadastrar torneio.", JOptionPane.ERROR_MESSAGE);
         }
+    }
+    
+        public DefaultTableModel getTableModel(int rowCount) {
+        String[] columnHeaders = new String[] {"ID", "Nome", ""};
+
+        DefaultTableModel teamRegisterTableModel = new DefaultTableModel(columnHeaders, rowCount) {
+
+            // Apenas última coluna editável (checkbox)
+            public boolean isCellEditable(int row, int column) {
+                return column == 2;
+            }
+
+            // Cria colunas de tipos diferentes (última é Bool p/ checkbox)
+            public Class<?> getColumnClass(int column) {
+                if (column == 2)
+                    return Boolean.class;
+                else
+                    return String.class;
+            }
+        };
+
+        return teamRegisterTableModel;
     }
 
     public void updateTournamentTableCells() {
