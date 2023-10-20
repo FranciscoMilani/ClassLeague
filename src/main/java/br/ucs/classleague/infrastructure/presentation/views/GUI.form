@@ -153,18 +153,22 @@
                                   <Component id="tournamentDialogInfoTitleLabel" alignment="0" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="3" attributes="0">
-                                  <Component id="tournamentDialogSportTypeLabel" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="tournamentDialogStartDateField" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="tournamentDialogSportTypeInfoData" alignment="3" min="-2" pref="24" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
                                   <Component id="tournamentDialogStartDateInfoData" alignment="1" min="-2" pref="24" max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="3" attributes="0">
+                                      <Component id="tournamentDialogSportTypeLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      <Component id="tournamentDialogStartDateField" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      <Component id="tournamentDialogSportTypeInfoData" alignment="3" min="-2" pref="24" max="-2" attributes="0"/>
+                                  </Group>
                               </Group>
                               <EmptySpace min="-2" pref="40" max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="3" attributes="0">
-                                  <Component id="tournamentDialogPhaseLabel" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="tournamentDialogEndDateField" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="tournamentDialogPhaseInfoData" alignment="3" min="-2" pref="24" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
                                   <Component id="tournamentDialogEndInfoData" alignment="0" min="-2" pref="24" max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="3" attributes="0">
+                                      <Component id="tournamentDialogPhaseLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      <Component id="tournamentDialogEndDateField" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      <Component id="tournamentDialogPhaseInfoData" alignment="3" min="-2" pref="24" max="-2" attributes="0"/>
+                                  </Group>
                               </Group>
                               <EmptySpace pref="36" max="32767" attributes="0"/>
                           </Group>
@@ -283,7 +287,7 @@
                         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                           <Font name="Segoe UI Semibold" size="24" style="0"/>
                         </Property>
-                        <Property name="text" type="java.lang.String" value="Pr&#xf3;ximos confrontos"/>
+                        <Property name="text" type="java.lang.String" value="Confrontos"/>
                       </Properties>
                     </Component>
                     <Container class="javax.swing.JScrollPane" name="tournamentMatchesTableScrollPane">
@@ -705,6 +709,9 @@
                               <Image iconType="3" name="/icons/pause-48.png"/>
                             </Property>
                           </Properties>
+                          <Events>
+                            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="timerPlayButtonActionPerformed"/>
+                          </Events>
                         </Component>
                         <Component class="javax.swing.JButton" name="timerDecreaseTimeButton">
                           <Properties>
@@ -719,14 +726,16 @@
                         <Component class="javax.swing.JButton" name="timerIncreaseTimeButton">
                           <Properties>
                             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                              <Image iconType="3" name="/icons/placeholder-24.png"/>
+                              <Image iconType="3" name="/icons/restart-24.png"/>
                             </Property>
                           </Properties>
+                          <Events>
+                            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="timerIncreaseTimeButtonActionPerformed"/>
+                          </Events>
                         </Component>
                         <Component class="javax.swing.JProgressBar" name="timerProgressBar">
                           <Properties>
-                            <Property name="maximum" type="int" value="30"/>
-                            <Property name="value" type="int" value="15"/>
+                            <Property name="maximum" type="int" value="0"/>
                           </Properties>
                         </Component>
                         <Component class="javax.swing.JLabel" name="timerCurrentTimeLabel">

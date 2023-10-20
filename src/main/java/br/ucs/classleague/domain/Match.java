@@ -56,4 +56,8 @@ public class Match implements Serializable {
         List<Team> teamsList = new ArrayList<>(teams);
         return teamsList.get(i);
     }
+    
+    public void setTeam(Team team) {
+        this.teams.add(team);
+    }
 }
