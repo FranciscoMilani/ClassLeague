@@ -23,4 +23,13 @@ public class TeamDao extends GenericDAO<Team, Long>{
             return new ArrayList<>();
         }
     }
+    
+    public Team searchTeamById(Long id){
+        EntityManager entityManager = EntityManagerProvider.getEntityManager();
+        try {
+            return entityManager.find(Team.class, id);
+        } finally {
+            //entityManager.close();
+        }
+    }
 }

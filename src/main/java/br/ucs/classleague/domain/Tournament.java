@@ -5,18 +5,20 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Transient;
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
-public class Tournament implements Serializable{
+public class Tournament implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
-    
+
     @Transient
     private Sport sport;
 
@@ -24,6 +26,9 @@ public class Tournament implements Serializable{
     private LocalDate endTime;
     private String sportString;
     private SportsEnum sportEnum;
+
+    @ManyToMany
+    private List<Team> teamsList;
 
     public Tournament() {
     }
@@ -58,7 +63,7 @@ public class Tournament implements Serializable{
     public void setSport(Sport sport) {
         this.sportEnum = sport.getSport();
     }
-    
+
     public void setSport(String sportString) {
         this.sportString = sportString;
     }
@@ -93,5 +98,13 @@ public class Tournament implements Serializable{
 
     public void setSportEnum(SportsEnum sportEnum) {
         this.sportEnum = sportEnum;
+    }
+
+    public List<Team> getTeamsList() {
+        return teamsList;
+    }
+
+    public void setTeamsList(List<Team> teamsList) {
+        this.teamsList = teamsList;
     }
 }
