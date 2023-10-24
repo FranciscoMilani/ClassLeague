@@ -9,6 +9,7 @@ public class DaoFactory {
     private static TeamDao teamDao;
     private static StudentTeamDao studentTeamDao;
     private static TournamentDao tournamentDao;
+    private static MatchDao matchDao;
     
     static {
         classDao = new ClassDao();
@@ -36,5 +37,9 @@ public class DaoFactory {
     
     public static TournamentDao getTournamentDao() {
         return tournamentDao;
+    }
+    
+    public static MatchDao getMatchDao() {
+        return matchDao;
     }
 }

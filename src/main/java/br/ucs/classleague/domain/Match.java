@@ -10,6 +10,8 @@ import jakarta.persistence.ManyToMany;
 import jakarta.persistence.UniqueConstraint;
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -48,5 +50,14 @@ public class Match implements Serializable {
 
     public void setDateTime(LocalDateTime dateTime) {
         this.dateTime = dateTime;
+    }
+    
+    public Team getTeam(int i) {
+        List<Team> teamsList = new ArrayList<>(teams);
+        return teamsList.get(i);
+    }
+    
+    public void setTeam(Team team) {
+        this.teams.add(team);
     }
 }
