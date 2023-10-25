@@ -1,22 +1,44 @@
 package br.ucs.classleague.infrastructure.presentation.controllers;
 
+import br.ucs.classleague.domain.Match;
 import br.ucs.classleague.domain.Tournament;
 import br.ucs.classleague.infrastructure.data.DaoFactory;
 import br.ucs.classleague.infrastructure.data.MatchDao;
 import br.ucs.classleague.infrastructure.data.TournamentDao;
+import br.ucs.classleague.infrastructure.presentation.model.TournamentModel;
 import br.ucs.classleague.infrastructure.presentation.views.GUI;
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
 
 public class TournamentController {
     
+    public static Long curTournamentId = -1L;
+    public static Long selectedMatchId = -1L;
+    
     private GUI frame;
+    private TournamentModel tournamentModel;
+    
     private TournamentDao tournamentDao = DaoFactory.getTournamentDao();
     private MatchDao matchDao = DaoFactory.getMatchDao();
-    public static Long curTournamentId = -1L;
     
-    public TournamentController(GUI frame) {
+    public TournamentController(GUI frame, TournamentModel tournamentModel) {
         this.frame = frame;
+        this.tournamentModel = tournamentModel;
+    }
+    
+    public void showTournamentDialog(String tournamentId){
+        // TODO: mover o currentTournamentId para o model
+        curTournamentId = Long.parseLong(tournamentId);
+        frame.jTournamentSelectTable.getSelectionModel().clearSelection();
+        frame.tournamentDialog.setVisible(true);
+        
+        tournamentModel.setTournamentId(curTournamentId);
+    }
+    
+    public void checkEnableMatch(String matchId){
+        Long mId = Long.parseLong(matchId);
+        Match match = matchDao.findById(mId).get();
+        tournamentModel.checkEnableMatch(match);
     }
     
     public void fillTournamentData() {
@@ -24,13 +46,16 @@ public class TournamentController {
             Tournament t = tournamentDao.findById(curTournamentId).get();
             
             frame.tournamentDialogNameData.setText(t.getName());
-            frame.tournamentDialogSportTypeInfoData.setText(t.getSport());
+            frame.tournamentDialogSportTypeInfoData.setText(t.getSportType().getName());
             frame.tournamentDialogStartDateInfoData.setText(t.getStartTime().toString());
             frame.tournamentDialogEndInfoData.setText(t.getEndTime().toString());
+            //frame.tournamentDialogPhaseLabel.setText(t.getPhase().getName());
         }
     }
     
     public DefaultTableModel getFullTableModel(){
+        ControllerUtilities.resetTable(frame.jTournamentSelectTable);
+        
         try {
             List<Tournament> tournaments = tournamentDao.findAll();
             return fillTournamentListTableData(tournaments);

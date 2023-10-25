@@ -5,9 +5,11 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Transient;
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.Set;
 
 @Entity
 public class Tournament implements Serializable{
@@ -22,8 +24,31 @@ public class Tournament implements Serializable{
 
     private LocalDate startTime;
     private LocalDate endTime;
-    private String sportString;
     private SportsEnum sportEnum;
+    private TournamentPhase phase;
+        
+    @OneToMany(mappedBy = "tournament")
+    private Set<Match> matches;
+    
+    @OneToMany(mappedBy = "tournament")
+    private Set<TournamentTeam> tournamentTeam;
+    
+    public static enum TournamentPhase {
+        ROUND_OF_SIXTEEN("Oitavas de final"),
+        QUARTERFINALS("Quartas de final"),
+        SEMIFINALS("Semifinais"),
+        FINAL("Final");
+        
+        private final String name;
+        
+        TournamentPhase(String name){
+            this.name = name;
+        }
+
+        public String getName() {
+            return name;
+        }
+    }
 
     public Tournament() {
     }
@@ -51,18 +76,19 @@ public class Tournament implements Serializable{
         this.name = name;
     }
 
-    public String getSport() {
-        return sportString;
+    public SportsEnum getSportType() {
+        return sportEnum;
+    }
+    
+    public Sport getSport(){
+        return sport;
     }
 
     public void setSport(Sport sport) {
+        this.sport = sport;
         this.sportEnum = sport.getSport();
     }
     
-    public void setSport(String sportString) {
-        this.sportString = sportString;
-    }
-
     public LocalDate getStartTime() {
         return startTime;
     }
@@ -79,14 +105,6 @@ public class Tournament implements Serializable{
         this.endTime = endTime;
     }
 
-    public String getSportString() {
-        return sportString;
-    }
-
-    public void setSportString(String sportString) {
-        this.sportString = sportString;
-    }
-
     public SportsEnum getSportEnum() {
         return sportEnum;
     }
@@ -94,4 +112,22 @@ public class Tournament implements Serializable{
     public void setSportEnum(SportsEnum sportEnum) {
         this.sportEnum = sportEnum;
     }
+
+    public Set<Match> getMatches() {
+        return matches;
+    }
+
+    public void setMatches(Set<Match> matches) {
+        this.matches = matches;
+    }
+
+    public TournamentPhase getPhase() {
+        return phase;
+    }
+
+    public void setPhase(TournamentPhase phase) {
+        this.phase = phase;
+    }
+    
+    
 }

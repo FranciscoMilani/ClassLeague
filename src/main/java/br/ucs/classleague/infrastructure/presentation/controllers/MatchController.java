@@ -1,5 +1,10 @@
 package br.ucs.classleague.infrastructure.presentation.controllers;
 
+import br.ucs.classleague.domain.MatchTimer;
+import br.ucs.classleague.domain.MatchTimer.MatchState;
+import br.ucs.classleague.infrastructure.data.DaoFactory;
+import br.ucs.classleague.infrastructure.data.MatchDao;
+import br.ucs.classleague.infrastructure.presentation.model.MatchModel;
 import br.ucs.classleague.infrastructure.presentation.views.GUI;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
@@ -9,41 +14,59 @@ import javax.swing.UIManager;
 
 public class MatchController {
     
-    private GUI frame;
-    private Timer timer;
+    private final GUI view;
     private final Color defaultColor;
+    private final MatchDao dao = DaoFactory.getMatchDao();
+    private MatchModel matchModel;
+    private Timer timer;
     
-    public MatchController(GUI frame){
-        this.frame = frame;
+    public MatchController(GUI view, MatchModel matchModel){
+        this.view = view;
+        this.matchModel = matchModel;
+        
+        matchModel.setTimer(new MatchTimer());
         defaultColor = UIManager.getColor("timerCurrentTimeLabel.background"); 
     }
     
-    public void initTimer(int maxTimeSeconds){     
+    public void setMatchInfo(String matchId){
+        Long mId = Long.parseLong(matchId);
+        matchModel.setMatch(dao.findById(mId).get());
+        matchModel.setInfo();
+    }
+    
+    public void initTimer(int maxTimeSeconds){   
+        MatchTimer.setState(MatchTimer.MatchState.RUNNING);
+        
         timer = new Timer(1000, new ActionListener() {
-            int currSeconds = 0;
             
             @Override
             public void actionPerformed(ActionEvent e) {      
-                if (currSeconds == maxTimeSeconds) {
-                    frame.timerCurrentTimeLabel.setForeground(Color.red);
+                if (matchModel.getTimer().getCurrentTime() == maxTimeSeconds) {
+                    view.timerDecreaseTimeButton.setEnabled(true);
+                    view.timerCurrentTimeLabel.setForeground(Color.red);
                 }
                 
-                int minutes = Math.floorDiv(currSeconds, 60);
-                int seconds = Math.floorMod(currSeconds, 60);
+                int minutes = Math.floorDiv(matchModel.getTimer().getCurrentTime(), 60);
+                int seconds = Math.floorMod(matchModel.getTimer().getCurrentTime(), 60);
                 
                 String timeText = String.format("%02d:%02d", minutes, seconds);   
 
-                frame.timerCurrentTimeLabel.setText(timeText);
-                frame.timerProgressBar.setValue(currSeconds++);   
+                view.timerCurrentTimeLabel.setText(timeText);
+                view.timerProgressBar.setValue(matchModel.getTimer().addCurrentTime(1));   
             }
         });
         
         timer.setInitialDelay(0);
     }
     
-    public void startTimer(int roundTimeSeconds){
+    public void startTimer() {
         if (timer == null){
-            frame.timerProgressBar.setMaximum(roundTimeSeconds);
+            Integer roundTimeSeconds = matchModel.getMatch()
+                    .getTournament()
+                    .getSport()
+                    .getMatchDurationMinutes() * 60;
+            
+            view.timerProgressBar.setMaximum(roundTimeSeconds);
             initTimer(roundTimeSeconds);
             timer.start();
         } else {
@@ -65,12 +88,18 @@ public class MatchController {
     public void resetTimer(){
         if (timer != null){
             freezeTimer();
-            frame.timerPlayButton.setSelected(false);
-            frame.timerProgressBar.setValue(0);
-            frame.timerCurrentTimeLabel.setForeground(defaultColor);
-            frame.timerCurrentTimeLabel.setText("00:00");
-            frame.timerEndTimeLabel.setText("00:00");
+            view.timerPlayButton.setSelected(false);
+            view.timerProgressBar.setValue(0);
+            view.timerCurrentTimeLabel.setForeground(defaultColor);
+            view.timerCurrentTimeLabel.setText("00:00");
+            view.timerEndTimeLabel.setText("00:00");
+            MatchTimer.setState(MatchState.WAITING);
             timer = null;
         }
+    }
+    
+    public void startNextPeriod() {
+        MatchTimer.setState(MatchState.RUNNING);
+        matchModel.getTimer().addPeriod();
     }
 }

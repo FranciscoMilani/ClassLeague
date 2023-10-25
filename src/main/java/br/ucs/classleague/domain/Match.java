@@ -7,6 +7,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.UniqueConstraint;
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -25,13 +26,19 @@ public class Match implements Serializable {
     @JoinTable(
         joinColumns = @JoinColumn(name = "match_id"),
         inverseJoinColumns = @JoinColumn(name = "team_id"),
-        uniqueConstraints = @UniqueConstraint(name = "uc_match_team", columnNames = { "match_id", "team_id" }) // não funciona?
+        uniqueConstraints = @UniqueConstraint(name = "uc_match_team", columnNames = { "match_id", "team_id" })
     )
     private Set<Team> teams;
     
     private LocalDateTime dateTime;
+    
+    private Boolean ended;
+    
+    @ManyToOne
+    private Tournament tournament;
 
-    public Match(LocalDateTime dateTime, Set<Team> teams) {
+    public Match(Tournament tournament, LocalDateTime dateTime, Set<Team> teams) {
+        this.tournament = tournament;
         this.dateTime = dateTime;
         this.teams = teams;
     }
@@ -59,5 +66,21 @@ public class Match implements Serializable {
     
     public void setTeam(Team team) {
         this.teams.add(team);
+    }
+
+    public Tournament getTournament() {
+        return tournament;
+    }
+
+    public void setTournament(Tournament tournament) {
+        this.tournament = tournament;
+    }
+
+    public Boolean getEnded() {
+        return ended;
+    }
+
+    public void setEnded(Boolean ended) {
+        this.ended = ended;
     }
 }

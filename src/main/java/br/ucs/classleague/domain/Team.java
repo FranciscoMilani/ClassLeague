@@ -17,11 +17,17 @@ public class Team implements Serializable {
     private Long id;
     private String name;
     private String acronym;
+    
     @ManyToOne
     private SchoolClass schoolClass;
     private Sport.SportsEnum sport;
+    
     @OneToMany(mappedBy = "team")
     private Set<StudentTeam> studentTeam;
+    
+    @OneToMany(mappedBy = "team")
+    private Set<TournamentTeam> TournamentTeam;
+    
 
     public Team() {
     }
