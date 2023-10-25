@@ -246,6 +246,21 @@ public class RegisterController {
     }
 
     public void createTournament(JTable table) {
+        Integer count = 0;
+        for (int i = 0; i < table.getRowCount(); i++) {
+            if (table.getValueAt(i, 2) != null && (Boolean) table.getValueAt(i, 2)) {
+                count++;
+            }
+        }
+        System.out.println(count);
+        if (!isPowerOfTwo(count)) {
+            JOptionPane.showMessageDialog(null, "Quantidade de times incorreta para realização do chaveamento", "Erro!", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        if (count > 16) {
+            JOptionPane.showMessageDialog(null, "Quantidade de times excedida, limite: 16 times", "Erro", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
         int sportEnumIndex = frame.jTeamRegisterSportComboBox.getSelectedIndex();
         Tournament tournament = new Tournament(this.frame.tournamentNameField.getText(),
                 parseStringToLocalDate(this.frame.tournamentStartDateField.getText()),
@@ -296,6 +311,14 @@ public class RegisterController {
         }
         tournament.setTeamsList(teamList);
         tournamentDao.updateTournament(tournament);
+    }
+
+    public static boolean isPowerOfTwo(int number) {
+        if (number <= 0) {
+            return false;
+        }
+        // Verifica se o número é uma potência de 2.
+        return (number & (number - 1)) == 0 && (number > 1);
     }
 
     public void updateTournamentTableCells() {
