@@ -10,15 +10,17 @@ import jakarta.persistence.Transient;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Set;
+import jakarta.persistence.ManyToMany;
+import java.util.List;
 
 @Entity
-public class Tournament implements Serializable{
+public class Tournament implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
-    
+
     @Transient
     private Sport sport;
 
@@ -49,6 +51,9 @@ public class Tournament implements Serializable{
             return name;
         }
     }
+
+    @ManyToMany
+    private List<Team> teamsList;
 
     public Tournament() {
     }
@@ -130,4 +135,11 @@ public class Tournament implements Serializable{
     }
     
     
+    public List<Team> getTeamsList() {
+        return teamsList;
+    }
+
+    public void setTeamsList(List<Team> teamsList) {
+        this.teamsList = teamsList;
+    }
 }

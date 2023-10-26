@@ -80,14 +80,14 @@ public class RegisterController {
                 frame.jRegisterStudentTelephoneField.getText(),
                 frame.jRegisterStudentCPFField.getText()
         );
-        
+
         try {
             studentDao.create(student);
             clearStudentRegisterFields();
             JOptionPane.showMessageDialog(null, "Sucesso!", "Aluno cadastrado com sucesso.", JOptionPane.INFORMATION_MESSAGE);
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Erro!", "Erro ao cadastrar aluno.", JOptionPane.ERROR_MESSAGE);
-        }      
+        }
         return true;
     }
 
@@ -106,15 +106,15 @@ public class RegisterController {
 
         return true;
     }
-    
+
     private void resetTable(JTable table) {
         DefaultTableModel model = (DefaultTableModel) table.getModel();
         model.setRowCount(0);
         table.revalidate();
     }
-    
+
     public DefaultTableModel getTeamRegisterTableModel(int rowCount) {
-        String[] columnHeaders = new String[] {"ID", "Nome", ""};
+        String[] columnHeaders = new String[]{"ID", "Nome", ""};
 
         DefaultTableModel teamRegisterTableModel = new DefaultTableModel(columnHeaders, rowCount) {
 
@@ -125,48 +125,49 @@ public class RegisterController {
 
             // Cria colunas de tipos diferentes (última é Bool p/ checkbox)
             public Class<?> getColumnClass(int column) {
-                if (column == 2)
+                if (column == 2) {
                     return Boolean.class;
-                else
+                } else {
                     return String.class;
+                }
             }
         };
 
         return teamRegisterTableModel;
     }
-    
+
     public void updateTeamTableCells(String number) {
         List<Student> students;
-        
+
         try {
             Integer n = Integer.parseInt(number);
-            
+
             if (n == frame.prevClassNumber) {
-                return; 
+                return;
             }
-            
+
             students = new ArrayList<>();
             frame.prevClassNumber = n;
-            
+
             resetTable(frame.jTeamRegisterStudentsTable);
             students = classDao.getStudentsByClassNumber(n);
-        } catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             return;
         }
-        
+
         DefaultTableModel model = getTeamRegisterTableModel(students.size());
-        
+
         frame.jTeamRegisterStudentsTable.setModel(model);
-        
+
         for (int i = 0; i < students.size(); i++) {
             System.out.println(students.get(i).toString());
             model.setValueAt(students.get(i).getId(), i, 0);
             model.setValueAt(students.get(i).getName(), i, 1);
         }
     }
-    
-    public String[] showSportsNames(){
+
+    public String[] showSportsNames() {
         return teamRegisterService.getSportsNames();
     }
 
@@ -243,8 +244,23 @@ public class RegisterController {
             JOptionPane.showMessageDialog(null, "Erro!", "Erro ao cadastrar treinador.", JOptionPane.ERROR_MESSAGE);
         }
     }
-    
-    public void createTournament() {
+
+    public void createTournament(JTable table) {
+        Integer count = 0;
+        for (int i = 0; i < table.getRowCount(); i++) {
+            if (table.getValueAt(i, 2) != null && (Boolean) table.getValueAt(i, 2)) {
+                count++;
+            }
+        }
+        System.out.println(count);
+        if (!isPowerOfTwo(count)) {
+            JOptionPane.showMessageDialog(null, "Quantidade de times incorreta para realização do chaveamento", "Erro!", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        if (count > 16) {
+            JOptionPane.showMessageDialog(null, "Quantidade de times excedida, limite: 16 times", "Erro", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
         int sportEnumIndex = frame.jTeamRegisterSportComboBox.getSelectedIndex();
         Tournament tournament = new Tournament(this.frame.tournamentNameField.getText(),
                 parseStringToLocalDate(this.frame.tournamentStartDateField.getText()),
@@ -253,15 +269,16 @@ public class RegisterController {
 
         //Salva o torneio no banco de dados
         try {
-            this.tournamentDao.create(tournament);
+            Long tournamentId = this.tournamentDao.create(tournament).getId();
+            assignTeamsToTournament(table, tournamentId);
             JOptionPane.showMessageDialog(null, "Sucesso!", "Torneio cadastrado com sucesso.", JOptionPane.INFORMATION_MESSAGE);
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Erro!", "Erro ao cadastrar torneio.", JOptionPane.ERROR_MESSAGE);
         }
     }
-    
-        public DefaultTableModel getTableModel(int rowCount) {
-        String[] columnHeaders = new String[] {"ID", "Nome", ""};
+
+    public DefaultTableModel getTableModel(int rowCount) {
+        String[] columnHeaders = new String[]{"ID", "Nome", ""};
 
         DefaultTableModel teamRegisterTableModel = new DefaultTableModel(columnHeaders, rowCount) {
 
@@ -272,14 +289,36 @@ public class RegisterController {
 
             // Cria colunas de tipos diferentes (última é Bool p/ checkbox)
             public Class<?> getColumnClass(int column) {
-                if (column == 2)
+                if (column == 2) {
                     return Boolean.class;
-                else
+                } else {
                     return String.class;
+                }
             }
         };
 
         return teamRegisterTableModel;
+    }
+
+    private void assignTeamsToTournament(JTable table, Long tournamentId) {
+        List<Team> teamList = new ArrayList<>();
+        Tournament tournament = tournamentDao.findById(tournamentId).get();
+        for (int i = 0; i < table.getRowCount(); i++) {
+            if (table.getValueAt(i, 2) != null && (Boolean) table.getValueAt(i, 2)) {
+                Long teamId = (Long) table.getValueAt(i, 0);
+                teamList.add(teamDao.searchTeamById(teamId));
+            }
+        }
+        tournament.setTeamsList(teamList);
+        tournamentDao.updateTournament(tournament);
+    }
+
+    public static boolean isPowerOfTwo(int number) {
+        if (number <= 0) {
+            return false;
+        }
+        // Verifica se o número é uma potência de 2.
+        return (number & (number - 1)) == 0 && (number > 1);
     }
 
     public void updateTournamentTableCells() {
@@ -320,7 +359,7 @@ public class RegisterController {
         this.frame.coachBirthDateField.setText("");
         this.frame.coachSportField.setText("");
     }
-    
+
     public void clearStudentRegisterFields() {
         this.frame.jRegisterStudentNameField.setText("");
         this.frame.jRegisterStudentSurnameField.setText("");
@@ -332,8 +371,8 @@ public class RegisterController {
         this.frame.jRegisterStudentTelephoneField.setText("");
         //this.frame.jRegisterStudentClassComboBox.setSelectedIndex(-1);
     }
-    
-    public void updateComboBoxes(){
+
+    public void updateComboBoxes() {
         this.showClassesNumbers();
         this.showSportsNames();
     }

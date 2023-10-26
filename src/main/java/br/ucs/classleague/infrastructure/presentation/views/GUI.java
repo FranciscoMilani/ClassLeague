@@ -1754,7 +1754,7 @@ public class GUI extends javax.swing.JFrame {
 
     private void tournamentRegisterButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tournamentRegisterButtonActionPerformed
         // TODO add your handling code here:
-        this.registerController.createTournament();
+        this.registerController.createTournament(jTournamentRegisterTeamsTable);
     }//GEN-LAST:event_tournamentRegisterButtonActionPerformed
 
     private void tournamentRegisterPanelMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tournamentRegisterPanelMouseEntered
