@@ -27,7 +27,6 @@ public class Team implements Serializable {
     
     @OneToMany(mappedBy = "team")
     private Set<TournamentTeam> TournamentTeam;
-    
 
     public Team() {
     }

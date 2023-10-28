@@ -7,6 +7,7 @@ import br.ucs.classleague.infrastructure.data.MatchDao;
 import br.ucs.classleague.infrastructure.data.TournamentDao;
 import br.ucs.classleague.infrastructure.presentation.model.TournamentModel;
 import br.ucs.classleague.infrastructure.presentation.views.GUI;
+import java.util.ArrayList;
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
 
@@ -32,6 +33,7 @@ public class TournamentController {
         frame.jTournamentSelectTable.getSelectionModel().clearSelection();
         frame.tournamentDialog.setVisible(true);
         
+        fillTournamentMatchTableData(curTournamentId);
         tournamentModel.setTournamentId(curTournamentId);
     }
     
@@ -97,7 +99,7 @@ public class TournamentController {
         for (int i = 0; i < tournaments.size(); i++) {
             model.addRow(new Object[]{ 
                 tournaments.get(i).getId(), 
-                tournaments.get(i).getSport(), 
+                tournaments.get(i).getSportType().getName() ,
                 tournaments.get(i).getName(),
                 tournaments.get(i).getStartTime()
             });
@@ -119,21 +121,19 @@ public class TournamentController {
         return tournamentMatchModel;
     }
     
-    public DefaultTableModel fillTournamentMatchTableData(Long tournamentId) {
+    public void fillTournamentMatchTableData(Long tournamentId) {
         DefaultTableModel model = (DefaultTableModel) frame.tournamentMatchesTable.getModel();
         Tournament tournament = tournamentDao.findById(curTournamentId).get();
-        
-        // retornar lista de matches deste torneio e popular lista
-        
-        /*                    
+        List<Match> matches = new ArrayList<>();
+        matches.addAll(tournament.getMatches());
+                           
+        ControllerUtilities.resetTable(frame.tournamentMatchesTable);
         for (int i = 0; i < matches.size(); i++) {
-            model.addRow(new Object[]{ 
+            model.addRow(new Object[]{
                 matches.get(i).getId(), 
-                matches.get(i).getTeam(0).getName(),
-                matches.get(i).getTeam(1).getName(),
+                matches.get(i).getFirst_team().getName(),
+                matches.get(i).getSecond_team().getName(),
             });
         }
-        */
-        return model;
     }
 }

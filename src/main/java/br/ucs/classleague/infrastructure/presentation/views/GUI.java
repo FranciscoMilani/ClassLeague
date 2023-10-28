@@ -3,6 +3,7 @@ package br.ucs.classleague.infrastructure.presentation.views;
 import br.ucs.classleague.domain.MatchTimer;
 import br.ucs.classleague.domain.MatchTimer.MatchState;
 import br.ucs.classleague.domain.SchoolClass;
+import br.ucs.classleague.infrastructure.presentation.controllers.ControllerUtilities;
 import br.ucs.classleague.infrastructure.presentation.controllers.MatchController;
 import br.ucs.classleague.infrastructure.presentation.controllers.RegisterController;
 import br.ucs.classleague.infrastructure.presentation.controllers.TournamentController;
@@ -204,7 +205,6 @@ public class GUI extends javax.swing.JFrame {
         tournamentDialog.setTitle("Torneio");
         tournamentDialog.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         tournamentDialog.setMinimumSize(null);
-        tournamentDialog.setModal(true);
         tournamentDialog.setSize(new java.awt.Dimension(1055, 810));
         tournamentDialog.addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowActivated(java.awt.event.WindowEvent evt) {
@@ -742,6 +742,7 @@ public class GUI extends javax.swing.JFrame {
         setMinimumSize(null);
         setSize(new java.awt.Dimension(0, 0));
 
+        mainTabbedPane.setName(""); // NOI18N
         mainTabbedPane.setPreferredSize(new java.awt.Dimension(1024, 768));
         mainTabbedPane.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
@@ -852,6 +853,8 @@ public class GUI extends javax.swing.JFrame {
             }
         });
 
+        tournamentRegister.setName("tournament"); // NOI18N
+
         tournamentLabel.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
         tournamentLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         tournamentLabel.setText("Cadastro de Torneios");
@@ -907,15 +910,9 @@ public class GUI extends javax.swing.JFrame {
 
         tournamentTeamsLabel.setText("Selecione os times participantes:");
 
-        jTournamentRegisterTeamsTable.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-
-            }
-        ));
+        jTournamentRegisterTeamsTable.setModel(registerController.getTournamentRegisterTableModel(0));
         jTournamentRegisterTeamsTable.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        registerController.updateTournamentTeamTableCells(tournamentSportComboBox.getSelectedIndex());
         jTournamentRegisterTeamScrollPane.setViewportView(jTournamentRegisterTeamsTable);
 
         javax.swing.GroupLayout tournamentRegisterPanelLayout = new javax.swing.GroupLayout(tournamentRegisterPanel);
@@ -979,7 +976,7 @@ public class GUI extends javax.swing.JFrame {
                 .addGap(310, 310, 310)
                 .addGroup(tournamentRegisterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(tournamentLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(tournamentRegisterPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                    .addComponent(tournamentRegisterPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 0, Short.MAX_VALUE))
                 .addContainerGap(359, Short.MAX_VALUE))
         );
         tournamentRegisterLayout.setVerticalGroup(
@@ -994,6 +991,7 @@ public class GUI extends javax.swing.JFrame {
 
         mainTabbedPane.addTab("Cadastro de Torneio", tournamentRegister);
 
+        classRegister.setName("class"); // NOI18N
         classRegister.setLayout(new java.awt.GridBagLayout());
 
         title4.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
@@ -1118,6 +1116,7 @@ public class GUI extends javax.swing.JFrame {
 
         mainTabbedPane.addTab("Cadastro de Turma", classRegister);
 
+        studentRegister2.setName("student"); // NOI18N
         studentRegister2.setLayout(new java.awt.GridBagLayout());
 
         jStudentRegisterTitle.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
@@ -1311,6 +1310,7 @@ public class GUI extends javax.swing.JFrame {
 
         mainTabbedPane.addTab("Cadastro de Aluno", studentRegister2);
 
+        teamRegisterPanel.setName("team"); // NOI18N
         teamRegisterPanel.setLayout(new java.awt.GridBagLayout());
 
         jTeamRegisterTitle.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
@@ -1429,14 +1429,7 @@ public class GUI extends javax.swing.JFrame {
         gridBagConstraints.insets = new java.awt.Insets(30, 0, 10, 0);
         jInnerTeamRegisterPanel.add(jTeamRegisterButton, gridBagConstraints);
 
-        jTeamRegisterStudentsTable.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-
-            }
-        ));
+        jTeamRegisterStudentsTable.setModel(registerController.getTeamRegisterTableModel(0));
         jTeamRegisterStudentsTable.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         jTeamRegisterStudentsScrollPane.setViewportView(jTeamRegisterStudentsTable);
 
@@ -1457,6 +1450,7 @@ public class GUI extends javax.swing.JFrame {
 
         mainTabbedPane.addTab("Cadastro de Time", teamRegisterPanel);
 
+        coachRegister.setName("coach"); // NOI18N
         coachRegister.setLayout(new java.awt.GridBagLayout());
 
         jCoachRegisterTitle1.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
@@ -1641,11 +1635,19 @@ public class GUI extends javax.swing.JFrame {
 
     private void mainTabbedPaneStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_mainTabbedPaneStateChanged
         JTabbedPane tp = (JTabbedPane) evt.getSource();
-        
+
         // Atualiza componentes de acordo com índice do painel selecionado
         if (tp.getSelectedIndex() == 0) {
             tournamentController.getFullTableModel();  
-        } else if (tp.getSelectedIndex() > 0) {
+        }
+        
+        if (tp.getSelectedComponent().getName() == "tournament"){
+            registerController.updateTournamentTeamTableCells(tournamentSportComboBox.getSelectedIndex());
+        } else if (tp.getSelectedComponent().getName() == "team"){
+            ControllerUtilities.resetTable(jTeamRegisterStudentsTable);
+        }
+        
+        if (tp.getSelectedIndex() > 0) {
             registerController.updateComboBoxes();
         }
     }//GEN-LAST:event_mainTabbedPaneStateChanged
@@ -1749,7 +1751,7 @@ public class GUI extends javax.swing.JFrame {
 
     private void tournamentSportComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tournamentSportComboBoxActionPerformed
         // TODO add your handling code here:
-        this.registerController.updateTournamentTableCells();
+        this.registerController.updateTournamentTeamTableCells(tournamentSportComboBox.getSelectedIndex());
     }//GEN-LAST:event_tournamentSportComboBoxActionPerformed
 
     private void tournamentRegisterButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tournamentRegisterButtonActionPerformed

@@ -1,7 +1,9 @@
 package br.ucs.classleague.domain;
 
 import br.ucs.classleague.domain.Sport.SportsEnum;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -10,8 +12,6 @@ import jakarta.persistence.Transient;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Set;
-import jakarta.persistence.ManyToMany;
-import java.util.List;
 
 @Entity
 public class Tournament implements Serializable {
@@ -32,7 +32,7 @@ public class Tournament implements Serializable {
     @OneToMany(mappedBy = "tournament")
     private Set<Match> matches;
     
-    @OneToMany(mappedBy = "tournament")
+    @OneToMany(mappedBy = "tournament", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<TournamentTeam> tournamentTeam;
     
     public static enum TournamentPhase {
@@ -51,9 +51,6 @@ public class Tournament implements Serializable {
             return name;
         }
     }
-
-    @ManyToMany
-    private List<Team> teamsList;
 
     public Tournament() {
     }
@@ -133,13 +130,12 @@ public class Tournament implements Serializable {
     public void setPhase(TournamentPhase phase) {
         this.phase = phase;
     }
-    
-    
-    public List<Team> getTeamsList() {
-        return teamsList;
+
+    public Set<TournamentTeam> getTournamentTeam() {
+        return tournamentTeam;
     }
 
-    public void setTeamsList(List<Team> teamsList) {
-        this.teamsList = teamsList;
+    public void setTournamentTeam(Set<TournamentTeam> tournamentTeam) {
+        this.tournamentTeam = tournamentTeam;
     }
 }

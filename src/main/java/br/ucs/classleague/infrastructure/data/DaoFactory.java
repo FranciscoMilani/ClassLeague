@@ -17,6 +17,7 @@ public class DaoFactory {
         teamDao = new TeamDao();
         studentTeamDao = new StudentTeamDao();
         tournamentDao = new TournamentDao();
+        matchDao = new MatchDao();
     }
     
     public static ClassDao getClassDao() {

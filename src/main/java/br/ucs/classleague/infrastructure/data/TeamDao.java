@@ -1,8 +1,10 @@
 package br.ucs.classleague.infrastructure.data;
 
+import br.ucs.classleague.domain.Sport.SportsEnum;
 import br.ucs.classleague.domain.Team;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.Query;
+import jakarta.persistence.TypedQuery;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,8 +30,23 @@ public class TeamDao extends GenericDAO<Team, Long>{
         EntityManager entityManager = EntityManagerProvider.getEntityManager();
         try {
             return entityManager.find(Team.class, id);
-        } finally {
-            //entityManager.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+    
+    public List<Team> findBySportIndex(SportsEnum sport){
+        EntityManager entityManager = EntityManagerProvider.getEntityManager();
+        try {
+            String jpql = "SELECT t from Team t WHERE t.sport = :sport";
+            TypedQuery<Team> query = entityManager.createQuery(jpql, Team.class);
+            query.setParameter("sport", sport);
+            
+            return query.getResultList();     
+        } catch (Exception e){
+            e.printStackTrace();
+            return null;
         }
     }
 }

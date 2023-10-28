@@ -11,7 +11,7 @@ public class TournamentModel extends AbstractModel {
     private Long openedTournamentId = -1L;
     
     public void checkEnableMatch(Match match) {
-        if (match.getEnded()){
+        if (match.getEnded() != null && match.getEnded()){
             canStartMatch = true;
             pcs.firePropertyChange("tournament_matchstate", (Boolean) canStartMatch, (Boolean)  true);
         } else {

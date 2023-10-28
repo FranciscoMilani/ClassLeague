@@ -33,6 +33,9 @@ public class TournamentTeam implements Serializable {
     
     private Integer bracketSeed;
 
+    public TournamentTeam() {
+    }
+    
     public TournamentTeamKey getTournamentTeamKey() {
         return tournamentTeamKey;
     }
@@ -56,8 +59,6 @@ public class TournamentTeam implements Serializable {
     public void setTeam(Team team) {
         this.team = team;
     }
-    
-    
     
     public Integer getPoints() {
         return points;

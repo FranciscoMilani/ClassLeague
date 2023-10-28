@@ -2,14 +2,18 @@ package br.ucs.classleague.infrastructure.presentation.controllers;
 
 import br.ucs.classleague.application.Services.ClassService;
 import br.ucs.classleague.application.Services.TeamRegisterService;
+import br.ucs.classleague.application.Services.TournamentService;
 import br.ucs.classleague.domain.Coach;
 import br.ucs.classleague.domain.SchoolClass;
 import br.ucs.classleague.domain.Sport;
+import br.ucs.classleague.domain.Sport.SportsEnum;
 import br.ucs.classleague.domain.Student;
 import br.ucs.classleague.domain.StudentTeam;
 import br.ucs.classleague.domain.StudentTeamKey;
 import br.ucs.classleague.domain.Team;
 import br.ucs.classleague.domain.Tournament;
+import br.ucs.classleague.domain.TournamentTeam;
+import br.ucs.classleague.domain.TournamentTeamKey;
 import br.ucs.classleague.infrastructure.data.ClassDao;
 import br.ucs.classleague.infrastructure.data.CoachDao;
 import br.ucs.classleague.infrastructure.data.EntityManagerProvider;
@@ -23,9 +27,11 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.stream.Collectors;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
@@ -44,6 +50,7 @@ public class RegisterController {
     private TeamRegisterService teamRegisterService = new TeamRegisterService();
     private StudentTeamDao studentTeamDao = new StudentTeamDao();
     private TournamentDao tournamentDao = new TournamentDao();
+    private TournamentService tournamentService = new TournamentService();
 
     public RegisterController(GUI frame) {
         this.frame = frame;
@@ -95,6 +102,7 @@ public class RegisterController {
         int shiftIndex = frame.jClassShift.getSelectedIndex();
         int cycleIndex = frame.jClassCycle.getSelectedIndex();
 
+        // TODO: Tratar campo de número
         SchoolClass schoolClass = new SchoolClass(
                 frame.jClassNameField.getText(),
                 Integer.parseInt(frame.jClassNumber.getText()),
@@ -105,12 +113,6 @@ public class RegisterController {
         classService.registerClass(schoolClass);
 
         return true;
-    }
-
-    private void resetTable(JTable table) {
-        DefaultTableModel model = (DefaultTableModel) table.getModel();
-        model.setRowCount(0);
-        table.revalidate();
     }
 
     public DefaultTableModel getTeamRegisterTableModel(int rowCount) {
@@ -141,29 +143,59 @@ public class RegisterController {
 
         try {
             Integer n = Integer.parseInt(number);
-
-            if (n == frame.prevClassNumber) {
-                return;
-            }
-
             students = new ArrayList<>();
-            frame.prevClassNumber = n;
-
-            resetTable(frame.jTeamRegisterStudentsTable);
             students = classDao.getStudentsByClassNumber(n);
         } catch (Exception e) {
             e.printStackTrace();
             return;
         }
 
-        DefaultTableModel model = getTeamRegisterTableModel(students.size());
-
-        frame.jTeamRegisterStudentsTable.setModel(model);
-
+        DefaultTableModel model = (DefaultTableModel) frame.jTeamRegisterStudentsTable.getModel();
+        ControllerUtilities.resetTable(frame.jTeamRegisterStudentsTable);
+        
         for (int i = 0; i < students.size(); i++) {
-            System.out.println(students.get(i).toString());
-            model.setValueAt(students.get(i).getId(), i, 0);
-            model.setValueAt(students.get(i).getName(), i, 1);
+            model.addRow(new Object[]{ 
+                students.get(i).getId(), 
+                students.get(i).getName(),
+            });
+        }
+    }
+    
+    public DefaultTableModel getTournamentRegisterTableModel(int rowCount){
+        String[] columnHeaders = new String[]{"ID", "Nome", ""};
+
+        DefaultTableModel model = new DefaultTableModel(columnHeaders, rowCount) {
+
+            // Apenas última coluna editável (checkbox)
+            public boolean isCellEditable(int row, int column) {
+                return column == 2;
+            }
+
+            // Cria colunas de tipos diferentes (última é Bool p/ checkbox)
+            public Class<?> getColumnClass(int column) {
+                if (column == 2) {
+                    return Boolean.class;
+                } else {
+                    return String.class;
+                }
+            }
+        };
+
+        return model;
+    }
+    
+    public void updateTournamentTeamTableCells(int sportEnumIndex){
+        List<Team> teams;
+
+        teams = teamDao.findBySportIndex(SportsEnum.values()[sportEnumIndex]);
+        DefaultTableModel model = (DefaultTableModel) frame.jTournamentRegisterTeamsTable.getModel();
+        ControllerUtilities.resetTable(frame.jTournamentRegisterTeamsTable);
+        
+        for (int i = 0; i < teams.size(); i++) {
+            model.addRow(new Object[]{ 
+                teams.get(i).getId(), 
+                teams.get(i).getName(),
+            });
         }
     }
 
@@ -271,8 +303,10 @@ public class RegisterController {
         try {
             Long tournamentId = this.tournamentDao.create(tournament).getId();
             assignTeamsToTournament(table, tournamentId);
+            tournamentService.createSimpleClashes(tournament);
             JOptionPane.showMessageDialog(null, "Sucesso!", "Torneio cadastrado com sucesso.", JOptionPane.INFORMATION_MESSAGE);
         } catch (Exception e) {
+            e.printStackTrace();
             JOptionPane.showMessageDialog(null, "Erro!", "Erro ao cadastrar torneio.", JOptionPane.ERROR_MESSAGE);
         }
     }
@@ -301,16 +335,26 @@ public class RegisterController {
     }
 
     private void assignTeamsToTournament(JTable table, Long tournamentId) {
-        List<Team> teamList = new ArrayList<>();
         Tournament tournament = tournamentDao.findById(tournamentId).get();
+        Set<TournamentTeam> ttSet = new HashSet<>();
+        
         for (int i = 0; i < table.getRowCount(); i++) {
             if (table.getValueAt(i, 2) != null && (Boolean) table.getValueAt(i, 2)) {
                 Long teamId = (Long) table.getValueAt(i, 0);
-                teamList.add(teamDao.searchTeamById(teamId));
+                Team team = teamDao.searchTeamById(teamId);
+                
+                // Cria chave composta para criar a entidade de junção Tournament-Team
+                TournamentTeam tt = new TournamentTeam();
+                tt.setTournamentTeamKey(new TournamentTeamKey(tournamentId, teamId));
+                tt.setTournament(tournament);
+                tt.setTeam(team);
+
+                ttSet.add(tt);
             }
         }
-        tournament.setTeamsList(teamList);
-        tournamentDao.updateTournament(tournament);
+        
+        // Atribui ao torneio o conjunto das entidades de junção criadas
+        tournament.setTournamentTeam(ttSet);
     }
 
     public static boolean isPowerOfTwo(int number) {
