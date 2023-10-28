@@ -210,6 +210,9 @@ public class GUI extends javax.swing.JFrame {
             public void windowActivated(java.awt.event.WindowEvent evt) {
                 tournamentDialogWindowActivated(evt);
             }
+            public void windowClosed(java.awt.event.WindowEvent evt) {
+                tournamentDialogWindowClosed(evt);
+            }
         });
 
         tournamentDialogMainPanel.setLayout(new java.awt.CardLayout());
@@ -403,6 +406,11 @@ public class GUI extends javax.swing.JFrame {
         );
 
         tournamentDialogMainPanel.add(tournamentMainPanel, "card1");
+        tournamentModel.addPropertyChangeListener((evt) -> {
+            if (evt.getPropertyName().equals(TournamentModel.MATCH_STATE)){
+                startNewMatchButton.setEnabled(tournamentModel.getCanStartMatch());
+            }
+        });
 
         matchMainPanel.addComponentListener(new java.awt.event.ComponentAdapter() {
             public void componentShown(java.awt.event.ComponentEvent evt) {
@@ -1767,6 +1775,7 @@ public class GUI extends javax.swing.JFrame {
     }//GEN-LAST:event_jRegisterStudentBirthdateFieldActionPerformed
 
     private void tournamentDialogWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_tournamentDialogWindowActivated
+        tournamentController.resetTournamentWindow();
         tournamentController.fillTournamentData();
         cl.first(tournamentDialogMainPanel);
     }//GEN-LAST:event_tournamentDialogWindowActivated
@@ -1803,8 +1812,12 @@ public class GUI extends javax.swing.JFrame {
     }//GEN-LAST:event_startNewMatchButtonActionPerformed
 
     private void matchMainPanelComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_matchMainPanelComponentShown
-        System.out.println("shown");
+        
     }//GEN-LAST:event_matchMainPanelComponentShown
+
+    private void tournamentDialogWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_tournamentDialogWindowClosed
+        tournamentController.resetTournamentWindow();
+    }//GEN-LAST:event_tournamentDialogWindowClosed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

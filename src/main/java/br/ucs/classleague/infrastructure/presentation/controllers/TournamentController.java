@@ -136,4 +136,9 @@ public class TournamentController {
             });
         }
     }
+    
+    public void resetTournamentWindow() {
+        tournamentModel.setTournamentId(-1L);
+        tournamentModel.setEnableMatch(false);
+    }
 }

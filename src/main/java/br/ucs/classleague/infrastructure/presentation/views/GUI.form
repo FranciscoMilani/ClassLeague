@@ -18,6 +18,7 @@
       </Properties>
       <Events>
         <EventHandler event="windowActivated" listener="java.awt.event.WindowListener" parameters="java.awt.event.WindowEvent" handler="tournamentDialogWindowActivated"/>
+        <EventHandler event="windowClosed" listener="java.awt.event.WindowListener" parameters="java.awt.event.WindowEvent" handler="tournamentDialogWindowClosed"/>
       </Events>
 
       <Layout>
@@ -41,6 +42,9 @@
           <Layout class="org.netbeans.modules.form.compat2.layouts.DesignCardLayout"/>
           <SubComponents>
             <Container class="javax.swing.JPanel" name="tournamentMainPanel">
+              <AuxValues>
+                <AuxValue name="JavaCodeGenerator_AddingCodePost" type="java.lang.String" value="tournamentModel.addPropertyChangeListener((evt) -&gt; {&#xa;    if (evt.getPropertyName().equals(TournamentModel.MATCH_STATE)){&#xa;        startNewMatchButton.setEnabled(tournamentModel.getCanStartMatch());&#xa;    }&#xa;});"/>
+              </AuxValues>
               <Constraints>
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignCardLayout" value="org.netbeans.modules.form.compat2.layouts.DesignCardLayout$CardConstraintsDescription">
                   <CardConstraints cardName="card1"/>

@@ -11,19 +11,33 @@ public class TournamentModel extends AbstractModel {
     private Long openedTournamentId = -1L;
     
     public void checkEnableMatch(Match match) {
-        if (match.getEnded() != null && match.getEnded()){
-            canStartMatch = true;
-            pcs.firePropertyChange("tournament_matchstate", (Boolean) canStartMatch, (Boolean)  true);
+        // se a partida não terminou, quer dizer que ainda não aconteceu e pode inicia-la
+        if (!match.getEnded()){
+            setEnableMatch(true);
         } else {
-            canStartMatch = false;
-            pcs.firePropertyChange("tournament_matchstate", (Boolean) canStartMatch, (Boolean)  false);
+            setEnableMatch(false);
         }
     }
     
-    public void setTournamentId(Long openedTournamentId) {
+    public void setEnableMatch(Boolean newVal){
+        var oldVal = canStartMatch;
+        canStartMatch = newVal;
+        
+        pcs.firePropertyChange("tournament_matchstate", (Boolean) oldVal, (Boolean) newVal);
+    }
+    
+    public void setTournamentId(Long newVal) {
         var oldTournament = openedTournamentId;
-        this.openedTournamentId = openedTournamentId;
+        openedTournamentId = newVal;
         
         pcs.firePropertyChange("tournament_currenttournament", oldTournament, openedTournamentId);
+    }
+    
+    public Boolean getCanStartMatch() {
+        return canStartMatch;
+    }
+
+    public Long getOpenedTournamentId() {
+        return openedTournamentId;
     }
 }
