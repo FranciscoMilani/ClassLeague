@@ -48,7 +48,7 @@ public class TournamentController {
             Tournament t = tournamentDao.findById(curTournamentId).get();
             
             frame.tournamentDialogNameData.setText(t.getName());
-            frame.tournamentDialogSportTypeInfoData.setText(t.getSportType().getName());
+            frame.tournamentDialogSportTypeInfoData.setText(t.getSportEnum().getName());
             frame.tournamentDialogStartDateInfoData.setText(t.getStartTime().toString());
             frame.tournamentDialogEndInfoData.setText(t.getEndTime().toString());
             //frame.tournamentDialogPhaseLabel.setText(t.getPhase().getName());
@@ -99,7 +99,7 @@ public class TournamentController {
         for (int i = 0; i < tournaments.size(); i++) {
             model.addRow(new Object[]{ 
                 tournaments.get(i).getId(), 
-                tournaments.get(i).getSportType().getName() ,
+                tournaments.get(i).getSportEnum().getName() ,
                 tournaments.get(i).getName(),
                 tournaments.get(i).getStartTime()
             });

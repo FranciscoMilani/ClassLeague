@@ -4,7 +4,7 @@ public abstract class Sport {
     
     private SportsEnum sport;
     private Integer matchDurationMinutes;
-    private Integer halfAmount;         // quantidade de "períodos" e.g. sets, tempo, quadro...
+    private Integer periodAmount;         // quantidade de "períodos" e.g. sets, tempo, quadro...
     private Boolean pointsPerPlayer;
     
     public static enum SportsEnum {
@@ -24,14 +24,11 @@ public abstract class Sport {
         }
     }
 
-    public Sport() {
-    }
-
-    public Sport(SportsEnum sport, Integer matchDurationMinutes, Integer halfAmount, 
+    public Sport(SportsEnum sport, Integer matchDurationMinutes, Integer periodAmount, 
             Boolean pointsPerPlayer) {
         this.sport = sport;
         this.matchDurationMinutes = matchDurationMinutes;
-        this.halfAmount = halfAmount;
+        this.periodAmount = periodAmount;
         this.pointsPerPlayer = pointsPerPlayer;
     }
     
@@ -51,12 +48,12 @@ public abstract class Sport {
         this.matchDurationMinutes = matchDurationMinutes;
     }
 
-    public Integer getHalfAmount() {
-        return halfAmount;
+    public Integer getPeriodAmount() {
+        return periodAmount;
     }
 
-    public void setHalfAmount(Integer halfAmount) {
-        this.halfAmount = halfAmount;
+    public void setPeriodAmount(Integer periodAmount) {
+        this.periodAmount = periodAmount;
     }
 
     public Boolean getPointsPerPlayer() {

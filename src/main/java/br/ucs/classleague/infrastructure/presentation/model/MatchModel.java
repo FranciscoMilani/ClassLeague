@@ -10,6 +10,7 @@ public class MatchModel extends AbstractModel {
     private Match match;
     private MatchTimer timer;
     private Long tournamentId;
+    private Long selectedMatchId;
     
     // Disparar firePropertyChange após mudar as variáveis para a View "ouvir" as mudanças nos métodos desse model
     // Esse método é chamado no Controller. O controller não deve implementar lógica de negócio
@@ -19,6 +20,17 @@ public class MatchModel extends AbstractModel {
 
     public void setInfo(){
         
+    }
+
+    public Long getMatchId() {
+        return selectedMatchId;
+    }
+    
+    public void setMatchId(Long matchId) {
+        var oldVal = matchId;
+        this.selectedMatchId = matchId;
+        
+        pcs.firePropertyChange(MATCH_ID, oldVal, matchId);
     }
     
     public Match getMatch() {

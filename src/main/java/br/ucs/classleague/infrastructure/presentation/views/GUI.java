@@ -41,7 +41,7 @@ public class GUI extends javax.swing.JFrame {
     private void initControllers() {
         this.registerController = new RegisterController(this);
         this.tournamentController = new TournamentController(this, tournamentModel);
-        this.matchController = new MatchController(this, matchModel);
+        this.matchController = new MatchController(this, matchModel, tournamentModel);
     }
 
     /**
@@ -81,10 +81,12 @@ public class GUI extends javax.swing.JFrame {
         matchSubtitle = new javax.swing.JLabel();
         matchInfoPanel = new javax.swing.JPanel();
         matchInfoTitle = new javax.swing.JLabel();
-        matchInfoTeams = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
+        matchPhaseDataLabel = new javax.swing.JLabel();
+        matchStartTimeDataLabel = new javax.swing.JLabel();
+        matchEndTimeDataLabel = new javax.swing.JLabel();
         matchStatusInfoPanel = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -93,12 +95,13 @@ public class GUI extends javax.swing.JFrame {
         matchControlTimerPanel = new javax.swing.JPanel();
         jLabel9 = new javax.swing.JLabel();
         timerPlayButton = new javax.swing.JToggleButton();
-        timerDecreaseTimeButton = new javax.swing.JButton();
-        timerIncreaseTimeButton = new javax.swing.JButton();
+        timerNextPeriodButton = new javax.swing.JButton();
+        timerResetTimerButton = new javax.swing.JButton();
         timerProgressBar = new javax.swing.JProgressBar();
         timerCurrentTimeLabel = new javax.swing.JLabel();
         timerEndTimeLabel = new javax.swing.JLabel();
         timerPeriodLabel = new javax.swing.JLabel();
+        timerPeriodNumberLabel = new javax.swing.JLabel();
         matchControlPointsPanel = new javax.swing.JPanel();
         studentAddPointComboBox = new javax.swing.JComboBox<>();
         jSpinner1 = new javax.swing.JSpinner();
@@ -313,8 +316,9 @@ public class GUI extends javax.swing.JFrame {
             int row = tournamentMatchesTable.getSelectedRow();
 
             if (!evt.getValueIsAdjusting() && row != -1) {
-                String val = tournamentMatchesTable.getValueAt(row, 0).toString();
-                tournamentController.checkEnableMatch(val);
+                String matchId = tournamentMatchesTable.getValueAt(row, 0).toString();
+                matchModel.setMatchId(Long.parseLong(matchId));
+                tournamentController.checkEnableMatch(matchId);
             }
         });
 
@@ -435,13 +439,11 @@ public class GUI extends javax.swing.JFrame {
         matchInfoTitle.setFont(new java.awt.Font("Segoe UI Semibold", 0, 18)); // NOI18N
         matchInfoTitle.setText("Informações");
 
-        matchInfoTeams.setText("Time X v Time Y");
+        jLabel6.setText("Hora de início:");
 
-        jLabel6.setText("Hora");
+        jLabel7.setText("Data de início:");
 
-        jLabel7.setText("Data");
-
-        jLabel8.setText("Quartas");
+        jLabel8.setText("Etapa:");
 
         javax.swing.GroupLayout matchInfoPanelLayout = new javax.swing.GroupLayout(matchInfoPanel);
         matchInfoPanel.setLayout(matchInfoPanelLayout);
@@ -452,14 +454,20 @@ public class GUI extends javax.swing.JFrame {
                 .addGroup(matchInfoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(matchInfoTitle)
                     .addGroup(matchInfoPanelLayout.createSequentialGroup()
+                        .addComponent(jLabel8)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(matchPhaseDataLabel)
+                        .addGap(155, 155, 155)
                         .addGroup(matchInfoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(matchInfoTeams)
-                            .addComponent(jLabel8))
-                        .addGap(152, 152, 152)
-                        .addGroup(matchInfoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel7)
-                            .addComponent(jLabel6))))
-                .addContainerGap(225, Short.MAX_VALUE))
+                            .addGroup(matchInfoPanelLayout.createSequentialGroup()
+                                .addComponent(jLabel7)
+                                .addGap(12, 12, 12)
+                                .addComponent(matchEndTimeDataLabel))
+                            .addGroup(matchInfoPanelLayout.createSequentialGroup()
+                                .addComponent(jLabel6)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(matchStartTimeDataLabel)))))
+                .addContainerGap(172, Short.MAX_VALUE))
         );
         matchInfoPanelLayout.setVerticalGroup(
             matchInfoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -468,12 +476,14 @@ public class GUI extends javax.swing.JFrame {
                 .addComponent(matchInfoTitle)
                 .addGap(31, 31, 31)
                 .addGroup(matchInfoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(matchInfoTeams)
-                    .addComponent(jLabel6))
+                    .addComponent(jLabel6)
+                    .addComponent(jLabel8)
+                    .addComponent(matchPhaseDataLabel)
+                    .addComponent(matchStartTimeDataLabel))
                 .addGap(45, 45, 45)
-                .addGroup(matchInfoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(matchInfoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel7)
-                    .addComponent(jLabel8))
+                    .addComponent(matchEndTimeDataLabel))
                 .addContainerGap(28, Short.MAX_VALUE))
         );
 
@@ -520,22 +530,22 @@ public class GUI extends javax.swing.JFrame {
             }
         });
 
-        timerDecreaseTimeButton.setBackground(new java.awt.Color(102, 102, 255));
-        timerDecreaseTimeButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/tempo-24.png"))); // NOI18N
-        timerDecreaseTimeButton.setToolTipText("Avançar tempo/set/quadro");
-        timerDecreaseTimeButton.setEnabled(false);
-        timerDecreaseTimeButton.addActionListener(new java.awt.event.ActionListener() {
+        timerNextPeriodButton.setBackground(new java.awt.Color(102, 102, 255));
+        timerNextPeriodButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/tempo-24.png"))); // NOI18N
+        timerNextPeriodButton.setToolTipText("Avançar tempo/set/quadro");
+        timerNextPeriodButton.setEnabled(false);
+        timerNextPeriodButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                timerDecreaseTimeButtonActionPerformed(evt);
+                timerNextPeriodButtonActionPerformed(evt);
             }
         });
 
-        timerIncreaseTimeButton.setBackground(new java.awt.Color(255, 102, 102));
-        timerIncreaseTimeButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/restart-24.png"))); // NOI18N
-        timerIncreaseTimeButton.setToolTipText("Resetar cronômetro");
-        timerIncreaseTimeButton.addActionListener(new java.awt.event.ActionListener() {
+        timerResetTimerButton.setBackground(new java.awt.Color(255, 102, 102));
+        timerResetTimerButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/restart-24.png"))); // NOI18N
+        timerResetTimerButton.setToolTipText("Resetar cronômetro");
+        timerResetTimerButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                timerIncreaseTimeButtonActionPerformed(evt);
+                timerResetTimerButtonActionPerformed(evt);
             }
         });
 
@@ -549,7 +559,10 @@ public class GUI extends javax.swing.JFrame {
         timerEndTimeLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         timerEndTimeLabel.setText("00:00");
 
-        timerPeriodLabel.setText("1º Tempo");
+        timerPeriodLabel.setText("º Tempo");
+
+        timerPeriodNumberLabel.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        timerPeriodNumberLabel.setText("1");
 
         javax.swing.GroupLayout matchControlTimerPanelLayout = new javax.swing.GroupLayout(matchControlTimerPanel);
         matchControlTimerPanel.setLayout(matchControlTimerPanelLayout);
@@ -557,27 +570,30 @@ public class GUI extends javax.swing.JFrame {
             matchControlTimerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, matchControlTimerPanelLayout.createSequentialGroup()
                 .addGap(101, 101, 101)
-                .addComponent(timerDecreaseTimeButton, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(timerNextPeriodButton, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(60, 60, 60)
                 .addComponent(timerPlayButton, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 60, Short.MAX_VALUE)
-                .addComponent(timerIncreaseTimeButton, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(timerResetTimerButton, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(102, 102, 102))
             .addGroup(matchControlTimerPanelLayout.createSequentialGroup()
                 .addGroup(matchControlTimerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(matchControlTimerPanelLayout.createSequentialGroup()
-                        .addGap(163, 163, 163)
-                        .addComponent(timerCurrentTimeLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(timerEndTimeLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(matchControlTimerPanelLayout.createSequentialGroup()
                         .addGap(25, 25, 25)
                         .addGroup(matchControlTimerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel9)
                             .addComponent(timerProgressBar, javax.swing.GroupLayout.PREFERRED_SIZE, 447, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(matchControlTimerPanelLayout.createSequentialGroup()
-                        .addGap(219, 219, 219)
-                        .addComponent(timerPeriodLabel)))
+                        .addGap(163, 163, 163)
+                        .addGroup(matchControlTimerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(matchControlTimerPanelLayout.createSequentialGroup()
+                                .addGap(6, 6, 6)
+                                .addComponent(timerPeriodNumberLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(timerCurrentTimeLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(matchControlTimerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(timerEndTimeLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 72, Short.MAX_VALUE)
+                            .addComponent(timerPeriodLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         matchControlTimerPanelLayout.setVerticalGroup(
@@ -587,12 +603,12 @@ public class GUI extends javax.swing.JFrame {
                 .addComponent(jLabel9)
                 .addGap(11, 11, 11)
                 .addGroup(matchControlTimerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(timerDecreaseTimeButton, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(timerNextPeriodButton, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(matchControlTimerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addComponent(timerPlayButton, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGroup(matchControlTimerPanelLayout.createSequentialGroup()
                             .addGap(38, 38, 38)
-                            .addComponent(timerIncreaseTimeButton, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(timerResetTimerButton, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
                 .addComponent(timerProgressBar, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -600,7 +616,9 @@ public class GUI extends javax.swing.JFrame {
                     .addComponent(timerEndTimeLabel)
                     .addComponent(timerCurrentTimeLabel))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(timerPeriodLabel)
+                .addGroup(matchControlTimerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(timerPeriodLabel)
+                    .addComponent(timerPeriodNumberLabel))
                 .addGap(17, 17, 17))
         );
 
@@ -668,7 +686,7 @@ public class GUI extends javax.swing.JFrame {
                         .addComponent(matchControlTimerPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(36, 36, 36)
                         .addComponent(matchControlPointsPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(16, Short.MAX_VALUE))))
+                        .addContainerGap(81, Short.MAX_VALUE))))
         );
         matchControlPanelLayout.setVerticalGroup(
             matchControlPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -696,7 +714,7 @@ public class GUI extends javax.swing.JFrame {
         matchMainPanelLayout.setHorizontalGroup(
             matchMainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(matchMainPanelLayout.createSequentialGroup()
-                .addContainerGap(12, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(matchMainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(matchMainPanelLayout.createSequentialGroup()
                         .addComponent(backToTournamentButton, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -705,12 +723,12 @@ public class GUI extends javax.swing.JFrame {
                     .addGroup(matchMainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                         .addGroup(matchMainPanelLayout.createSequentialGroup()
                             .addComponent(matchInfoPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 108, Short.MAX_VALUE)
                             .addComponent(matchStatusInfoPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addComponent(matchControlPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(matchSubtitle, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(matchTitle, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addContainerGap(12, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         matchMainPanelLayout.setVerticalGroup(
             matchMainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -984,7 +1002,7 @@ public class GUI extends javax.swing.JFrame {
                 .addGap(310, 310, 310)
                 .addGroup(tournamentRegisterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(tournamentLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(tournamentRegisterPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 0, Short.MAX_VALUE))
+                    .addComponent(tournamentRegisterPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                 .addContainerGap(359, Short.MAX_VALUE))
         );
         tournamentRegisterLayout.setVerticalGroup(
@@ -1781,7 +1799,7 @@ public class GUI extends javax.swing.JFrame {
     }//GEN-LAST:event_tournamentDialogWindowActivated
 
     private void backToTournamentButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backToTournamentButtonActionPerformed
-        if (MatchTimer.getState() != MatchState.WAITING){
+        if (MatchTimer.getState() != MatchState.WAITING) {
             JOptionPane.showMessageDialog(null, "A partida precisa ser encerrada para voltar");
         } else {
             cl.show(tournamentDialogMainPanel, "card1");   
@@ -1792,9 +1810,9 @@ public class GUI extends javax.swing.JFrame {
         tournamentController.getQueriedTableModel(searchTournamentField.getText());
     }//GEN-LAST:event_searchTournamentBtnActionPerformed
 
-    private void timerDecreaseTimeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_timerDecreaseTimeButtonActionPerformed
-        matchController.startNextPeriod();
-    }//GEN-LAST:event_timerDecreaseTimeButtonActionPerformed
+    private void timerNextPeriodButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_timerNextPeriodButtonActionPerformed
+        matchController.endPeriod();
+    }//GEN-LAST:event_timerNextPeriodButtonActionPerformed
     
     private void timerPlayButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_timerPlayButtonActionPerformed
         if (timerPlayButton.isSelected())
@@ -1803,11 +1821,12 @@ public class GUI extends javax.swing.JFrame {
             matchController.freezeTimer();
     }//GEN-LAST:event_timerPlayButtonActionPerformed
 
-    private void timerIncreaseTimeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_timerIncreaseTimeButtonActionPerformed
+    private void timerResetTimerButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_timerResetTimerButtonActionPerformed
         matchController.resetTimer();
-    }//GEN-LAST:event_timerIncreaseTimeButtonActionPerformed
+    }//GEN-LAST:event_timerResetTimerButtonActionPerformed
 
     private void startNewMatchButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_startNewMatchButtonActionPerformed
+        matchController.setMatchInfo(matchModel.getMatchId().toString());
         cl.show(tournamentDialogMainPanel, "card2");
     }//GEN-LAST:event_startNewMatchButtonActionPerformed
 
@@ -1912,10 +1931,12 @@ public class GUI extends javax.swing.JFrame {
     public javax.swing.JPanel matchControlPointsPanel;
     public javax.swing.JPanel matchControlTimerPanel;
     public javax.swing.JLabel matchControlTitle;
+    public javax.swing.JLabel matchEndTimeDataLabel;
     public javax.swing.JPanel matchInfoPanel;
-    public javax.swing.JLabel matchInfoTeams;
     public javax.swing.JLabel matchInfoTitle;
     public javax.swing.JPanel matchMainPanel;
+    public javax.swing.JLabel matchPhaseDataLabel;
+    public javax.swing.JLabel matchStartTimeDataLabel;
     public javax.swing.JPanel matchStatusInfoPanel;
     public javax.swing.JLabel matchSubtitle;
     public javax.swing.JLabel matchTitle;
@@ -1926,12 +1947,13 @@ public class GUI extends javax.swing.JFrame {
     public javax.swing.JPanel studentRegister2;
     public javax.swing.JPanel teamRegisterPanel;
     public javax.swing.JLabel timerCurrentTimeLabel;
-    public javax.swing.JButton timerDecreaseTimeButton;
     public javax.swing.JLabel timerEndTimeLabel;
-    public javax.swing.JButton timerIncreaseTimeButton;
+    public javax.swing.JButton timerNextPeriodButton;
     public javax.swing.JLabel timerPeriodLabel;
+    public javax.swing.JLabel timerPeriodNumberLabel;
     public javax.swing.JToggleButton timerPlayButton;
     public javax.swing.JProgressBar timerProgressBar;
+    public javax.swing.JButton timerResetTimerButton;
     public javax.swing.JLabel title4;
     public javax.swing.JDialog tournamentDialog;
     public javax.swing.JLabel tournamentDialogEndDateField;

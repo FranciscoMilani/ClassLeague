@@ -16,14 +16,6 @@ public class Match implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     
-//    @ManyToMany
-//    @JoinTable(
-//        joinColumns = @JoinColumn(name = "match_id"),
-//        inverseJoinColumns = @JoinColumn(name = "team_id"), 
-//        uniqueConstraints = @UniqueConstraint(name = "uc_match_team", columnNames = { "match_id", "team_id" })
-//    )
-//    private Set<Team> teams;
-    
     @ManyToOne
     @JoinColumn(nullable = false)
     private Team first_team;
@@ -65,15 +57,6 @@ public class Match implements Serializable {
     public void setDateTime(LocalDateTime dateTime) {
         this.dateTime = dateTime;
     }
-    
-//    public Team getTeam(int i) {
-//        List<Team> teamsList = new ArrayList<>(teams);
-//        return teamsList.get(i);
-//    }
-//    
-//    public void setTeam(Team team) {
-//        this.teams.add(team);
-//    }
 
     public Tournament getTournament() {
         return tournament;

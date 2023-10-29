@@ -22,12 +22,7 @@ public class MatchTimer {
         INTERVAL
     }
     
-    public void resetTime() {
-        currentTimeSeconds = 0;
-    }
-    
     public void addPeriod() {
-        state = MatchState.RUNNING;
         currentPeriod++;
     }
      
@@ -43,12 +38,23 @@ public class MatchTimer {
         return currentTimeSeconds;
     }
 
-    public Integer addCurrentTime(Integer currentTimeSeconds) {
-        this.currentTimeSeconds += currentTimeSeconds;
-        return currentTimeSeconds;
+    public void addCurrentTime(Integer timeToAddSeconds) {
+        currentTimeSeconds += timeToAddSeconds;
     }
 
     public Integer getCurrentPeriod() {
         return currentPeriod;
+    }
+    
+    public void resetTimer() {
+        state = MatchState.WAITING;
+        currentTimeSeconds = 0;
+        currentPeriod = 1;
+    }
+    
+    public void prepareNextPeriod() {
+        state = MatchState.INTERVAL;
+        currentTimeSeconds = 0;
+        currentPeriod++;
     }
 }

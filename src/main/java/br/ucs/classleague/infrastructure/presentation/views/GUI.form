@@ -308,7 +308,7 @@
                             </Property>
                           </Properties>
                           <AuxValues>
-                            <AuxValue name="JavaCodeGenerator_AddingCodePost" type="java.lang.String" value="tournamentMatchesTable.getSelectionModel().addListSelectionListener((evt) -&gt; {&#xa;    int row = tournamentMatchesTable.getSelectedRow();&#xa;&#xa;    if (!evt.getValueIsAdjusting() &amp;&amp; row != -1) {&#xa;        String val = tournamentMatchesTable.getValueAt(row, 0).toString();&#xa;        tournamentController.checkEnableMatch(val);&#xa;    }&#xa;});"/>
+                            <AuxValue name="JavaCodeGenerator_AddingCodePost" type="java.lang.String" value="tournamentMatchesTable.getSelectionModel().addListSelectionListener((evt) -&gt; {&#xa;    int row = tournamentMatchesTable.getSelectedRow();&#xa;&#xa;    if (!evt.getValueIsAdjusting() &amp;&amp; row != -1) {&#xa;        String matchId = tournamentMatchesTable.getValueAt(row, 0).toString();&#xa;        matchModel.setMatchId(Long.parseLong(matchId));&#xa;        tournamentController.checkEnableMatch(matchId);&#xa;    }&#xa;});"/>
                           </AuxValues>
                         </Component>
                       </SubComponents>
@@ -387,7 +387,7 @@
                 <DimensionLayout dim="0">
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" attributes="0">
-                          <EmptySpace pref="12" max="32767" attributes="0"/>
+                          <EmptySpace max="32767" attributes="0"/>
                           <Group type="103" groupAlignment="1" attributes="0">
                               <Group type="102" attributes="0">
                                   <Component id="backToTournamentButton" min="-2" pref="123" max="-2" attributes="0"/>
@@ -397,7 +397,7 @@
                               <Group type="103" groupAlignment="0" max="-2" attributes="0">
                                   <Group type="102" alignment="0" attributes="0">
                                       <Component id="matchInfoPanel" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace pref="30" max="32767" attributes="0"/>
+                                      <EmptySpace pref="108" max="32767" attributes="0"/>
                                       <Component id="matchStatusInfoPanel" min="-2" max="-2" attributes="0"/>
                                   </Group>
                                   <Component id="matchControlPanel" alignment="0" max="32767" attributes="0"/>
@@ -405,7 +405,7 @@
                                   <Component id="matchTitle" alignment="0" max="32767" attributes="0"/>
                               </Group>
                           </Group>
-                          <EmptySpace pref="12" max="32767" attributes="0"/>
+                          <EmptySpace max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -470,23 +470,30 @@
                   <Layout>
                     <DimensionLayout dim="0">
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" alignment="0" attributes="0">
+                          <Group type="102" attributes="0">
                               <EmptySpace min="-2" pref="24" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Component id="matchInfoTitle" min="-2" max="-2" attributes="0"/>
                                   <Group type="102" alignment="0" attributes="0">
+                                      <Component id="jLabel8" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                      <Component id="matchPhaseDataLabel" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace min="-2" pref="155" max="-2" attributes="0"/>
                                       <Group type="103" groupAlignment="0" attributes="0">
-                                          <Component id="matchInfoTeams" min="-2" max="-2" attributes="0"/>
-                                          <Component id="jLabel8" min="-2" max="-2" attributes="0"/>
-                                      </Group>
-                                      <EmptySpace min="-2" pref="152" max="-2" attributes="0"/>
-                                      <Group type="103" groupAlignment="0" attributes="0">
-                                          <Component id="jLabel7" min="-2" max="-2" attributes="0"/>
-                                          <Component id="jLabel6" min="-2" max="-2" attributes="0"/>
+                                          <Group type="102" attributes="0">
+                                              <Component id="jLabel7" min="-2" max="-2" attributes="0"/>
+                                              <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
+                                              <Component id="matchEndTimeDataLabel" min="-2" max="-2" attributes="0"/>
+                                          </Group>
+                                          <Group type="102" attributes="0">
+                                              <Component id="jLabel6" min="-2" max="-2" attributes="0"/>
+                                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                              <Component id="matchStartTimeDataLabel" min="-2" max="-2" attributes="0"/>
+                                          </Group>
                                       </Group>
                                   </Group>
                               </Group>
-                              <EmptySpace pref="225" max="32767" attributes="0"/>
+                              <EmptySpace pref="172" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                     </DimensionLayout>
@@ -497,13 +504,15 @@
                               <Component id="matchInfoTitle" min="-2" max="-2" attributes="0"/>
                               <EmptySpace min="-2" pref="31" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="3" attributes="0">
-                                  <Component id="matchInfoTeams" alignment="3" min="-2" max="-2" attributes="0"/>
                                   <Component id="jLabel6" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="jLabel8" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="matchPhaseDataLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="matchStartTimeDataLabel" alignment="3" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace min="-2" pref="45" max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="3" attributes="0">
-                                  <Component id="jLabel7" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="jLabel8" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="jLabel7" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="matchEndTimeDataLabel" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace pref="28" max="32767" attributes="0"/>
                           </Group>
@@ -519,25 +528,26 @@
                         <Property name="text" type="java.lang.String" value="Informa&#xe7;&#xf5;es"/>
                       </Properties>
                     </Component>
-                    <Component class="javax.swing.JLabel" name="matchInfoTeams">
-                      <Properties>
-                        <Property name="text" type="java.lang.String" value="Time X v Time Y"/>
-                      </Properties>
-                    </Component>
                     <Component class="javax.swing.JLabel" name="jLabel6">
                       <Properties>
-                        <Property name="text" type="java.lang.String" value="Hora"/>
+                        <Property name="text" type="java.lang.String" value="Hora de in&#xed;cio:"/>
                       </Properties>
                     </Component>
                     <Component class="javax.swing.JLabel" name="jLabel7">
                       <Properties>
-                        <Property name="text" type="java.lang.String" value="Data"/>
+                        <Property name="text" type="java.lang.String" value="Data de in&#xed;cio:"/>
                       </Properties>
                     </Component>
                     <Component class="javax.swing.JLabel" name="jLabel8">
                       <Properties>
-                        <Property name="text" type="java.lang.String" value="Quartas"/>
+                        <Property name="text" type="java.lang.String" value="Etapa:"/>
                       </Properties>
+                    </Component>
+                    <Component class="javax.swing.JLabel" name="matchPhaseDataLabel">
+                    </Component>
+                    <Component class="javax.swing.JLabel" name="matchStartTimeDataLabel">
+                    </Component>
+                    <Component class="javax.swing.JLabel" name="matchEndTimeDataLabel">
                     </Component>
                   </SubComponents>
                 </Container>
@@ -607,7 +617,7 @@
                                       <Component id="matchControlTimerPanel" min="-2" max="-2" attributes="0"/>
                                       <EmptySpace min="-2" pref="36" max="-2" attributes="0"/>
                                       <Component id="matchControlPointsPanel" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace pref="16" max="32767" attributes="0"/>
+                                      <EmptySpace pref="81" max="32767" attributes="0"/>
                                   </Group>
                               </Group>
                           </Group>
@@ -644,21 +654,15 @@
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Group type="102" alignment="1" attributes="0">
                                   <EmptySpace min="-2" pref="101" max="-2" attributes="0"/>
-                                  <Component id="timerDecreaseTimeButton" min="-2" pref="48" max="-2" attributes="0"/>
+                                  <Component id="timerNextPeriodButton" min="-2" pref="48" max="-2" attributes="0"/>
                                   <EmptySpace min="-2" pref="60" max="-2" attributes="0"/>
                                   <Component id="timerPlayButton" min="-2" pref="72" max="-2" attributes="0"/>
                                   <EmptySpace pref="60" max="32767" attributes="0"/>
-                                  <Component id="timerIncreaseTimeButton" min="-2" pref="48" max="-2" attributes="0"/>
+                                  <Component id="timerResetTimerButton" min="-2" pref="48" max="-2" attributes="0"/>
                                   <EmptySpace min="-2" pref="102" max="-2" attributes="0"/>
                               </Group>
                               <Group type="102" attributes="0">
                                   <Group type="103" groupAlignment="0" attributes="0">
-                                      <Group type="102" alignment="0" attributes="0">
-                                          <EmptySpace min="-2" pref="163" max="-2" attributes="0"/>
-                                          <Component id="timerCurrentTimeLabel" min="-2" pref="72" max="-2" attributes="0"/>
-                                          <EmptySpace type="separate" max="-2" attributes="0"/>
-                                          <Component id="timerEndTimeLabel" min="-2" pref="72" max="-2" attributes="0"/>
-                                      </Group>
                                       <Group type="102" alignment="0" attributes="0">
                                           <EmptySpace min="-2" pref="25" max="-2" attributes="0"/>
                                           <Group type="103" groupAlignment="0" attributes="0">
@@ -667,8 +671,19 @@
                                           </Group>
                                       </Group>
                                       <Group type="102" alignment="0" attributes="0">
-                                          <EmptySpace min="-2" pref="219" max="-2" attributes="0"/>
-                                          <Component id="timerPeriodLabel" min="-2" max="-2" attributes="0"/>
+                                          <EmptySpace min="-2" pref="163" max="-2" attributes="0"/>
+                                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                              <Group type="102" attributes="0">
+                                                  <EmptySpace min="6" pref="6" max="-2" attributes="0"/>
+                                                  <Component id="timerPeriodNumberLabel" max="32767" attributes="0"/>
+                                              </Group>
+                                              <Component id="timerCurrentTimeLabel" min="-2" pref="72" max="-2" attributes="0"/>
+                                          </Group>
+                                          <EmptySpace max="-2" attributes="0"/>
+                                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                              <Component id="timerEndTimeLabel" pref="72" max="32767" attributes="0"/>
+                                              <Component id="timerPeriodLabel" max="32767" attributes="0"/>
+                                          </Group>
                                       </Group>
                                   </Group>
                                   <EmptySpace max="32767" attributes="0"/>
@@ -682,12 +697,12 @@
                                   <Component id="jLabel9" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace min="-2" pref="11" max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="1" attributes="0">
-                                      <Component id="timerDecreaseTimeButton" min="-2" pref="48" max="-2" attributes="0"/>
+                                      <Component id="timerNextPeriodButton" min="-2" pref="48" max="-2" attributes="0"/>
                                       <Group type="103" alignment="1" groupAlignment="0" attributes="0">
                                           <Component id="timerPlayButton" alignment="0" min="-2" pref="72" max="-2" attributes="0"/>
                                           <Group type="102" alignment="0" attributes="0">
                                               <EmptySpace min="-2" pref="38" max="-2" attributes="0"/>
-                                              <Component id="timerIncreaseTimeButton" min="-2" pref="48" max="-2" attributes="0"/>
+                                              <Component id="timerResetTimerButton" min="-2" pref="48" max="-2" attributes="0"/>
                                           </Group>
                                       </Group>
                                   </Group>
@@ -699,7 +714,10 @@
                                       <Component id="timerCurrentTimeLabel" alignment="3" min="-2" max="-2" attributes="0"/>
                                   </Group>
                                   <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="timerPeriodLabel" min="-2" max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="3" attributes="0">
+                                      <Component id="timerPeriodLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      <Component id="timerPeriodNumberLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  </Group>
                                   <EmptySpace min="-2" pref="17" max="-2" attributes="0"/>
                               </Group>
                           </Group>
@@ -727,7 +745,7 @@
                             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="timerPlayButtonActionPerformed"/>
                           </Events>
                         </Component>
-                        <Component class="javax.swing.JButton" name="timerDecreaseTimeButton">
+                        <Component class="javax.swing.JButton" name="timerNextPeriodButton">
                           <Properties>
                             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                               <Color blue="ff" green="66" red="66" type="rgb"/>
@@ -739,10 +757,10 @@
                             <Property name="enabled" type="boolean" value="false"/>
                           </Properties>
                           <Events>
-                            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="timerDecreaseTimeButtonActionPerformed"/>
+                            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="timerNextPeriodButtonActionPerformed"/>
                           </Events>
                         </Component>
-                        <Component class="javax.swing.JButton" name="timerIncreaseTimeButton">
+                        <Component class="javax.swing.JButton" name="timerResetTimerButton">
                           <Properties>
                             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                               <Color blue="66" green="66" red="ff" type="rgb"/>
@@ -753,7 +771,7 @@
                             <Property name="toolTipText" type="java.lang.String" value="Resetar cron&#xf4;metro"/>
                           </Properties>
                           <Events>
-                            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="timerIncreaseTimeButtonActionPerformed"/>
+                            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="timerResetTimerButtonActionPerformed"/>
                           </Events>
                         </Component>
                         <Component class="javax.swing.JProgressBar" name="timerProgressBar">
@@ -781,7 +799,13 @@
                         </Component>
                         <Component class="javax.swing.JLabel" name="timerPeriodLabel">
                           <Properties>
-                            <Property name="text" type="java.lang.String" value="1&#xba; Tempo"/>
+                            <Property name="text" type="java.lang.String" value="&#xba; Tempo"/>
+                          </Properties>
+                        </Component>
+                        <Component class="javax.swing.JLabel" name="timerPeriodNumberLabel">
+                          <Properties>
+                            <Property name="horizontalAlignment" type="int" value="11"/>
+                            <Property name="text" type="java.lang.String" value="1"/>
                           </Properties>
                         </Component>
                       </SubComponents>

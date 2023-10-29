@@ -8,6 +8,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.PostLoad;
 import jakarta.persistence.Transient;
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -34,7 +35,7 @@ public class Tournament implements Serializable {
     
     @OneToMany(mappedBy = "tournament", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<TournamentTeam> tournamentTeam;
-    
+
     public static enum TournamentPhase {
         ROUND_OF_SIXTEEN("Oitavas de final"),
         QUARTERFINALS("Quartas de final"),
@@ -61,6 +62,11 @@ public class Tournament implements Serializable {
         this.endTime = endTime;
         this.sportEnum = sport;
     }
+    
+    @PostLoad
+    private void loadSport(){
+        sport = SportFactory.createSport(sportEnum);
+    }
 
     public Long getId() {
         return id;
@@ -77,15 +83,11 @@ public class Tournament implements Serializable {
     public void setName(String name) {
         this.name = name;
     }
-
-    public SportsEnum getSportType() {
-        return sportEnum;
-    }
     
     public Sport getSport(){
         return sport;
     }
-
+    
     public void setSport(Sport sport) {
         this.sport = sport;
         this.sportEnum = sport.getSport();

@@ -30,7 +30,7 @@ public class TournamentModel extends AbstractModel {
         var oldTournament = openedTournamentId;
         openedTournamentId = newVal;
         
-        pcs.firePropertyChange("tournament_currenttournament", oldTournament, openedTournamentId);
+        pcs.firePropertyChange("tournament_currenttournament", oldTournament, newVal);
     }
     
     public Boolean getCanStartMatch() {
