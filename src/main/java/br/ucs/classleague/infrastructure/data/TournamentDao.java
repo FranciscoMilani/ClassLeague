@@ -20,14 +20,4 @@ public class TournamentDao extends GenericDAO<Tournament, Long> {
         
         return resultList;
     }
-    
-    public void updateTournament(Tournament t){
-        EntityManager entityManager = EntityManagerProvider.getEntityManager();
-        try {
-           entityManager.getTransaction().begin();
-           entityManager.merge(t);
-           entityManager.getTransaction().commit();
-        } catch (Exception e) {
-        }
-    }
 }
