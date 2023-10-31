@@ -12,6 +12,7 @@ import br.ucs.classleague.domain.StudentTeam;
 import br.ucs.classleague.domain.StudentTeamKey;
 import br.ucs.classleague.domain.Team;
 import br.ucs.classleague.domain.Tournament;
+import br.ucs.classleague.domain.Tournament.TournamentPhase;
 import br.ucs.classleague.domain.TournamentTeam;
 import br.ucs.classleague.domain.TournamentTeamKey;
 import br.ucs.classleague.infrastructure.data.ClassDao;
@@ -285,19 +286,24 @@ public class RegisterController {
             }
         }
         System.out.println(count);
-        if (!isPowerOfTwo(count)) {
-            JOptionPane.showMessageDialog(null, "Quantidade de times incorreta para realização do chaveamento", "Erro!", JOptionPane.ERROR_MESSAGE);
+        if (!isPowerOfTwo(count) || count < 4) {
+            JOptionPane.showMessageDialog(null, "Quantidade de times incorreta para realização do chaveamento. Selecione potências de 2 maiores ou igual a 4.", "Erro", JOptionPane.ERROR_MESSAGE);
             return;
         }
         if (count > 16) {
-            JOptionPane.showMessageDialog(null, "Quantidade de times excedida, limite: 16 times", "Erro", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Quantidade de times excedida, limite: 16 times.", "Erro", JOptionPane.ERROR_MESSAGE);
             return;
         }
         int sportEnumIndex = frame.jTeamRegisterSportComboBox.getSelectedIndex();
+        
+        int phaseIndex = (int) (Math.log(count) / Math.log(2));
+        TournamentPhase startPhase = TournamentPhase.values()[phaseIndex];
+        
         Tournament tournament = new Tournament(this.frame.tournamentNameField.getText(),
                 parseStringToLocalDate(this.frame.tournamentStartDateField.getText()),
                 parseStringToLocalDate(this.frame.tournamentEndDateField.getText()),
-                Sport.SportsEnum.values()[sportEnumIndex]);
+                Sport.SportsEnum.values()[sportEnumIndex],
+                startPhase);
 
         //Salva o torneio no banco de dados
         try {
@@ -353,6 +359,7 @@ public class RegisterController {
             }
         }
         
+        tournamentDao.update(tournament);
         // Atribui ao torneio o conjunto das entidades de junção criadas
         tournament.setTournamentTeam(ttSet);
     }

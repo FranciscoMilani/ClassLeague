@@ -44,7 +44,7 @@ public class Tournament implements Serializable {
         
         private final String name;
         
-        TournamentPhase(String name){
+        TournamentPhase(String name) {
             this.name = name;
         }
 
@@ -56,11 +56,12 @@ public class Tournament implements Serializable {
     public Tournament() {
     }
 
-    public Tournament(String name, LocalDate startTime, LocalDate endTime, SportsEnum sport) {
+    public Tournament(String name, LocalDate startTime, LocalDate endTime, SportsEnum sport, TournamentPhase startPhase) {
         this.name = name;
         this.startTime = startTime;
         this.endTime = endTime;
         this.sportEnum = sport;
+        this.phase = startPhase;
     }
     
     @PostLoad

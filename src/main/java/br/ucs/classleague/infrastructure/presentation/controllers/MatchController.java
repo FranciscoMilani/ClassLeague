@@ -1,5 +1,6 @@
 package br.ucs.classleague.infrastructure.presentation.controllers;
 
+import br.ucs.classleague.domain.Match;
 import br.ucs.classleague.domain.MatchTimer;
 import br.ucs.classleague.domain.MatchTimer.MatchState;
 import br.ucs.classleague.infrastructure.data.DaoFactory;
@@ -10,6 +11,9 @@ import br.ucs.classleague.infrastructure.presentation.views.GUI;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.FormatStyle;
 import javax.swing.Timer;
 import javax.swing.UIManager;
 
@@ -38,7 +42,8 @@ public class MatchController {
     public void setMatchInfo(String matchId) {
         Long mId = Long.parseLong(matchId);
         matchModel.setMatch(dao.findById(mId).get());
-        matchModel.setInfo();
+        //matchModel.setInfo();
+        fillMatchInfo();
     }
     
     public void initTimer(int maxTimeSeconds) {
@@ -161,5 +166,27 @@ public class MatchController {
             
             timer = null;
         }
+    }
+    
+    public void fillMatchInfo() {
+        Match match = matchModel.getMatch();
+        
+        LocalDate date = match.getDateTime().toLocalDate();
+        DateTimeFormatter formatter = DateTimeFormatter.ofLocalizedDate(FormatStyle.LONG);
+        String dateText = date.format(formatter);
+        
+        view.matchStartTimeDataLabel.setText(dateText);
+        view.matchEndTimeDataLabel.setText("---");
+        view.matchPhaseDataLabel.setText(
+                match.getTournament()
+                        .getPhase()
+                        .getName()
+        );
+    }
+    
+    public void endMatch() {
+        Match match = matchModel.getMatch();
+        match.setEnded(true);
+        dao.update(match);
     }
 }

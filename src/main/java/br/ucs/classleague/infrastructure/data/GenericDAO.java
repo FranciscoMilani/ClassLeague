@@ -74,4 +74,21 @@ public class GenericDAO<T, ID extends Serializable> {
             //entityManager.close();
         }
     }
+    
+    public T update(T entity) {
+        EntityManager entityManager = EntityManagerProvider.getEntityManager();
+        T updatedEntity = null;
+        
+        try {
+            entityManager.getTransaction().begin();
+            updatedEntity = entityManager.merge(entity);    
+            entityManager.refresh(updatedEntity);
+            entityManager.getTransaction().commit();
+        } catch (Exception e) {
+            entityManager.getTransaction().rollback();
+            e.printStackTrace();
+        }
+        
+        return updatedEntity;
+    }
 }
