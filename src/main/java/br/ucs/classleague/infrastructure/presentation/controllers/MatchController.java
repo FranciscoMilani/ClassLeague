@@ -107,6 +107,7 @@ public class MatchController {
             view.timerCurrentTimeLabel.setForeground(defaultColor);
             view.timerCurrentTimeLabel.setText("00:00");
             view.timerPeriodNumberLabel.setText("1");
+            view.timerProgressBar.setValue(0);
            
             view.timerPlayButton.setSelected(false);
             view.timerNextPeriodButton.setEnabled(false);

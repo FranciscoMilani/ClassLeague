@@ -112,7 +112,7 @@ public class GUI extends javax.swing.JFrame {
         jList1 = new javax.swing.JList<>();
         jButton9 = new javax.swing.JButton();
         backToTournamentButton = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
+        endMatchButton = new javax.swing.JButton();
         mainTabbedPane = new javax.swing.JTabbedPane();
         mainPanel = new javax.swing.JPanel();
         mainTopPanel = new javax.swing.JPanel();
@@ -744,10 +744,10 @@ public class GUI extends javax.swing.JFrame {
             }
         });
 
-        jButton4.setText("Encerrar Partida");
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
+        endMatchButton.setText("Encerrar Partida");
+        endMatchButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
+                endMatchButtonActionPerformed(evt);
             }
         });
 
@@ -763,7 +763,7 @@ public class GUI extends javax.swing.JFrame {
                     .addGroup(matchMainPanelLayout.createSequentialGroup()
                         .addComponent(backToTournamentButton, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(endMatchButton, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(matchControlPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(matchMainPanelLayout.createSequentialGroup()
                         .addComponent(matchInfoPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -787,7 +787,7 @@ public class GUI extends javax.swing.JFrame {
                 .addGap(18, 18, Short.MAX_VALUE)
                 .addGroup(matchMainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(backToTournamentButton, javax.swing.GroupLayout.DEFAULT_SIZE, 57, Short.MAX_VALUE)
-                    .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(endMatchButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(9, Short.MAX_VALUE))
         );
 
@@ -1043,7 +1043,7 @@ public class GUI extends javax.swing.JFrame {
                 .addGap(310, 310, 310)
                 .addGroup(tournamentRegisterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(tournamentLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(tournamentRegisterPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 0, Short.MAX_VALUE))
+                    .addComponent(tournamentRegisterPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                 .addContainerGap(359, Short.MAX_VALUE))
         );
         tournamentRegisterLayout.setVerticalGroup(
@@ -1879,9 +1879,9 @@ public class GUI extends javax.swing.JFrame {
         tournamentController.resetTournamentWindow();
     }//GEN-LAST:event_tournamentDialogWindowClosed
 
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+    private void endMatchButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_endMatchButtonActionPerformed
         matchController.endMatch();
-    }//GEN-LAST:event_jButton4ActionPerformed
+    }//GEN-LAST:event_endMatchButtonActionPerformed
 
     private void studentAddPointComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_studentAddPointComboBoxActionPerformed
         // TODO add your handling code here:
@@ -1912,7 +1912,7 @@ public class GUI extends javax.swing.JFrame {
     public javax.swing.JLabel coachSportLabel;
     public javax.swing.JTextField coachSurnameField1;
     public javax.swing.JLabel coachSurnameLabel;
-    public javax.swing.JButton jButton4;
+    public javax.swing.JButton endMatchButton;
     public javax.swing.JButton jButton7;
     public javax.swing.JButton jButton8;
     public javax.swing.JButton jButton9;

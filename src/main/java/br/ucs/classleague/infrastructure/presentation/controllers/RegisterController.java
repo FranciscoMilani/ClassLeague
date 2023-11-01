@@ -359,9 +359,13 @@ public class RegisterController {
             }
         }
         
-        tournamentDao.update(tournament);
         // Atribui ao torneio o conjunto das entidades de junção criadas
         tournament.setTournamentTeam(ttSet);
+        
+        // Edita entidade no banco e faz refresh da entidade p/ atualizar seu estado com a informação do banco
+        // Sem refresh(), não atualiza a referência aos TournamentTeams. Talvez a razão seja porque não foi feito persist dos TournamentTeams direto na criação.
+        tournamentDao.update(tournament);
+        tournamentDao.refresh(tournament);
     }
 
     public static boolean isPowerOfTwo(int number) {
