@@ -12,6 +12,9 @@ public class StudentTeamKey implements Serializable {
 
     @Column(name = "team_id")
     private Long teamId;
+
+    public StudentTeamKey() {
+    }
     
     public StudentTeamKey(Long studentId, Long teamId) {
         this.studentId = studentId;

@@ -14,6 +14,7 @@ import java.awt.event.ActionListener;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
+import javax.swing.JOptionPane;
 import javax.swing.Timer;
 import javax.swing.UIManager;
 
@@ -186,8 +187,15 @@ public class MatchController {
     }
     
     public void endMatch() {
-        Match match = matchModel.getMatch();
-        match.setEnded(true);
-        dao.update(match);
+        int option = JOptionPane.showConfirmDialog(view.tournamentDialog, "Confirmar encerramento?", "Encerrando partida", 0);
+        
+        // Marcou "Sim" para encerrar partida
+        if (option == 0) {
+            Match match = matchModel.getMatch();
+            match.setEnded(true);
+            dao.update(match);
+            
+            view.cl.show(view.tournamentDialogMainPanel, "card1");
+        }
     }
 }

@@ -13,7 +13,7 @@ import javax.swing.table.DefaultTableModel;
 
 public class TournamentController {
     
-    public static Long curTournamentId = -1L;
+    //public static Long curTournamentId = -1L;
     public static Long selectedMatchId = -1L;
     
     private GUI frame;
@@ -28,13 +28,19 @@ public class TournamentController {
     }
     
     public void showTournamentDialog(String tournamentId){
-        // TODO: mover o currentTournamentId para o model
-        curTournamentId = Long.parseLong(tournamentId);
+        Long curTournamentId = Long.parseLong(tournamentId);
         frame.jTournamentSelectTable.getSelectionModel().clearSelection();
-        frame.tournamentDialog.setVisible(true);
-        
-        fillTournamentMatchTableData(curTournamentId);
         tournamentModel.setTournamentId(curTournamentId);
+        fillTournamentMatchTableData(tournamentModel.getOpenedTournamentId());
+        
+        /* 
+            TODO: Reavaliar implementação de JDialogs como substitutos para múltiplos JFrames
+                - Modal bloqueia thread? atual quando habilitado. Por isso chamar setVisible no final da função.
+                - Ter em mente que pode dar problemas no resto da aplicação.
+                - Alterar parâmetros de modalityType e modalExclusionTypes resolve o problema mas cria outros problemas de visualização das janelas
+        */
+        
+        frame.tournamentDialog.setVisible(true);
     }
     
     public void checkEnableMatch(String matchId){
@@ -44,8 +50,8 @@ public class TournamentController {
     }
     
     public void fillTournamentData() {
-        if (curTournamentId != -1){
-            Tournament t = tournamentDao.findById(curTournamentId).get();
+        if (tournamentModel.getOpenedTournamentId() != -1){
+            Tournament t = tournamentDao.findById(tournamentModel.getOpenedTournamentId()).get();
             
             frame.tournamentDialogNameData.setText(t.getName());
             frame.tournamentDialogSportTypeInfoData.setText(t.getSportEnum().getName());
@@ -123,12 +129,12 @@ public class TournamentController {
     
     public void fillTournamentMatchTableData(Long tournamentId) {
         DefaultTableModel model = (DefaultTableModel) frame.tournamentMatchesTable.getModel();
-        Tournament tournament = tournamentDao.findById(curTournamentId).get();
+        Tournament tournament = tournamentDao.findById(tournamentModel.getOpenedTournamentId()).get();
         List<Match> matches = new ArrayList<>();
         matches.addAll(tournament.getMatches());
-                           
+  
         ControllerUtilities.resetTable(frame.tournamentMatchesTable);
-        for (int i = 0; i < matches.size(); i++) {
+        for (int i = 0; i < matches.size(); i++) {;
             model.addRow(new Object[]{
                 matches.get(i).getId(), 
                 matches.get(i).getFirst_team().getName(),
