@@ -2,6 +2,7 @@ package br.ucs.classleague.infrastructure.presentation.controllers;
 
 import br.ucs.classleague.application.Services.MatchService;
 import br.ucs.classleague.domain.Match;
+import br.ucs.classleague.domain.Team;
 import br.ucs.classleague.infrastructure.presentation.model.MatchModel;
 import br.ucs.classleague.infrastructure.presentation.views.GUI;
 import java.util.List;
@@ -22,35 +23,45 @@ public class MatchPointsController {
     
     public void fillPointsComboBox() {
         Match match = matchModel.getMatch();
-        view.addPointsComboBox.addItem(match.getSecond_team().getAcronym());
         view.addPointsComboBox.addItem(match.getFirst_team().getAcronym());
+        view.addPointsComboBox.addItem(match.getSecond_team().getAcronym());
     }
-    
-    public void addPoints() {
+
+    public void insertPoint(int point) {
         int row = view.pointsScoredTable.getSelectedRow();
+        Object cbItem = view.addPointsComboBox.getSelectedItem();
+        
         if (row == -1){
             return;
-        } 
+        }  
         
-        int pointsAmount = (Integer) view.selectPointsSpinner.getValue();
-        String studentId = view.pointsScoredTable.getValueAt(row, 0).toString();
-        String teamAcronym = view.addPointsComboBox.getSelectedItem().toString();
-        
-        if (view.addPointsComboBox.getSelectedItem() == null) {
-            JOptionPane.showMessageDialog(null, "Selecione um time e/ou jogador para destinar os pontos.");
+        if (cbItem == null) {
+            JOptionPane.showMessageDialog(view.tournamentDialog, "Selecione um time e/ou jogador para destinar os pontos");
             return;
         }
+        
+        String studentId = view.pointsScoredTable.getValueAt(row, 0).toString();
+        String teamAcronym = cbItem.toString();
+        Team team = matchService.getTeamWithAcronym(teamAcronym);
 
-        int newPointAmount = matchService.updatePointsForPlayer(
-                pointsAmount, 
+        int playerScore = matchService.updatePointsForPlayer(
+                point, 
                 Long.parseLong(studentId), 
-                matchService.getTeamWithAcronym(teamAcronym).getId()
+                team.getId()
         );
         
         view.pointsScoredTable.clearSelection();
-        view.pointsScoredTable.setValueAt(newPointAmount, row, 2);
+        view.pointsScoredTable.setValueAt(playerScore, row, 2);
+        
+        int teamScore = matchService.updatePointsForTeam(
+                matchModel.getMatch(),
+                team.getId(),
+                point
+        );
+        
+        setTeamScore(teamScore);
     }
-    
+
     public DefaultTableModel fillTeamList() {                   
         String teamAcronym = view.addPointsComboBox.getSelectedItem().toString();
 
@@ -66,8 +77,18 @@ public class MatchPointsController {
     
     public void resetPointsComponents() {
         view.addPointsComboBox.removeAllItems();
-        view.selectPointsSpinner.setValue(0);
         ControllerUtilities.resetTable(view.pointsScoredTable);
+    }
+    
+    private void setTeamScore(Integer score) {
+        int i = view.addPointsComboBox.getSelectedIndex();
+        String scoreText = Integer.toString(score);
+        
+        if (i == 0) {
+            view.firstTeamScoreLabel.setText(scoreText);
+        } else {
+            view.secondTeamScoreLabel.setText(scoreText);
+        }
     }
     
 }

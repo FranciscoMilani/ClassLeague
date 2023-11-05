@@ -17,6 +17,9 @@ public class Match implements Serializable {
     private Long id;
     
     @ManyToOne
+    private Tournament tournament;
+    
+    @ManyToOne
     @JoinColumn(nullable = false)
     private Team first_team;
     
@@ -24,12 +27,10 @@ public class Match implements Serializable {
     @JoinColumn(nullable = false)
     private Team second_team;
     
+    private Integer first_team_score = 0;
+    private Integer second_team_score = 0;
+    private Boolean ended = false;
     private LocalDateTime dateTime;
-    
-    private Boolean ended;
-    
-    @ManyToOne
-    private Tournament tournament;
 
     public Match() {
     }
@@ -90,4 +91,21 @@ public class Match implements Serializable {
         this.second_team = second_team;
     }
 
+    public Integer getFirst_team_score() {
+        return first_team_score;
+    }
+
+    public void setFirst_team_score(Integer first_team_score) {
+        this.first_team_score = first_team_score;
+    }
+
+    public Integer getSecond_team_score() {
+        return second_team_score;
+    }
+
+    public void setSecond_team_score(Integer second_team_score) {
+        this.second_team_score = second_team_score;
+    }
+
+    
 }

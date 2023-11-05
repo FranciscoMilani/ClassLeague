@@ -184,6 +184,9 @@ public class MatchController {
                         .getPhase()
                         .getName()
         );
+        
+        view.firstTeamNameLabel.setText(match.getFirst_team().getName());
+        view.secondTeamNameLabel.setText(match.getSecond_team().getName());
     }
     
     public void endMatch() {

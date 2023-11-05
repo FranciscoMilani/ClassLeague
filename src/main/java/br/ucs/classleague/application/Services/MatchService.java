@@ -1,5 +1,6 @@
 package br.ucs.classleague.application.Services;
 
+import br.ucs.classleague.domain.Match;
 import br.ucs.classleague.domain.Student;
 import br.ucs.classleague.domain.StudentTeam;
 import br.ucs.classleague.domain.StudentTeamKey;
@@ -46,9 +47,24 @@ public class MatchService {
 //    
     public int updatePointsForPlayer(Integer pointsAmount, Long studentId, Long teamId) {
         StudentTeam st = studentTeamDao.findByStudentTeamId(new StudentTeamKey(studentId, teamId));
-        st.setPoints(st.getPoints() + pointsAmount);
+        Integer score = Math.max(0, st.getPoints() + pointsAmount);
+        st.setPoints(score);
         studentTeamDao.update(st);
         return st.getPoints();
+    }
+    
+    public int updatePointsForTeam(Match match, Long teamId, Integer pointsAmount) {
+        Integer sum;
+        if (teamId == 0) {
+            sum = Math.max(0, match.getFirst_team_score() + pointsAmount);
+            match.setFirst_team_score(sum);
+        } else {
+            sum = Math.max(0, match.getSecond_team_score() + pointsAmount);
+            match.setSecond_team_score(sum);
+        }
+        
+        matchDao.update(match);
+        return sum;
     }
     
     public Team getTeamWithAcronym(String acronym) {
