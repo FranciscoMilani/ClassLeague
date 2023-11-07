@@ -6,6 +6,7 @@ import br.ucs.classleague.domain.Team;
 import br.ucs.classleague.infrastructure.presentation.model.MatchModel;
 import br.ucs.classleague.infrastructure.presentation.views.GUI;
 import java.util.List;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -23,8 +24,13 @@ public class MatchPointsController {
     
     public void fillPointsComboBox() {
         Match match = matchModel.getMatch();
-        view.addPointsComboBox.addItem(match.getFirst_team().getAcronym());
-        view.addPointsComboBox.addItem(match.getSecond_team().getAcronym());
+        
+        Object[] data = {
+            match.getFirst_team().getAcronym(),
+            match.getSecond_team().getAcronym()
+        };
+        
+        view.addPointsComboBox.setModel(new DefaultComboBoxModel(data));
     }
 
     public void insertPoint(int point) {
@@ -63,9 +69,8 @@ public class MatchPointsController {
         setTeamScore(teamScore);
     }
 
-    public DefaultTableModel fillTeamList() {        
+    public DefaultTableModel fillTeamPlayersList() {  
         ControllerUtilities.resetTable(view.pointsScoredTable);
-        
         String teamAcronym = view.addPointsComboBox.getSelectedItem().toString();
         DefaultTableModel model = (DefaultTableModel) view.pointsScoredTable.getModel();
         List<Object[]> teamStudentsToObjectArray = matchService.teamStudentsToObjectArray(teamAcronym);

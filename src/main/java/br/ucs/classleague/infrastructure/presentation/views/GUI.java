@@ -12,6 +12,7 @@ import br.ucs.classleague.infrastructure.presentation.model.MatchModel;
 import br.ucs.classleague.infrastructure.presentation.model.TournamentModel;
 import java.awt.CardLayout;
 import java.awt.event.ActionEvent;
+import java.awt.event.ItemEvent;
 import javax.swing.JOptionPane;
 import javax.swing.JTabbedPane;
 
@@ -669,9 +670,9 @@ public class GUI extends javax.swing.JFrame {
                 .addGap(17, 17, 17))
         );
 
-        addPointsComboBox.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                addPointsComboBoxActionPerformed(evt);
+        addPointsComboBox.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                addPointsComboBoxItemStateChanged(evt);
             }
         });
 
@@ -1866,12 +1867,10 @@ public class GUI extends javax.swing.JFrame {
     }//GEN-LAST:event_tournamentNameFieldActionPerformed
 
     private void tournamentSportComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tournamentSportComboBoxActionPerformed
-        // TODO add your handling code here:
         this.registerController.updateTournamentTeamTableCells(tournamentSportComboBox.getSelectedIndex());
     }//GEN-LAST:event_tournamentSportComboBoxActionPerformed
 
     private void tournamentRegisterButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tournamentRegisterButtonActionPerformed
-        // TODO add your handling code here:
         this.registerController.createTournament(jTournamentRegisterTeamsTable);
     }//GEN-LAST:event_tournamentRegisterButtonActionPerformed
 
@@ -1903,13 +1902,10 @@ public class GUI extends javax.swing.JFrame {
 
     private void startNewMatchButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_startNewMatchButtonActionPerformed
         setAndShowActiveTournamentDialogLayout("card2");
-        //matchController.setMatchInfo();
         
         matchPointsController.resetPointsComponents();
         matchPointsController.fillPointsComboBox();
-        matchPointsController.fillTeamList();
-        
-        //setAndShowActiveTournamentDialogLayout("card2");    
+        matchPointsController.fillTeamPlayersList();
     }//GEN-LAST:event_startNewMatchButtonActionPerformed
 
     private void tournamentDialogWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_tournamentDialogWindowClosed
@@ -1919,10 +1915,6 @@ public class GUI extends javax.swing.JFrame {
     private void endMatchButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_endMatchButtonActionPerformed
         matchController.endMatch();
     }//GEN-LAST:event_endMatchButtonActionPerformed
-
-    private void addPointsComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addPointsComboBoxActionPerformed
-        matchPointsController.fillTeamList();
-    }//GEN-LAST:event_addPointsComboBoxActionPerformed
 
     private void tournamentDialogComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_tournamentDialogComponentShown
         setAndShowActiveTournamentDialogLayout("card1");
@@ -1955,6 +1947,12 @@ public class GUI extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_tournamentDialogWindowClosing
+
+    private void addPointsComboBoxItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_addPointsComboBoxItemStateChanged
+        if (evt.getStateChange() == ItemEvent.SELECTED) {
+            matchPointsController.fillTeamPlayersList();
+        }
+    }//GEN-LAST:event_addPointsComboBoxItemStateChanged
 
     public void setAndShowActiveTournamentDialogLayout(String cardName) {
         int op = cardName.equals("card1") ? DISPOSE_ON_CLOSE : DO_NOTHING_ON_CLOSE;
