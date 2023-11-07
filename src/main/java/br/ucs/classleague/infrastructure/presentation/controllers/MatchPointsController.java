@@ -29,6 +29,7 @@ public class MatchPointsController {
 
     public void insertPoint(int point) {
         int row = view.pointsScoredTable.getSelectedRow();
+        int index = view.addPointsComboBox.getSelectedIndex();
         Object cbItem = view.addPointsComboBox.getSelectedItem();
         
         if (row == -1){
@@ -55,16 +56,17 @@ public class MatchPointsController {
         
         int teamScore = matchService.updatePointsForTeam(
                 matchModel.getMatch(),
-                team.getId(),
+                index,
                 point
         );
         
         setTeamScore(teamScore);
     }
 
-    public DefaultTableModel fillTeamList() {                   
+    public DefaultTableModel fillTeamList() {        
+        ControllerUtilities.resetTable(view.pointsScoredTable);
+        
         String teamAcronym = view.addPointsComboBox.getSelectedItem().toString();
-
         DefaultTableModel model = (DefaultTableModel) view.pointsScoredTable.getModel();
         List<Object[]> teamStudentsToObjectArray = matchService.teamStudentsToObjectArray(teamAcronym);
         
@@ -90,5 +92,4 @@ public class MatchPointsController {
             view.secondTeamScoreLabel.setText(scoreText);
         }
     }
-    
 }

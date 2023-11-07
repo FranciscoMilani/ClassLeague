@@ -297,7 +297,7 @@ public class RegisterController {
         int sportEnumIndex = frame.jTeamRegisterSportComboBox.getSelectedIndex();
         
         int phaseIndex = (int) (Math.log(count) / Math.log(2));
-        TournamentPhase startPhase = TournamentPhase.values()[phaseIndex];
+        TournamentPhase startPhase = TournamentPhase.values()[TournamentPhase.values().length - phaseIndex];
         
         Tournament tournament = new Tournament(this.frame.tournamentNameField.getText(),
                 parseStringToLocalDate(this.frame.tournamentStartDateField.getText()),
@@ -309,7 +309,7 @@ public class RegisterController {
         try {
             Long tournamentId = this.tournamentDao.create(tournament).getId();
             assignTeamsToTournament(table, tournamentId);
-            tournamentService.createSimpleClashes(tournament);
+            tournamentService.createInitialSimpleClashes(tournament);
             JOptionPane.showMessageDialog(null, "Sucesso!", "Torneio cadastrado com sucesso.", JOptionPane.INFORMATION_MESSAGE);
         } catch (Exception e) {
             e.printStackTrace();

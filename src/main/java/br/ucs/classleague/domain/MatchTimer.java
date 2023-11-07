@@ -7,7 +7,7 @@ public class MatchTimer {
     private Integer currentPeriod;
     
     static {
-        state = MatchState.WAITING;
+        MatchTimer.state = MatchState.WAITING;
     }
 
     public MatchTimer() {
@@ -19,7 +19,8 @@ public class MatchTimer {
         WAITING,
         RUNNING,
         STOPPED,
-        INTERVAL
+        INTERVAL,
+        ENDED
     }
     
     public void addPeriod() {
@@ -27,11 +28,11 @@ public class MatchTimer {
     }
      
     public static MatchState getState() {
-        return state;
+        return MatchTimer.state;
     }
     
     public static void setState(MatchState state) {
-        state = state;
+        MatchTimer.state = state;
     }
 
     public Integer getCurrentTime() {
@@ -47,13 +48,13 @@ public class MatchTimer {
     }
     
     public void resetTimer() {
-        state = MatchState.WAITING;
+        MatchTimer.state = MatchState.WAITING;
         currentTimeSeconds = 0;
         currentPeriod = 1;
     }
     
     public void prepareNextPeriod() {
-        state = MatchState.INTERVAL;
+        MatchTimer.state = MatchState.INTERVAL;
         currentTimeSeconds = 0;
         currentPeriod++;
     }
