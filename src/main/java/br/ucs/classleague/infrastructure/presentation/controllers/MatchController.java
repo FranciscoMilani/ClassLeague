@@ -14,6 +14,7 @@ import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
 import javax.swing.JOptionPane;
@@ -185,13 +186,21 @@ public class MatchController {
     
     public void fillInfoForMatchToBePlayed(Match match) {  
         LocalDate date = match.getDateTime().toLocalDate();
+        LocalTime time = match.getDateTime().toLocalTime();
+        
         DateTimeFormatter formatter = DateTimeFormatter.ofLocalizedDate(
                 FormatStyle.LONG
         );
+        
+        DateTimeFormatter formatterTime = DateTimeFormatter.ofLocalizedTime(
+                FormatStyle.SHORT
+        );
+        
         String dateText = date.format(formatter);
+        String timeText = time.format(formatterTime);
         
         view.matchStartTimeDataLabel.setText(dateText);
-        view.matchEndTimeDataLabel.setText("---");
+        view.matchEndTimeDataLabel.setText(timeText);
         view.matchPhaseDataLabel.setText(
                 match.getTournament()
                         .getPhase()
@@ -211,10 +220,18 @@ public class MatchController {
     
     public void fillInfoForEndedMatch(Match match) {  
         LocalDate date = match.getDateTime().toLocalDate();
+        LocalTime time = match.getDateTime().toLocalTime();
+        
         DateTimeFormatter formatter = DateTimeFormatter.ofLocalizedDate(
                 FormatStyle.LONG
         );
+        
+        DateTimeFormatter formatterTime = DateTimeFormatter.ofLocalizedTime(
+                FormatStyle.SHORT
+        );
+        
         String dateText = date.format(formatter);
+        String timeText = time.format(formatterTime);
         
         // buttons
         view.endMatchButton.setEnabled(false);
@@ -223,7 +240,7 @@ public class MatchController {
         
         // labels
         view.matchStartTimeDataLabel.setText(dateText);
-        view.matchEndTimeDataLabel.setText("---");
+        view.matchEndTimeDataLabel.setText(timeText);
         view.matchPhaseDataLabel.setText(match.getTournament().getPhase().getName());
         view.firstTeamNameLabel.setText(match.getFirst_team().getName());
         view.secondTeamNameLabel.setText(match.getSecond_team().getName());
