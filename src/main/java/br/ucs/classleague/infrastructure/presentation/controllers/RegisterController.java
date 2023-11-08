@@ -84,7 +84,7 @@ public class RegisterController {
                 frame.jRegisterStudentNameField.getText(),
                 frame.jRegisterStudentSurnameField.getText(),
                 parseStringToLocalDate(frame.jRegisterStudentBirthdateField.getText()),
-                frame.jRegisterStudentGenderField.getText(),
+                frame.studentGenderComboBox.getSelectedItem().toString(),
                 frame.jRegisterStudentTelephoneField.getText(),
                 frame.jRegisterStudentCPFField.getText()
         );
@@ -100,6 +100,7 @@ public class RegisterController {
     }
 
     public Boolean registerClass() {
+        try {
         int shiftIndex = frame.jClassShift.getSelectedIndex();
         int cycleIndex = frame.jClassCycle.getSelectedIndex();
 
@@ -112,8 +113,13 @@ public class RegisterController {
         );
 
         classService.registerClass(schoolClass);
+        JOptionPane.showMessageDialog(null, "Sucesso!", "Turma cadastrada com sucesso.", JOptionPane.INFORMATION_MESSAGE);
 
-        return true;
+        return true; 
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Erro!", "Erro ao cadastrar turma.", JOptionPane.ERROR);
+            return false;
+        }
     }
 
     public DefaultTableModel getTeamRegisterTableModel(int rowCount) {
@@ -203,6 +209,21 @@ public class RegisterController {
     public String[] showSportsNames() {
         return teamRegisterService.getSportsNames();
     }
+    
+    public String[] showClassShiftNames() {
+        return classService.getClassShiftNames();
+    }
+    
+    public String[] showEducationalCycleNames() {
+        return classService.getEducationalCycleNames();
+    }
+    
+    public String[] showGender() {
+        String[] str = new String[2];
+        str[0] = "Feminino";
+        str[1] = "Masculino";
+        return str;
+    }
 
     public void registerTeam(JTable table) {
         String name = frame.jTeamRegisterNameField.getText();
@@ -260,11 +281,12 @@ public class RegisterController {
     }
 
     public void createCoach() {
-        Coach coach = new Coach(this.frame.coachSportField.getText(),
+        int sportEnumIndex = frame.coachSportComboBox.getSelectedIndex();
+        Coach coach = new Coach(Sport.SportsEnum.values()[sportEnumIndex].getName(),
                 this.frame.coachNameField.getText(),
                 this.frame.coachSurnameField1.getText(),
                 parseStringToLocalDate(this.frame.coachBirthDateField.getText()),
-                this.frame.coachGenderField.getText(),
+                this.frame.coachGenderComboBox.getSelectedItem().toString(),
                 this.frame.coachPhoneField.getText(),
                 this.frame.coachCPFField.getText());
 
@@ -407,12 +429,10 @@ public class RegisterController {
     public void clearCoachRegisterFields() {
         this.frame.coachNameField.setText("");
         this.frame.coachSurnameField1.setText("");
-        this.frame.coachGenderField.setText("");
         this.frame.coachPhoneField.setText("");
         this.frame.coachNameField.setText("");
         this.frame.coachCPFField.setText("");
         this.frame.coachBirthDateField.setText("");
-        this.frame.coachSportField.setText("");
     }
 
     public void clearStudentRegisterFields() {
@@ -420,7 +440,6 @@ public class RegisterController {
         this.frame.jRegisterStudentSurnameField.setText("");
         this.frame.jRegisterStudentBirthdateField.setText("");
         this.frame.jRegisterStudentCPFField.setText("");
-        this.frame.jRegisterStudentGenderField.setText("");
         this.frame.jRegisterStudentFatherNameField.setText("");
         this.frame.jRegisterStudentMotherNameField.setText("");
         this.frame.jRegisterStudentTelephoneField.setText("");

@@ -13,7 +13,7 @@ public class SportFactory {
             }
             case FUTSAL: {
             }
-            case VOLLEYBALL: {
+            case HANDBALL: {
             }
             case BASKETBALL: {
             }
