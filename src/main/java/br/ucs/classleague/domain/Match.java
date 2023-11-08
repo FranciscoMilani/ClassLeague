@@ -1,5 +1,6 @@
 package br.ucs.classleague.domain;
 
+import br.ucs.classleague.domain.Tournament.TournamentPhase;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -31,16 +32,21 @@ public class Match implements Serializable {
     private Integer second_team_score = 0;
     private Boolean ended = false;
     private LocalDateTime dateTime;
+    private TournamentPhase phase;
+    
+    @ManyToOne
+    private Team winner;
 
     public Match() {
     }
 
-    public Match(Tournament tournament, LocalDateTime dateTime, Team t1, Team t2) {
+    public Match(Tournament tournament, LocalDateTime dateTime, Team t1, Team t2, TournamentPhase phase) {
         this.tournament = tournament;
         this.dateTime = dateTime;
         this.first_team = t1;
         this.second_team = t2;
         this.ended = false;
+        this.phase = phase;
     }
 
     public Long getId() {
@@ -107,5 +113,19 @@ public class Match implements Serializable {
         this.second_team_score = second_team_score;
     }
 
-    
+    public TournamentPhase getPhase() {
+        return phase;
+    }
+
+    public void setPhase(TournamentPhase phase) {
+        this.phase = phase;
+    }
+
+    public Team getWinner() {
+        return winner;
+    }
+
+    public void setWinner(Team winner) {
+        this.winner = winner;
+    }
 }

@@ -40,11 +40,7 @@ public class MatchService {
         
         return students;
     }
-    
-//    public updatePointsForTeam(String teamAcronym) {;
-//        
-//    }
-//    
+
     public int updatePointsForPlayer(Integer pointsAmount, Long studentId, Long teamId) {
         StudentTeam st = studentTeamDao.findByStudentTeamId(new StudentTeamKey(studentId, teamId));
         Integer score = Math.max(0, st.getPoints() + pointsAmount);
@@ -53,12 +49,12 @@ public class MatchService {
         return st.getPoints();
     }
     
-    public int updatePointsForTeam(Match match, Long teamId, Integer pointsAmount) {
-        Integer sum;
-        if (teamId == 0) {
+    public int updatePointsForTeam(Match match, Integer teamIndex, Integer pointsAmount) {
+        int sum = 0;
+        if (teamIndex == 0) {
             sum = Math.max(0, match.getFirst_team_score() + pointsAmount);
             match.setFirst_team_score(sum);
-        } else {
+        } else if (teamIndex == 1) {
             sum = Math.max(0, match.getSecond_team_score() + pointsAmount);
             match.setSecond_team_score(sum);
         }
@@ -69,5 +65,22 @@ public class MatchService {
     
     public Team getTeamWithAcronym(String acronym) {
         return teamDao.findByAcronym(acronym);
+    }
+    
+    public Team determineMatchWinner(Match match) {
+        int firstScore = match.getFirst_team_score();
+        int secondScore = match.getSecond_team_score();
+        
+        if (firstScore > secondScore) {
+            match.setWinner(match.getFirst_team());
+        } else if (firstScore < secondScore) {
+            match.setWinner(match.getSecond_team());
+        } else {
+            // empate
+            return null;
+        }
+
+        matchDao.update(match);
+        return (firstScore > secondScore) ? match.getFirst_team() : match.getSecond_team();
     }
 }

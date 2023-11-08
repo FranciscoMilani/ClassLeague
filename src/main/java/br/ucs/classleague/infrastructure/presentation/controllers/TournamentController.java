@@ -1,64 +1,70 @@
 package br.ucs.classleague.infrastructure.presentation.controllers;
 
+import br.ucs.classleague.application.Services.TournamentService;
 import br.ucs.classleague.domain.Match;
 import br.ucs.classleague.domain.Tournament;
 import br.ucs.classleague.infrastructure.data.DaoFactory;
 import br.ucs.classleague.infrastructure.data.MatchDao;
 import br.ucs.classleague.infrastructure.data.TournamentDao;
+import br.ucs.classleague.infrastructure.presentation.model.MatchModel;
 import br.ucs.classleague.infrastructure.presentation.model.TournamentModel;
 import br.ucs.classleague.infrastructure.presentation.views.GUI;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 import javax.swing.table.DefaultTableModel;
 
 public class TournamentController {
     
-    //public static Long curTournamentId = -1L;
     public static Long selectedMatchId = -1L;
     
     private GUI frame;
     private TournamentModel tournamentModel;
+    private MatchModel matchModel;
+    private TournamentDao tournamentDao;
+    private MatchDao matchDao;
+    private TournamentService tournamentService;
     
-    private TournamentDao tournamentDao = DaoFactory.getTournamentDao();
-    private MatchDao matchDao = DaoFactory.getMatchDao();
-    
-    public TournamentController(GUI frame, TournamentModel tournamentModel) {
+    public TournamentController(GUI frame, TournamentModel tournamentModel, MatchModel matchModel) {
         this.frame = frame;
         this.tournamentModel = tournamentModel;
+        this.matchModel = matchModel;
+        matchDao = DaoFactory.getMatchDao();
+        tournamentDao = DaoFactory.getTournamentDao();
+        tournamentService = new TournamentService();
     }
     
     public void showTournamentDialog(String tournamentId){
         Long curTournamentId = Long.parseLong(tournamentId);
         frame.jTournamentSelectTable.getSelectionModel().clearSelection();
-        tournamentModel.setTournamentId(curTournamentId);
-        fillTournamentMatchTableData(tournamentModel.getOpenedTournamentId());
         
-        /* 
-            TODO: Reavaliar implementação de JDialogs como substitutos para múltiplos JFrames
-                - Modal bloqueia thread? atual quando habilitado. Por isso chamar setVisible no final da função.
-                - Ter em mente que pode dar problemas no resto da aplicação.
-                - Alterar parâmetros de modalityType e modalExclusionTypes resolve o problema mas cria outros problemas de visualização das janelas
-        */
+        Tournament t = tournamentDao.findById(curTournamentId).get();
+        if (t != null) {
+            tournamentModel.setTournament(t);
+        }
         
+        fillTournamentMatchTableData(tournamentModel.getTournament());
         frame.tournamentDialog.setVisible(true);
     }
     
-    public void checkEnableMatch(String matchId){
-        Long mId = Long.parseLong(matchId);
-        Match match = matchDao.findById(mId).get();
+    public void checkEnableMatch(String matchId) {
+        Long id = Long.parseLong(matchId);
+        Match match = matchDao.findById(id).get();
+        
+        matchModel.setMatchId(id);
         tournamentModel.checkEnableMatch(match);
     }
     
     public void fillTournamentData() {
-        if (tournamentModel.getOpenedTournamentId() != -1){
-            Tournament t = tournamentDao.findById(tournamentModel.getOpenedTournamentId()).get();
-            
-            frame.tournamentDialogNameData.setText(t.getName());
-            frame.tournamentDialogSportTypeInfoData.setText(t.getSportEnum().getName());
-            frame.tournamentDialogStartDateInfoData.setText(t.getStartTime().toString());
-            frame.tournamentDialogEndInfoData.setText(t.getEndTime().toString());
-            //frame.tournamentDialogPhaseLabel.setText(t.getPhase().getName());
-        }
+        Tournament t = tournamentModel.getTournament();
+
+        frame.tournamentDialogNameData.setText(t.getName());
+        frame.tournamentDialogSportTypeInfoData.setText(t.getSportEnum().getName());
+        frame.tournamentDialogStartDateInfoData.setText(t.getStartTime().toString());
+        frame.tournamentDialogEndInfoData.setText(t.getEndTime().toString());
+        frame.tournamentDialogPhaseLabel.setText(t.getPhase().getName());
+
+        boolean canStart = tournamentService.checkNextPhase(t);
+        frame.startNewPhaseButton.setEnabled(canStart);
     }
     
     public DefaultTableModel getFullTableModel(){
@@ -127,13 +133,17 @@ public class TournamentController {
         return tournamentMatchModel;
     }
     
-    public void fillTournamentMatchTableData(Long tournamentId) {
+    public void fillTournamentMatchTableData(Tournament tournament) {
         DefaultTableModel model = (DefaultTableModel) frame.tournamentMatchesTable.getModel();
-        Tournament tournament = tournamentDao.findById(tournamentModel.getOpenedTournamentId()).get();
-        List<Match> matches = new ArrayList<>();
-        matches.addAll(tournament.getMatches());
+        
+        // coleta apenas confrontos da fase atual do torneio
+        List<Match> matches = tournament.getMatches()
+                .stream()
+                .filter((m) -> m.getPhase() == tournament.getPhase())
+                .collect(Collectors.toList());
   
         ControllerUtilities.resetTable(frame.tournamentMatchesTable);
+        
         for (int i = 0; i < matches.size(); i++) {;
             model.addRow(new Object[]{
                 matches.get(i).getId(), 
@@ -144,7 +154,13 @@ public class TournamentController {
     }
     
     public void resetTournamentWindow() {
-        tournamentModel.setTournamentId(-1L);
+        tournamentModel.setTournament(null);
         tournamentModel.setEnableMatch(false);
+    }
+    
+    public void startNextPhase() {
+        tournamentService.startNextPhase(tournamentModel.getTournament());
+        fillTournamentMatchTableData(tournamentModel.getTournament());
+        frame.startNewPhaseButton.setEnabled(false);
     }
 }

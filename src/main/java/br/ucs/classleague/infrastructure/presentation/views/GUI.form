@@ -22,6 +22,7 @@
       <Events>
         <EventHandler event="componentShown" listener="java.awt.event.ComponentListener" parameters="java.awt.event.ComponentEvent" handler="tournamentDialogComponentShown"/>
         <EventHandler event="windowClosed" listener="java.awt.event.WindowListener" parameters="java.awt.event.WindowEvent" handler="tournamentDialogWindowClosed"/>
+        <EventHandler event="windowClosing" listener="java.awt.event.WindowListener" parameters="java.awt.event.WindowEvent" handler="tournamentDialogWindowClosing"/>
       </Events>
 
       <Layout>
@@ -210,7 +211,7 @@
                         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                           <Image iconType="3" name="/icons/info-24.png"/>
                         </Property>
-                        <Property name="text" type="java.lang.String" value="Fase da competi&#xe7;&#xe3;o:"/>
+                        <Property name="text" type="java.lang.String" value="Fase eliminat&#xf3;ria:"/>
                       </Properties>
                     </Component>
                     <Component class="javax.swing.JLabel" name="tournamentDialogEndDateField">
@@ -294,7 +295,7 @@
                         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                           <Font name="Segoe UI Semibold" size="24" style="0"/>
                         </Property>
-                        <Property name="text" type="java.lang.String" value="Confrontos"/>
+                        <Property name="text" type="java.lang.String" value="Confrontos da Fase"/>
                       </Properties>
                     </Component>
                     <Container class="javax.swing.JScrollPane" name="tournamentMatchesTableScrollPane">
@@ -311,7 +312,7 @@
                             </Property>
                           </Properties>
                           <AuxValues>
-                            <AuxValue name="JavaCodeGenerator_AddingCodePost" type="java.lang.String" value="tournamentMatchesTable.getSelectionModel().addListSelectionListener((evt) -&gt; {&#xa;    int row = tournamentMatchesTable.getSelectedRow();&#xa;&#xa;    if (!evt.getValueIsAdjusting() &amp;&amp; row != -1) {&#xa;        String matchId = tournamentMatchesTable.getValueAt(row, 0).toString();&#xa;        matchModel.setMatchId(Long.parseLong(matchId));&#xa;        tournamentController.checkEnableMatch(matchId);&#xa;    }&#xa;});"/>
+                            <AuxValue name="JavaCodeGenerator_AddingCodePost" type="java.lang.String" value="tournamentMatchesTable.getSelectionModel().addListSelectionListener((evt) -&gt; {&#xa;    int row = tournamentMatchesTable.getSelectedRow();&#xa;&#xa;    if (!evt.getValueIsAdjusting() &amp;&amp; row != -1) {&#xa;        String matchId = tournamentMatchesTable.getValueAt(row, 0).toString();&#xa;        tournamentController.checkEnableMatch(matchId);&#xa;    }&#xa;});"/>
                           </AuxValues>
                         </Component>
                       </SubComponents>
@@ -331,10 +332,18 @@
                           <Group type="102" alignment="1" attributes="0">
                               <EmptySpace pref="45" max="32767" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="startNewMatchButton" alignment="0" min="-2" pref="124" max="-2" attributes="0"/>
-                                  <Component id="viewTeamsButton" alignment="0" min="-2" pref="124" max="-2" attributes="0"/>
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <Component id="startNewPhaseButton" min="-2" pref="124" max="-2" attributes="0"/>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                  </Group>
+                                  <Group type="102" alignment="1" attributes="0">
+                                      <Group type="103" groupAlignment="0" attributes="0">
+                                          <Component id="startNewMatchButton" alignment="0" min="-2" pref="124" max="-2" attributes="0"/>
+                                          <Component id="viewTeamsButton" alignment="0" min="-2" pref="124" max="-2" attributes="0"/>
+                                      </Group>
+                                      <EmptySpace min="-2" pref="42" max="-2" attributes="0"/>
+                                  </Group>
                               </Group>
-                              <EmptySpace min="-2" pref="42" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                     </DimensionLayout>
@@ -343,6 +352,8 @@
                           <Group type="102" alignment="1" attributes="0">
                               <EmptySpace min="-2" pref="66" max="-2" attributes="0"/>
                               <Component id="startNewMatchButton" min="-2" pref="79" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="startNewPhaseButton" min="-2" pref="55" max="-2" attributes="0"/>
                               <EmptySpace max="32767" attributes="0"/>
                               <Component id="viewTeamsButton" min="-2" pref="245" max="-2" attributes="0"/>
                               <EmptySpace min="-2" pref="91" max="-2" attributes="0"/>
@@ -369,6 +380,15 @@
                         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="startNewMatchButtonActionPerformed"/>
                       </Events>
                     </Component>
+                    <Component class="javax.swing.JButton" name="startNewPhaseButton">
+                      <Properties>
+                        <Property name="text" type="java.lang.String" value="Pr&#xf3;xima fase"/>
+                        <Property name="enabled" type="boolean" value="false"/>
+                      </Properties>
+                      <Events>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="startNewPhaseButtonActionPerformed"/>
+                      </Events>
+                    </Component>
                   </SubComponents>
                 </Container>
               </SubComponents>
@@ -391,8 +411,7 @@
                           <Group type="103" groupAlignment="1" attributes="0">
                               <Component id="matchTitle" max="32767" attributes="0"/>
                               <Group type="102" attributes="0">
-                                  <Component id="backToTournamentButton" min="-2" pref="123" max="-2" attributes="0"/>
-                                  <EmptySpace max="32767" attributes="0"/>
+                                  <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                                   <Component id="endMatchButton" min="-2" pref="120" max="-2" attributes="0"/>
                               </Group>
                               <Component id="matchControlPanel" max="32767" attributes="0"/>
@@ -419,10 +438,7 @@
                           <EmptySpace pref="35" max="32767" attributes="0"/>
                           <Component id="matchControlPanel" min="-2" max="-2" attributes="0"/>
                           <EmptySpace type="separate" max="32767" attributes="0"/>
-                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                              <Component id="backToTournamentButton" pref="57" max="32767" attributes="0"/>
-                              <Component id="endMatchButton" max="32767" attributes="0"/>
-                          </Group>
+                          <Component id="endMatchButton" min="-2" pref="57" max="-2" attributes="0"/>
                           <EmptySpace pref="9" max="32767" attributes="0"/>
                       </Group>
                   </Group>
@@ -512,12 +528,12 @@
                     </Component>
                     <Component class="javax.swing.JLabel" name="jLabel6">
                       <Properties>
-                        <Property name="text" type="java.lang.String" value="Hora de in&#xed;cio:"/>
+                        <Property name="text" type="java.lang.String" value="Hora marcada:"/>
                       </Properties>
                     </Component>
                     <Component class="javax.swing.JLabel" name="jLabel7">
                       <Properties>
-                        <Property name="text" type="java.lang.String" value="Data de in&#xed;cio:"/>
+                        <Property name="text" type="java.lang.String" value="Data marcada:"/>
                       </Properties>
                     </Component>
                     <Component class="javax.swing.JLabel" name="jLabel8">
@@ -800,6 +816,7 @@
                               <Image iconType="3" name="/icons/restart-24.png"/>
                             </Property>
                             <Property name="toolTipText" type="java.lang.String" value="Resetar cron&#xf4;metro"/>
+                            <Property name="enabled" type="boolean" value="false"/>
                           </Properties>
                           <Events>
                             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="timerResetTimerButtonActionPerformed"/>
@@ -889,7 +906,7 @@
                             </Property>
                           </Properties>
                           <Events>
-                            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="addPointsComboBoxActionPerformed"/>
+                            <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="addPointsComboBoxItemStateChanged"/>
                           </Events>
                           <AuxValues>
                             <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
@@ -968,17 +985,10 @@
                     </Container>
                   </SubComponents>
                 </Container>
-                <Component class="javax.swing.JButton" name="backToTournamentButton">
-                  <Properties>
-                    <Property name="text" type="java.lang.String" value="Voltar"/>
-                  </Properties>
-                  <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="backToTournamentButtonActionPerformed"/>
-                  </Events>
-                </Component>
                 <Component class="javax.swing.JButton" name="endMatchButton">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Encerrar Partida"/>
+                    <Property name="enabled" type="boolean" value="false"/>
                   </Properties>
                   <Events>
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="endMatchButtonActionPerformed"/>
