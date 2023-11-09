@@ -89,7 +89,7 @@ public class MatchController {
             Integer roundTimeSeconds = matchModel.getMatch()
                     .getTournament()
                     .getSport()
-                    .getMatchDurationMinutes() / 10; // * 60
+                    .getMatchDurationMinutes() * 60;
             
             view.timerProgressBar.setMaximum(roundTimeSeconds);
             initTimer(roundTimeSeconds);
