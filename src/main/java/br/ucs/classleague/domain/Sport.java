@@ -9,7 +9,7 @@ public abstract class Sport {
     
     public static enum SportsEnum {
         FOOTBALL("Futebol"),
-        VOLLEYBALL("Vôlei"),
+        HANDBALL("Handebol"),
         BASKETBALL("Basquete"),
         FUTSAL("Futsal");
 

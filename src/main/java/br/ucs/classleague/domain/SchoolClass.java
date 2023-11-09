@@ -29,6 +29,14 @@ public class SchoolClass implements Serializable {
         private SchoolShift(String name) {
             this.name = name;
         }
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
     }
 
     public static enum EducationalCycle {
@@ -38,6 +46,14 @@ public class SchoolClass implements Serializable {
         private String name;
 
         private EducationalCycle(String name) {
+            this.name = name;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
             this.name = name;
         }
     }

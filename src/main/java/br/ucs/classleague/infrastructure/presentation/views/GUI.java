@@ -3,6 +3,7 @@ package br.ucs.classleague.infrastructure.presentation.views;
 import br.ucs.classleague.domain.MatchTimer;
 import br.ucs.classleague.domain.MatchTimer.MatchState;
 import br.ucs.classleague.domain.SchoolClass;
+import br.ucs.classleague.domain.SchoolClass.SchoolShift;
 import br.ucs.classleague.infrastructure.presentation.controllers.ControllerUtilities;
 import br.ucs.classleague.infrastructure.presentation.controllers.MatchController;
 import br.ucs.classleague.infrastructure.presentation.controllers.MatchPointsController;
@@ -12,6 +13,7 @@ import br.ucs.classleague.infrastructure.presentation.model.MatchModel;
 import br.ucs.classleague.infrastructure.presentation.model.TournamentModel;
 import java.awt.CardLayout;
 import java.awt.event.ActionEvent;
+import javax.swing.DefaultComboBoxModel;
 import java.awt.event.ItemEvent;
 import javax.swing.JOptionPane;
 import javax.swing.JTabbedPane;
@@ -155,9 +157,9 @@ public class GUI extends javax.swing.JFrame {
         jLabel15 = new javax.swing.JLabel();
         jClassNumber = new javax.swing.JTextField();
         jLabel16 = new javax.swing.JLabel();
-        jClassShift = new javax.swing.JComboBox<>();
+        jClassShift = new javax.swing.JComboBox<>(registerController.showClassShiftNames());
         jLabel17 = new javax.swing.JLabel();
-        jClassCycle = new javax.swing.JComboBox<>();
+        jClassCycle = new javax.swing.JComboBox<>(registerController.showEducationalCycleNames());
         jButton8 = new javax.swing.JButton();
         studentRegister2 = new javax.swing.JPanel();
         jStudentRegisterTitle = new javax.swing.JLabel();
@@ -165,7 +167,6 @@ public class GUI extends javax.swing.JFrame {
         jRegisterStudentNameLabel = new javax.swing.JLabel();
         jRegisterStudentNameField = new javax.swing.JTextField();
         jRegisterStudentGenderLabel = new javax.swing.JLabel();
-        jRegisterStudentGenderField = new javax.swing.JTextField();
         JRegisterStudentClassLabel = new javax.swing.JLabel();
         jRegisterStudentClassComboBox = new javax.swing.JComboBox<>();
         JRegisterStudentFatherNameLabel = new javax.swing.JLabel();
@@ -181,6 +182,7 @@ public class GUI extends javax.swing.JFrame {
         jRegisterStudentTelephoneField = new javax.swing.JFormattedTextField();
         jRegisterStudentBirthdateField = new javax.swing.JFormattedTextField();
         jRegisterStudentCPFField = new javax.swing.JFormattedTextField();
+        studentGenderComboBox = new javax.swing.JComboBox<>(registerController.showGender());
         teamRegisterPanel = new javax.swing.JPanel();
         jTeamRegisterTitle = new javax.swing.JLabel();
         jInnerTeamRegisterPanel = new javax.swing.JPanel();
@@ -201,18 +203,18 @@ public class GUI extends javax.swing.JFrame {
         coachSurnameLabel = new javax.swing.JLabel();
         coachNameField = new javax.swing.JTextField();
         coachGenderLabel = new javax.swing.JLabel();
-        coachGenderField = new javax.swing.JTextField();
         coachNameLabel1 = new javax.swing.JLabel();
         coachSurnameField1 = new javax.swing.JTextField();
         coachPhoneLabel = new javax.swing.JLabel();
         coachCPFLabel = new javax.swing.JLabel();
         coachBirthDateLabel = new javax.swing.JLabel();
         coachSportLabel = new javax.swing.JLabel();
-        coachSportField = new javax.swing.JTextField();
         JCoachRegisterButton1 = new javax.swing.JButton();
         coachBirthDateField = new javax.swing.JFormattedTextField();
         coachCPFField = new javax.swing.JFormattedTextField();
         coachPhoneField = new javax.swing.JFormattedTextField();
+        coachSportComboBox = new javax.swing.JComboBox<>(registerController.showSportsNames());
+        coachGenderComboBox = new javax.swing.JComboBox<>(registerController.showGender());
 
         tournamentDialog.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         tournamentDialog.setTitle("Torneio");
@@ -280,7 +282,7 @@ public class GUI extends javax.swing.JFrame {
                         .addGap(31, 31, 31))
                     .addGroup(tournamentInfoPanelLayout.createSequentialGroup()
                         .addGroup(tournamentInfoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(tournamentDialogPhaseLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 157, Short.MAX_VALUE)
+                            .addComponent(tournamentDialogPhaseLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 157, Short.MAX_VALUE)
                             .addComponent(tournamentDialogSportTypeLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(tournamentInfoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -933,7 +935,7 @@ public class GUI extends javax.swing.JFrame {
             .addGroup(mainInnerTopPanelLayout.createSequentialGroup()
                 .addGap(61, 61, 61)
                 .addComponent(addTournamentBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 459, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 463, Short.MAX_VALUE)
                 .addComponent(searchTournamentField, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(searchTournamentBtn)
@@ -1202,7 +1204,6 @@ public class GUI extends javax.swing.JFrame {
         gridBagConstraints.insets = new java.awt.Insets(10, 5, 0, 0);
         jPanel5.add(jLabel16, gridBagConstraints);
 
-        jClassShift.setModel(new javax.swing.DefaultComboBoxModel<>(SchoolClass.SchoolShift.values()));
         jClassShift.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jClassShiftActionPerformed(evt);
@@ -1223,7 +1224,6 @@ public class GUI extends javax.swing.JFrame {
         gridBagConstraints.insets = new java.awt.Insets(10, 5, 0, 0);
         jPanel5.add(jLabel17, gridBagConstraints);
 
-        jClassCycle.setModel(new javax.swing.DefaultComboBoxModel<>(SchoolClass.EducationalCycle.values()));
         jClassCycle.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jClassCycleActionPerformed(evt);
@@ -1285,12 +1285,6 @@ public class GUI extends javax.swing.JFrame {
         });
 
         jRegisterStudentGenderLabel.setText("Sexo");
-
-        jRegisterStudentGenderField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jRegisterStudentGenderFieldActionPerformed(evt);
-            }
-        });
 
         JRegisterStudentClassLabel.setText("Turma");
 
@@ -1355,6 +1349,12 @@ public class GUI extends javax.swing.JFrame {
             ex.printStackTrace();
         }
 
+        studentGenderComboBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                studentGenderComboBoxActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jStudentRegisterPanelLayout = new javax.swing.GroupLayout(jStudentRegisterPanel);
         jStudentRegisterPanel.setLayout(jStudentRegisterPanelLayout);
         jStudentRegisterPanelLayout.setHorizontalGroup(
@@ -1366,10 +1366,10 @@ public class GUI extends javax.swing.JFrame {
                         .addGroup(jStudentRegisterPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(JRegisterStudentFatherNameLabel)
                             .addComponent(jRegisterStudentGenderLabel)
-                            .addComponent(jRegisterStudentGenderField, javax.swing.GroupLayout.PREFERRED_SIZE, 308, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jRegisterStudentFatherNameField, javax.swing.GroupLayout.PREFERRED_SIZE, 308, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jRegisterStudentMotherNameLabel)
-                            .addComponent(jRegisterStudentMotherNameField, javax.swing.GroupLayout.PREFERRED_SIZE, 308, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jRegisterStudentMotherNameField, javax.swing.GroupLayout.PREFERRED_SIZE, 308, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(studentGenderComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addContainerGap())
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jStudentRegisterPanelLayout.createSequentialGroup()
                         .addComponent(jRegisterStudentClassComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 308, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -1423,7 +1423,7 @@ public class GUI extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jRegisterStudentGenderLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jRegisterStudentGenderField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(studentGenderComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(JRegisterStudentFatherNameLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -1442,7 +1442,7 @@ public class GUI extends javax.swing.JFrame {
                 .addComponent(jRegisterStudentClassComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(JStudentRegisterButton, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(16, Short.MAX_VALUE))
         );
 
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -1619,12 +1619,6 @@ public class GUI extends javax.swing.JFrame {
 
         coachGenderLabel.setText("Sexo");
 
-        coachGenderField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                coachGenderFieldActionPerformed(evt);
-            }
-        });
-
         coachNameLabel1.setText("Nome");
 
         coachSurnameField1.addActionListener(new java.awt.event.ActionListener() {
@@ -1640,12 +1634,6 @@ public class GUI extends javax.swing.JFrame {
         coachBirthDateLabel.setText("Data de Nascimento");
 
         coachSportLabel.setText("Esporte");
-
-        coachSportField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                coachSportFieldActionPerformed(evt);
-            }
-        });
 
         JCoachRegisterButton1.setText("Cadastrar");
         JCoachRegisterButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -1677,6 +1665,18 @@ public class GUI extends javax.swing.JFrame {
             ex.printStackTrace();
         }
 
+        coachSportComboBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                coachSportComboBoxActionPerformed(evt);
+            }
+        });
+
+        coachGenderComboBox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                coachGenderComboBoxActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout coachRegisterPanelLayout = new javax.swing.GroupLayout(coachRegisterPanel);
         coachRegisterPanel.setLayout(coachRegisterPanelLayout);
         coachRegisterPanelLayout.setHorizontalGroup(
@@ -1688,26 +1688,24 @@ public class GUI extends javax.swing.JFrame {
                         .addGroup(coachRegisterPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(coachSurnameLabel)
                             .addComponent(coachNameField, javax.swing.GroupLayout.PREFERRED_SIZE, 391, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(coachGenderField, javax.swing.GroupLayout.PREFERRED_SIZE, 391, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(coachNameLabel1)
                             .addComponent(coachGenderLabel)
                             .addComponent(coachSurnameField1, javax.swing.GroupLayout.PREFERRED_SIZE, 391, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(coachPhoneLabel)
                             .addComponent(coachCPFLabel)
                             .addComponent(coachBirthDateLabel)
-                            .addComponent(coachSportLabel)
-                            .addComponent(coachSportField, javax.swing.GroupLayout.PREFERRED_SIZE, 391, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(coachSportLabel)))
                     .addGroup(coachRegisterPanelLayout.createSequentialGroup()
-                        .addGap(140, 140, 140)
+                        .addGap(134, 134, 134)
                         .addComponent(JCoachRegisterButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(coachRegisterPanelLayout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(coachPhoneField, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(coachRegisterPanelLayout.createSequentialGroup()
-                        .addContainerGap()
                         .addGroup(coachRegisterPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(coachBirthDateField, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 126, Short.MAX_VALUE)
-                            .addComponent(coachCPFField, javax.swing.GroupLayout.Alignment.LEADING))))
+                            .addComponent(coachPhoneField, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(coachGenderComboBox, javax.swing.GroupLayout.Alignment.LEADING, 0, 183, Short.MAX_VALUE)
+                            .addComponent(coachCPFField, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(coachBirthDateField, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(coachSportComboBox, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addContainerGap())
         );
         coachRegisterPanelLayout.setVerticalGroup(
@@ -1723,7 +1721,7 @@ public class GUI extends javax.swing.JFrame {
                 .addGap(3, 3, 3)
                 .addComponent(coachGenderLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(coachGenderField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(coachGenderComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(coachPhoneLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -1739,10 +1737,10 @@ public class GUI extends javax.swing.JFrame {
                 .addGap(12, 12, 12)
                 .addComponent(coachSportLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(coachSportField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(coachSportComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 20, Short.MAX_VALUE)
                 .addComponent(JCoachRegisterButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(20, Short.MAX_VALUE))
+                .addGap(14, 14, 14))
         );
 
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -1802,10 +1800,6 @@ public class GUI extends javax.swing.JFrame {
     private void jRegisterStudentClassComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRegisterStudentClassComboBoxActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jRegisterStudentClassComboBoxActionPerformed
-
-    private void jRegisterStudentGenderFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRegisterStudentGenderFieldActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jRegisterStudentGenderFieldActionPerformed
 
     private void jRegisterStudentNameFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRegisterStudentNameFieldActionPerformed
         // TODO add your handling code here:
@@ -1867,17 +1861,9 @@ public class GUI extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_coachSurnameField1ActionPerformed
 
-    private void coachGenderFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_coachGenderFieldActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_coachGenderFieldActionPerformed
-
     private void coachNameFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_coachNameFieldActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_coachNameFieldActionPerformed
-
-    private void coachSportFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_coachSportFieldActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_coachSportFieldActionPerformed
 
     private void JCoachRegisterButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JCoachRegisterButton1ActionPerformed
         // TODO add your handling code here:
@@ -1954,6 +1940,18 @@ public class GUI extends javax.swing.JFrame {
         matchPointsController.insertPoint(+1);
     }//GEN-LAST:event_addPointButtonActionPerformed
 
+    private void coachSportComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_coachSportComboBoxActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_coachSportComboBoxActionPerformed
+
+    private void coachGenderComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_coachGenderComboBoxActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_coachGenderComboBoxActionPerformed
+
+    private void studentGenderComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_studentGenderComboBoxActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_studentGenderComboBoxActionPerformed
+
     private void startNewPhaseButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_startNewPhaseButtonActionPerformed
         tournamentController.startNextPhase();
     }//GEN-LAST:event_startNewPhaseButtonActionPerformed
@@ -2006,7 +2004,7 @@ public class GUI extends javax.swing.JFrame {
     public javax.swing.JLabel coachBirthDateLabel;
     public javax.swing.JFormattedTextField coachCPFField;
     public javax.swing.JLabel coachCPFLabel;
-    public javax.swing.JTextField coachGenderField;
+    public javax.swing.JComboBox<String> coachGenderComboBox;
     public javax.swing.JLabel coachGenderLabel;
     public javax.swing.JTextField coachNameField;
     public javax.swing.JLabel coachNameLabel1;
@@ -2014,7 +2012,7 @@ public class GUI extends javax.swing.JFrame {
     public javax.swing.JLabel coachPhoneLabel;
     public javax.swing.JPanel coachRegister;
     public javax.swing.JPanel coachRegisterPanel;
-    public javax.swing.JTextField coachSportField;
+    public javax.swing.JComboBox<String> coachSportComboBox;
     public javax.swing.JLabel coachSportLabel;
     public javax.swing.JTextField coachSurnameField1;
     public javax.swing.JLabel coachSurnameLabel;
@@ -2023,10 +2021,10 @@ public class GUI extends javax.swing.JFrame {
     public javax.swing.JLabel firstTeamScoreLabel;
     public javax.swing.JButton jButton1;
     public javax.swing.JButton jButton8;
-    public javax.swing.JComboBox<SchoolClass.EducationalCycle> jClassCycle;
+    public javax.swing.JComboBox<String> jClassCycle;
     public javax.swing.JTextField jClassNameField;
     public javax.swing.JTextField jClassNumber;
-    public javax.swing.JComboBox<SchoolClass.SchoolShift> jClassShift;
+    public javax.swing.JComboBox<String> jClassShift;
     public javax.swing.JLabel jCoachRegisterTitle1;
     public javax.swing.JPanel jInnerTeamRegisterPanel;
     public javax.swing.JLabel jLabel1;
@@ -2046,7 +2044,6 @@ public class GUI extends javax.swing.JFrame {
     public javax.swing.JLabel jRegisterStudentCPFLabel;
     public javax.swing.JComboBox<String> jRegisterStudentClassComboBox;
     public javax.swing.JTextField jRegisterStudentFatherNameField;
-    public javax.swing.JTextField jRegisterStudentGenderField;
     public javax.swing.JLabel jRegisterStudentGenderLabel;
     public javax.swing.JTextField jRegisterStudentMotherNameField;
     public javax.swing.JLabel jRegisterStudentMotherNameLabel;
@@ -2101,6 +2098,7 @@ public class GUI extends javax.swing.JFrame {
     public javax.swing.JLabel secondTeamNameLabel;
     public javax.swing.JLabel secondTeamScoreLabel;
     public javax.swing.JButton startNewMatchButton;
+    public javax.swing.JComboBox<String> studentGenderComboBox;
     public javax.swing.JButton startNewPhaseButton;
     public javax.swing.JPanel studentRegister2;
     public javax.swing.JPanel teamRegisterPanel;
