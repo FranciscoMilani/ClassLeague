@@ -5,7 +5,7 @@ import br.ucs.classleague.domain.Match;
 import br.ucs.classleague.domain.MatchTimer;
 import br.ucs.classleague.domain.MatchTimer.MatchState;
 import br.ucs.classleague.domain.Team;
-import br.ucs.classleague.infrastructure.data.DaoFactory;
+import br.ucs.classleague.infrastructure.data.DaoProvider;
 import br.ucs.classleague.infrastructure.data.MatchDao;
 import br.ucs.classleague.infrastructure.presentation.model.MatchModel;
 import br.ucs.classleague.infrastructure.presentation.model.TournamentModel;
@@ -13,10 +13,7 @@ import br.ucs.classleague.infrastructure.presentation.views.GUI;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.time.LocalDate;
-import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
-import java.time.format.FormatStyle;
+import java.time.LocalDateTime;
 import javax.swing.JOptionPane;
 import javax.swing.Timer;
 import javax.swing.UIManager;
@@ -37,7 +34,7 @@ public class MatchController {
         this.view = view;
         this.matchModel = matchModel;
         this.tournamentModel = tournamentModel;
-        dao = DaoFactory.getMatchDao();
+        dao = DaoProvider.getMatchDao();
         matchService = new MatchService();
         
         matchModel.setTimer(new MatchTimer());
@@ -49,11 +46,13 @@ public class MatchController {
         Match match = dao.findById(id).get();
         matchModel.setMatch(match);
         
-        view.startNewMatchButton.setEnabled(false);
         view.tournamentMatchesTable.clearSelection();
+        view.startNewMatchButton.setEnabled(false);
+        view.endMatchButton.setEnabled(false);
         
         if (match.getEnded()){
-            fillInfoForEndedMatch(match);
+            JOptionPane.showMessageDialog(view.tournamentDialog, "PARTIDA ENCERRADA NÃO DEVERIA SER ACESSÍVEL. VOLTANDO PARA \"CARD1\"");
+            view.setAndShowActiveTournamentDialogLayout("card1");
         } else {
             fillInfoForMatchToBePlayed(match);
         }
@@ -90,7 +89,7 @@ public class MatchController {
             Integer roundTimeSeconds = matchModel.getMatch()
                     .getTournament()
                     .getSport()
-                    .getMatchDurationMinutes() * 60;
+                    .getMatchDurationMinutes() / 10; // * 60
             
             view.timerProgressBar.setMaximum(roundTimeSeconds);
             initTimer(roundTimeSeconds);
@@ -100,14 +99,14 @@ public class MatchController {
         }
     }
     
-    public void freezeTimer(){        
+    public void freezeTimer() {        
         if(timer.isRunning()){
             MatchTimer.setState(MatchState.STOPPED);
             timer.stop();
         }
     }
     
-    public void resumeTimer(){
+    public void resumeTimer() {
         timer.setInitialDelay(1000);
         timer.start();
     }
@@ -173,7 +172,6 @@ public class MatchController {
             view.timerProgressBar.setValue(0);
             view.timerCurrentTimeLabel.setForeground(defaultColor);
             view.timerCurrentTimeLabel.setText("00:00");
-            view.timerEndTimeLabel.setText("00:00");
             
             matchModel.getTimer().prepareNextPeriod();
 
@@ -184,58 +182,15 @@ public class MatchController {
         }
     }
     
-    public void fillInfoForMatchToBePlayed(Match match) {  
-        LocalDate date = match.getDateTime().toLocalDate();
-        LocalTime time = match.getDateTime().toLocalTime();
-        
-        DateTimeFormatter formatter = DateTimeFormatter.ofLocalizedDate(
-                FormatStyle.LONG
-        );
-        
-        DateTimeFormatter formatterTime = DateTimeFormatter.ofLocalizedTime(
-                FormatStyle.SHORT
-        );
-        
-        String dateText = date.format(formatter);
-        String timeText = time.format(formatterTime);
-        
-        view.matchStartTimeDataLabel.setText(dateText);
-        view.matchEndTimeDataLabel.setText(timeText);
-        view.matchPhaseDataLabel.setText(
-                match.getTournament()
-                        .getPhase()
-                        .getName()
-        );
-        view.firstTeamNameLabel.setText(match.getFirst_team().getName());
-        view.secondTeamNameLabel.setText(match.getSecond_team().getName());
-        
-        String periodTimeMins = matchModel.getMatch()
-            .getTournament()
-            .getSport()
-            .getMatchDurationMinutes()
-        .toString();
-        
-        view.timerEndTimeLabel.setText(periodTimeMins + ":00");
-    }
-    
-    public void fillInfoForEndedMatch(Match match) {  
-        LocalDate date = match.getDateTime().toLocalDate();
-        LocalTime time = match.getDateTime().toLocalTime();
-        
-        DateTimeFormatter formatter = DateTimeFormatter.ofLocalizedDate(
-                FormatStyle.LONG
-        );
-        
-        DateTimeFormatter formatterTime = DateTimeFormatter.ofLocalizedTime(
-                FormatStyle.SHORT
-        );
-        
-        String dateText = date.format(formatter);
-        String timeText = time.format(formatterTime);
+    public void fillInfoForMatchToBePlayed(Match match) {
+        LocalDateTime ldt = match.getDateTime();
+        String dateText = ControllerUtilities.getFormattedDate(ldt);
+        String timeText = ControllerUtilities.getFormattedTime(ldt);
         
         // buttons
+        view.timerPlayButton.setSelected(false);
+        view.timerPlayButton.setEnabled(true);
         view.endMatchButton.setEnabled(false);
-        view.timerPlayButton.setEnabled(false);
         view.timerNextPeriodButton.setEnabled(false);
         
         // labels
@@ -244,11 +199,15 @@ public class MatchController {
         view.matchPhaseDataLabel.setText(match.getTournament().getPhase().getName());
         view.firstTeamNameLabel.setText(match.getFirst_team().getName());
         view.secondTeamNameLabel.setText(match.getSecond_team().getName());
+        view.firstTeamScoreLabel.setText("0");
+        view.secondTeamScoreLabel.setText("0");
+        view.timerCurrentTimeLabel.setText("00:00");
+        view.timerPeriodNumberLabel.setText("1");
         
         // outros
         view.timerProgressBar.setValue(0);
         
-        String periodTimeMins = match
+        String periodTimeMins = matchModel.getMatch()
             .getTournament()
             .getSport()
             .getMatchDurationMinutes()

@@ -1,13 +1,13 @@
 package br.ucs.classleague;
 
 import br.ucs.classleague.infrastructure.presentation.views.GUI;
-import com.formdev.flatlaf.FlatDarculaLaf;
+import com.formdev.flatlaf.themes.FlatMacDarkLaf;
 import javax.swing.SwingUtilities;
 
 public class ClassLeague {
 
     public static void main(String[] args) {
-        FlatDarculaLaf.setup();
+        FlatMacDarkLaf.setup();
         
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {

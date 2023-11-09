@@ -5,7 +5,7 @@ import br.ucs.classleague.domain.Team;
 import br.ucs.classleague.domain.Tournament;
 import br.ucs.classleague.domain.Tournament.TournamentPhase;
 import br.ucs.classleague.domain.TournamentTeam;
-import br.ucs.classleague.infrastructure.data.DaoFactory;
+import br.ucs.classleague.infrastructure.data.DaoProvider;
 import br.ucs.classleague.infrastructure.data.MatchDao;
 import br.ucs.classleague.infrastructure.data.TournamentDao;
 import java.time.LocalDateTime;
@@ -16,8 +16,8 @@ import java.util.stream.Collectors;
 
 public class TournamentService {
     
-    private TournamentDao tournamentDao = DaoFactory.getTournamentDao();
-    private MatchDao matchDao = DaoFactory.getMatchDao();
+    private TournamentDao tournamentDao = DaoProvider.getTournamentDao();
+    private MatchDao matchDao = DaoProvider.getMatchDao();
     
     /*
         Cria confrontos entre times

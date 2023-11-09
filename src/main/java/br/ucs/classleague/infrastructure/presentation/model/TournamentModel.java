@@ -15,7 +15,7 @@ public class TournamentModel extends AbstractModel {
         setEnableMatch(!match.getEnded());
     }
     
-    public void setEnableMatch(Boolean newVal){
+    public void setEnableMatch(Boolean newVal) {
         var oldVal = canStartMatch;
         canStartMatch = newVal;
         

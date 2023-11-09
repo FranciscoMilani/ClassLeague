@@ -5,7 +5,7 @@ import br.ucs.classleague.domain.Student;
 import br.ucs.classleague.domain.StudentTeam;
 import br.ucs.classleague.domain.StudentTeamKey;
 import br.ucs.classleague.domain.Team;
-import br.ucs.classleague.infrastructure.data.DaoFactory;
+import br.ucs.classleague.infrastructure.data.DaoProvider;
 import br.ucs.classleague.infrastructure.data.MatchDao;
 import br.ucs.classleague.infrastructure.data.StudentTeamDao;
 import br.ucs.classleague.infrastructure.data.TeamDao;
@@ -19,9 +19,9 @@ public class MatchService {
     private StudentTeamDao studentTeamDao;
 
     public MatchService() {
-        this.matchDao = DaoFactory.getMatchDao();
-        this.teamDao = DaoFactory.getTeamDao();
-        this.studentTeamDao = DaoFactory.getStudentTeamDao();
+        this.matchDao = DaoProvider.getMatchDao();
+        this.teamDao = DaoProvider.getTeamDao();
+        this.studentTeamDao = DaoProvider.getStudentTeamDao();
     }
     
     public List<Object[]> teamStudentsToObjectArray(String teamAcronym) {

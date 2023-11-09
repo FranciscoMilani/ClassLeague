@@ -3,7 +3,7 @@ package br.ucs.classleague.infrastructure.presentation.controllers;
 import br.ucs.classleague.application.Services.TournamentService;
 import br.ucs.classleague.domain.Match;
 import br.ucs.classleague.domain.Tournament;
-import br.ucs.classleague.infrastructure.data.DaoFactory;
+import br.ucs.classleague.infrastructure.data.DaoProvider;
 import br.ucs.classleague.infrastructure.data.MatchDao;
 import br.ucs.classleague.infrastructure.data.TournamentDao;
 import br.ucs.classleague.infrastructure.presentation.model.MatchModel;
@@ -28,8 +28,8 @@ public class TournamentController {
         this.frame = frame;
         this.tournamentModel = tournamentModel;
         this.matchModel = matchModel;
-        matchDao = DaoFactory.getMatchDao();
-        tournamentDao = DaoFactory.getTournamentDao();
+        matchDao = DaoProvider.getMatchDao();
+        tournamentDao = DaoProvider.getTournamentDao();
         tournamentService = new TournamentService();
     }
     
@@ -43,6 +43,7 @@ public class TournamentController {
         }
         
         fillTournamentMatchTableData(tournamentModel.getTournament());
+        fillPreviousMatchesTableData(tournamentModel.getTournament());
         frame.tournamentDialog.setVisible(true);
     }
     
@@ -121,7 +122,7 @@ public class TournamentController {
     }
     
     public DefaultTableModel getTournamentMatchTableModel(int rowCount){
-        String[] columnHeaders = new String[] {"ID", "Time 1", "Time 2"};
+        String[] columnHeaders = new String[] {"ID", "Time 1", "Time 2", "Vencedor", "Placar"};
 
         DefaultTableModel tournamentMatchModel = new DefaultTableModel(columnHeaders, rowCount) {           
             @Override
@@ -144,12 +145,63 @@ public class TournamentController {
   
         ControllerUtilities.resetTable(frame.tournamentMatchesTable);
         
-        for (int i = 0; i < matches.size(); i++) {;
+        for (int i = 0; i < matches.size(); i++) {
+            Match match = matches.get(i);
+            
+            String col5 = String.format("%d - %d",
+                    match.getFirst_team_score(),
+                    match.getSecond_team_score()
+            );
+            
             model.addRow(new Object[]{
-                matches.get(i).getId(), 
-                matches.get(i).getFirst_team().getName(),
-                matches.get(i).getSecond_team().getName(),
+                match.getId(), 
+                match.getFirst_team().getName(),
+                match.getSecond_team().getName(),
+                match.getWinner() == null ? "" : match.getWinner().getName(),
+                match.getEnded() ? col5 : ""
             });
+        }
+    }
+    
+    public DefaultTableModel getPreviousMatchesTableModel(int rowCount){
+        String[] columnHeaders = new String[] {"Times", "Vencedor", "Placar"};
+
+        DefaultTableModel tournamentMatchModel = new DefaultTableModel(columnHeaders, rowCount) {           
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
+        
+        return tournamentMatchModel;
+    }
+    
+    public void fillPreviousMatchesTableData(Tournament tournament) {
+        DefaultTableModel model = (DefaultTableModel) frame.tournamentPreviousMatchesTable.getModel();
+        
+        List<Match> matches = tournament.getMatches()
+                .stream()
+                .filter((m) -> m.getPhase() != tournament.getPhase())
+                .collect(Collectors.toList());
+  
+        ControllerUtilities.resetTable(frame.tournamentPreviousMatchesTable); 
+
+        for (int i = 0; i < matches.size(); i++) {
+            Match match = matches.get(i);
+            
+            String col1 = String.format("%s x %s",
+                    match.getFirst_team().getName(),
+                    match.getSecond_team().getName()
+            );  
+            
+            String col2 = match.getWinner().getName();
+            
+            String col3 = String.format("%d - %d",
+                    match.getFirst_team_score(),
+                    match.getSecond_team_score()
+            );
+            
+            model.addRow(new Object[]{ col1, col2, col3 });
         }
     }
     
@@ -161,6 +213,7 @@ public class TournamentController {
     public void startNextPhase() {
         tournamentService.startNextPhase(tournamentModel.getTournament());
         fillTournamentMatchTableData(tournamentModel.getTournament());
+        fillPreviousMatchesTableData(tournamentModel.getTournament());
         frame.startNewPhaseButton.setEnabled(false);
     }
 }
