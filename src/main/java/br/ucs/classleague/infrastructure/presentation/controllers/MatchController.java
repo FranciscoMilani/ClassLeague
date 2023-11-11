@@ -233,6 +233,8 @@ public class MatchController {
                 match.setEnded(true);
                 match.setWinner(winner);
                 dao.update(match);
+                
+                view.setAndShowActiveTournamentDialogLayout("card1");
             } else {
                 // implementar logica de empate
                 JOptionPane.showMessageDialog(view.tournamentDialog, "Partida empatada...");

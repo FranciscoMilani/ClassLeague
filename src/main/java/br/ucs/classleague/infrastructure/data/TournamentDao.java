@@ -20,4 +20,10 @@ public class TournamentDao extends GenericDAO<Tournament, Long> {
         
         return resultList;
     }
+    
+    public List<Tournament> findAllOrderByStartDate() {
+        EntityManager entityManager = EntityManagerProvider.getEntityManager();
+        return entityManager.createQuery("SELECT t FROM Tournament t ORDER BY t.startTime ASC", Tournament.class)
+            .getResultList();
+    }
 }

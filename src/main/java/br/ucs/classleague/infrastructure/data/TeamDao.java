@@ -15,7 +15,7 @@ public class TeamDao extends GenericDAO<Team, Long>{
         super(Team.class);
     }
 
-    public List<Team> searchAllTeamsBySport(String sport){
+    public List<Team> findAllTeamsBySport(String sport){
         EntityManager entityManager = EntityManagerProvider.getEntityManager();
         try {
             Query query = entityManager.createQuery("SELECT i FROM Team i WHERE i.sport = :sport");
@@ -23,16 +23,6 @@ public class TeamDao extends GenericDAO<Team, Long>{
             return query.getResultList();
         } catch (Exception e) {
             return new ArrayList<>();
-        }
-    }
-    
-    public Team searchTeamById(Long id){
-        EntityManager entityManager = EntityManagerProvider.getEntityManager();
-        try {
-            return entityManager.find(Team.class, id);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
         }
     }
     

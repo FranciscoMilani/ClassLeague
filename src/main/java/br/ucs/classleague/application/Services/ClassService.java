@@ -34,5 +34,7 @@ public class ClassService {
         return names;
     }
 
-    
+    public Boolean checkForValidNumber(int classNumber) {
+        return classDao.findByNumber(classNumber) == null ? true : false;
+    }
 }
