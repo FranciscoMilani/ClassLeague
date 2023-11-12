@@ -6,6 +6,7 @@ public abstract class Sport {
     private Integer matchDurationMinutes;
     private Integer periodAmount;         // quantidade de "períodos" e.g. sets, tempo, quadro...
     private Boolean pointsPerPlayer;
+    private Boolean hasOvertime;
     
     public static enum SportsEnum {
         FOOTBALL("Futebol"),
@@ -62,5 +63,9 @@ public abstract class Sport {
 
     public void setPointsPerPlayer(Boolean pointsPerPlayer) {
         this.pointsPerPlayer = pointsPerPlayer;
+    }
+
+    public Boolean getHasOvertime() {
+        return hasOvertime;
     }
 }

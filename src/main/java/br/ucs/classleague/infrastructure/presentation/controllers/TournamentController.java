@@ -17,8 +17,6 @@ import javax.swing.table.DefaultTableModel;
 
 public class TournamentController {
     
-    public static Long selectedMatchId = -1L;
-    
     private GUI frame;
     private TournamentModel tournamentModel;
     private MatchModel matchModel;
@@ -35,16 +33,14 @@ public class TournamentController {
         tournamentService = new TournamentService();
     }
     
-    public void showTournamentDialog(String tournamentId){
+    public void enableTournamentDialog(String tournamentId){
         Long curTournamentId = Long.parseLong(tournamentId);
-        
         frame.jTournamentSelectTable.getSelectionModel().clearSelection();
         Tournament tournament = tournamentDao.findById(curTournamentId).get();
         
         if (tournament != null) {
             tournamentModel.setTournament(tournament);
-            fillTournamentData();
-            frame.tournamentDialog.setVisible(true);
+            frame.setAndShowActiveTournamentDialogCard("card1");
         }
     }
     
@@ -199,7 +195,6 @@ public class TournamentController {
             frame.tournamentHistoryComboBox.setEnabled(true);
             tPhase = TournamentPhase.fromString((String) frame.tournamentHistoryComboBox.getSelectedItem());
         } else {
-            System.out.println("nulo");
             frame.tournamentHistoryComboBox.setEnabled(false);
             tPhase = null;
         }

@@ -997,8 +997,7 @@
                                           <Component id="addPointButton" min="-2" pref="27" max="-2" attributes="0"/>
                                           <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
                                           <Component id="removePointButton" min="-2" max="-2" attributes="0"/>
-                                          <EmptySpace min="-2" pref="74" max="-2" attributes="0"/>
-                                          <Component id="jButton1" min="-2" pref="58" max="-2" attributes="0"/>
+                                          <EmptySpace min="-2" pref="132" max="-2" attributes="0"/>
                                       </Group>
                                   </Group>
                                   <EmptySpace pref="27" max="32767" attributes="0"/>
@@ -1011,7 +1010,6 @@
                                   <EmptySpace min="-2" pref="24" max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="3" attributes="0">
                                       <Component id="addPointsComboBox" alignment="3" min="-2" max="-2" attributes="0"/>
-                                      <Component id="jButton1" alignment="3" min="-2" pref="27" max="-2" attributes="0"/>
                                       <Component id="addPointButton" alignment="3" min="-2" max="-2" attributes="0"/>
                                       <Component id="removePointButton" alignment="3" min="-2" max="-2" attributes="0"/>
                                   </Group>
@@ -1087,11 +1085,6 @@
                             </Component>
                           </SubComponents>
                         </Container>
-                        <Component class="javax.swing.JButton" name="jButton1">
-                          <Properties>
-                            <Property name="text" type="java.lang.String" value="LOG"/>
-                          </Properties>
-                        </Component>
                         <Component class="javax.swing.JButton" name="addPointButton">
                           <Properties>
                             <Property name="text" type="java.lang.String" value="+"/>
@@ -1138,7 +1131,11 @@
                               <Group type="102" attributes="0">
                                   <EmptySpace min="-2" pref="116" max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                                      <Component id="jLabel3" max="32767" attributes="0"/>
+                                      <Group type="102" attributes="0">
+                                          <Component id="jLabel3" max="32767" attributes="0"/>
+                                          <EmptySpace max="-2" attributes="0"/>
+                                          <Component id="jButton1" min="-2" pref="48" max="-2" attributes="0"/>
+                                      </Group>
                                       <Component id="jScrollPane3" pref="833" max="32767" attributes="0"/>
                                   </Group>
                               </Group>
@@ -1155,8 +1152,11 @@
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace min="-2" pref="102" max="-2" attributes="0"/>
-                          <Component id="jLabel3" min="-2" pref="44" max="-2" attributes="0"/>
-                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                              <Component id="jLabel3" min="-2" pref="44" max="-2" attributes="0"/>
+                              <Component id="jButton1" pref="48" max="32767" attributes="0"/>
+                          </Group>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
                           <Component id="jScrollPane3" min="-2" max="-2" attributes="0"/>
                           <EmptySpace min="-2" pref="27" max="-2" attributes="0"/>
                           <Component id="jButton2" min="-2" pref="45" max="-2" attributes="0"/>
@@ -1177,30 +1177,30 @@
                       <Properties>
                         <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
                           <Table columnCount="4" rowCount="0">
-                            <Column editable="true" title="Sigla" type="java.lang.String"/>
-                            <Column editable="true" title="Nome" type="java.lang.String"/>
-                            <Column editable="true" title="Turma" type="java.lang.String"/>
-                            <Column editable="true" title="Pontos no torneio" type="java.lang.Integer"/>
+                            <Column editable="false" title="Sigla" type="java.lang.String"/>
+                            <Column editable="false" title="Nome" type="java.lang.String"/>
+                            <Column editable="false" title="Turma" type="java.lang.String"/>
+                            <Column editable="false" title="Pontos no torneio" type="java.lang.Integer"/>
                           </Table>
                         </Property>
                         <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
                           <TableColumnModel selectionModel="0">
-                            <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                            <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="false">
                               <Title/>
                               <Editor/>
                               <Renderer/>
                             </Column>
-                            <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                            <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="false">
                               <Title/>
                               <Editor/>
                               <Renderer/>
                             </Column>
-                            <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                            <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="false">
                               <Title/>
                               <Editor/>
                               <Renderer/>
                             </Column>
-                            <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                            <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="false">
                               <Title/>
                               <Editor/>
                               <Renderer/>
@@ -1209,7 +1209,7 @@
                         </Property>
                         <Property name="rowSelectionAllowed" type="boolean" value="false"/>
                         <Property name="tableHeader" type="javax.swing.table.JTableHeader" editor="org.netbeans.modules.form.editors2.JTableHeaderEditor">
-                          <TableHeader reorderingAllowed="false" resizingAllowed="true"/>
+                          <TableHeader reorderingAllowed="false" resizingAllowed="false"/>
                         </Property>
                       </Properties>
                     </Component>
@@ -1230,6 +1230,25 @@
                   </Properties>
                   <Events>
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton2ActionPerformed"/>
+                  </Events>
+                </Component>
+                <Component class="javax.swing.JButton" name="jButton1">
+                  <Properties>
+                    <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                      <Color blue="dd" green="dd" red="dd" type="rgb"/>
+                    </Property>
+                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                      <Font name="Segoe UI" size="12" style="1"/>
+                    </Property>
+                    <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                      <Color blue="0" green="0" red="0" type="rgb"/>
+                    </Property>
+                    <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                      <Image iconType="3" name="/icons/export-csv-24.png"/>
+                    </Property>
+                  </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton1ActionPerformed"/>
                   </Events>
                 </Component>
               </SubComponents>
@@ -1344,7 +1363,7 @@
                           <Group type="102" alignment="0" attributes="0">
                               <EmptySpace min="-2" pref="61" max="-2" attributes="0"/>
                               <Component id="addTournamentBtn" min="-2" pref="180" max="-2" attributes="0"/>
-                              <EmptySpace pref="463" max="32767" attributes="0"/>
+                              <EmptySpace max="32767" attributes="0"/>
                               <Component id="searchTournamentField" min="-2" pref="172" max="-2" attributes="0"/>
                               <EmptySpace type="unrelated" max="-2" attributes="0"/>
                               <Component id="searchTournamentBtn" min="-2" max="-2" attributes="0"/>
@@ -1439,7 +1458,7 @@
                         <Property name="showHorizontalLines" type="boolean" value="true"/>
                       </Properties>
                       <AuxValues>
-                        <AuxValue name="JavaCodeGenerator_AddingCodePost" type="java.lang.String" value="jTournamentSelectTable.getSelectionModel().addListSelectionListener((evt) -&gt; {&#xa;    if (!evt.getValueIsAdjusting() &amp;&amp; jTournamentSelectTable.getSelectedRow() != -1){&#xa;        int row = jTournamentSelectTable.getSelectedRow();&#xa;        String val = jTournamentSelectTable.getValueAt(row, 0).toString();&#xa;        tournamentController.showTournamentDialog(val);&#xa;    }&#xa;});"/>
+                        <AuxValue name="JavaCodeGenerator_AddingCodePost" type="java.lang.String" value="jTournamentSelectTable.getSelectionModel().addListSelectionListener((evt) -&gt; {&#xa;    if (!evt.getValueIsAdjusting() &amp;&amp; jTournamentSelectTable.getSelectedRow() != -1){&#xa;        int row = jTournamentSelectTable.getSelectedRow();&#xa;        String val = jTournamentSelectTable.getValueAt(row, 0).toString();&#xa;        tournamentController.enableTournamentDialog(val);&#xa;    }&#xa;});"/>
                         <AuxValue name="JavaCodeGenerator_SerializeTo" type="java.lang.String" value="GUI_jTournamentSelectTable"/>
                       </AuxValues>
                     </Component>
@@ -1476,7 +1495,7 @@
                           <Component id="tournamentLabel" max="32767" attributes="0"/>
                           <Component id="tournamentRegisterPanel" pref="0" max="32767" attributes="0"/>
                       </Group>
-                      <EmptySpace pref="356" max="32767" attributes="0"/>
+                      <EmptySpace pref="406" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
