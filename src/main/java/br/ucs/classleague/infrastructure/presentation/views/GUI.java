@@ -2,7 +2,6 @@ package br.ucs.classleague.infrastructure.presentation.views;
 
 import br.ucs.classleague.domain.MatchState;
 import br.ucs.classleague.domain.MatchTimer;
-import br.ucs.classleague.domain.MatchTimer.MatchState;
 import br.ucs.classleague.infrastructure.presentation.controllers.ControllerUtilities;
 import br.ucs.classleague.infrastructure.presentation.controllers.MatchController;
 import br.ucs.classleague.infrastructure.presentation.controllers.MatchPointsController;
@@ -346,10 +345,21 @@ public class GUI extends javax.swing.JFrame {
                         .addGroup(tournamentInfoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(tournamentDialogStartDateField, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(tournamentDialogEndDateField))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(tournamentInfoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(tournamentDialogEndInfoData, javax.swing.GroupLayout.DEFAULT_SIZE, 120, Short.MAX_VALUE)
-                            .addComponent(tournamentDialogStartDateInfoData, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addContainerGap())
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, tournamentInfoPanelLayout.createSequentialGroup()
+                        .addGroup(tournamentInfoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jSeparator1, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, tournamentInfoPanelLayout.createSequentialGroup()
+                                .addGroup(tournamentInfoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(tournamentInfoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 31, Short.MAX_VALUE)
+                                .addGroup(tournamentInfoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(tournamentInfoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(tournamentDialogStartDateInfoData, javax.swing.GroupLayout.DEFAULT_SIZE, 126, Short.MAX_VALUE)
+                                    .addComponent(tournamentDialogEndInfoData, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                         .addGap(69, 69, 69))))
         );
         tournamentInfoPanelLayout.setVerticalGroup(
@@ -1554,7 +1564,7 @@ public class GUI extends javax.swing.JFrame {
                 .addGap(310, 310, 310)
                 .addGroup(tournamentRegisterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(tournamentLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(tournamentRegisterPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 0, Short.MAX_VALUE))
+                    .addComponent(tournamentRegisterPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                 .addContainerGap(406, Short.MAX_VALUE))
         );
         tournamentRegisterLayout.setVerticalGroup(
@@ -2520,6 +2530,17 @@ public class GUI extends javax.swing.JFrame {
 
     public void setAndShowActiveTournamentDialogLayout(String cardName) {
         int op = cardName.equals("card1") ? DISPOSE_ON_CLOSE : DO_NOTHING_ON_CLOSE;
+        tournamentDialog.setDefaultCloseOperation(op);
+        tournamentDialogActiveLayout = cardName;
+        cl.show(tournamentDialogMainPanel, cardName);
+        
+        if (tournamentDialogActiveLayout.equals("card1")) {
+            tournamentController.fillTournamentData();
+        } else if (tournamentDialogActiveLayout.equals("card2")) {
+            matchController.setMatchInfo();
+        }
+    }
+    
     private void viewTeamsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewTeamsButtonActionPerformed
         setAndShowActiveTournamentDialogCard("card3");
     }//GEN-LAST:event_viewTeamsButtonActionPerformed
