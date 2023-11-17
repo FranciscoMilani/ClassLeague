@@ -21,12 +21,12 @@ public class Coach extends Person {
         super(name, surname, birthDate, gender, telephone, cpf);
         this.sport = sport;
     }
-    
-    public Long getCoachId() {
+
+    public Long getId() {
         return id;
     }
 
-    public void setCoachId(Long coachId) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -37,4 +37,5 @@ public class Coach extends Person {
     public void setSport(String sport) {
         this.sport = sport;
     }
+    
 }
