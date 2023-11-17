@@ -1,6 +1,7 @@
 package br.ucs.classleague.infrastructure.presentation.controllers;
 
 import br.ucs.classleague.application.Services.MatchService;
+import br.ucs.classleague.application.Services.TournamentService;
 import br.ucs.classleague.domain.Match;
 import br.ucs.classleague.domain.Team;
 import br.ucs.classleague.infrastructure.presentation.model.MatchModel;
@@ -15,11 +16,13 @@ public class MatchPointsController {
     private GUI view;
     private MatchModel matchModel;
     private MatchService matchService;
+    private TournamentService tournamentService;
 
     public MatchPointsController(GUI view, MatchModel matchModel) {
         this.view = view;
         this.matchModel = matchModel;
         matchService = new MatchService();
+        tournamentService = new TournamentService();
     }
     
     public void fillPointsComboBox() {

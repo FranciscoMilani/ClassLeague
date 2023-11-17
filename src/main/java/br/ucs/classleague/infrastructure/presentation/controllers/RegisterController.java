@@ -101,23 +101,30 @@ public class RegisterController {
 
     public Boolean registerClass() {
         try {
-        int shiftIndex = frame.jClassShift.getSelectedIndex();
-        int cycleIndex = frame.jClassCycle.getSelectedIndex();
+            int shiftIndex = frame.jClassShift.getSelectedIndex();
+            int cycleIndex = frame.jClassCycle.getSelectedIndex();
+            int number = Integer.parseInt(frame.jClassNumber.getText());
+            
+            boolean valid = classService.checkForValidNumber(number);
+            if (!valid) {
+                JOptionPane.showMessageDialog(frame.classRegister,  "Número da turma já existe, insira outro.","Erro!", JOptionPane.ERROR_MESSAGE);
+                return false;
+            }
+            
+            SchoolClass schoolClass = new SchoolClass(
+                    frame.jClassNameField.getText(),
+                    number,
+                    SchoolClass.SchoolShift.values()[shiftIndex],
+                    SchoolClass.EducationalCycle.values()[cycleIndex]
+            );
 
-        // TODO: Tratar campo de número
-        SchoolClass schoolClass = new SchoolClass(
-                frame.jClassNameField.getText(),
-                Integer.parseInt(frame.jClassNumber.getText()),
-                SchoolClass.SchoolShift.values()[shiftIndex],
-                SchoolClass.EducationalCycle.values()[cycleIndex]
-        );
-
-        classService.registerClass(schoolClass);
-        JOptionPane.showMessageDialog(null, "Sucesso!", "Turma cadastrada com sucesso.", JOptionPane.INFORMATION_MESSAGE);
-
-        return true; 
+            classService.registerClass(schoolClass);
+            JOptionPane.showMessageDialog(null, "Sucesso!", "Turma cadastrada com sucesso.", JOptionPane.INFORMATION_MESSAGE);
+            clearClassRegisterFields();
+            return true; 
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Erro!", "Erro ao cadastrar turma.", JOptionPane.ERROR);
+            JOptionPane.showMessageDialog(null, "Erro!", "Erro ao cadastrar turma.", JOptionPane.ERROR_MESSAGE);
+            clearClassRegisterFields();
             return false;
         }
     }
@@ -195,8 +202,8 @@ public class RegisterController {
         List<Team> teams;
 
         teams = teamDao.findBySportIndex(SportsEnum.values()[sportEnumIndex]);
-        DefaultTableModel model = (DefaultTableModel) frame.jTournamentRegisterTeamsTable.getModel();
-        ControllerUtilities.resetTable(frame.jTournamentRegisterTeamsTable);
+        DefaultTableModel model = (DefaultTableModel) frame.tournamentRegisterTeamsTable.getModel();
+        ControllerUtilities.resetTable(frame.tournamentRegisterTeamsTable);
         
         for (int i = 0; i < teams.size(); i++) {
             model.addRow(new Object[]{ 
@@ -316,10 +323,10 @@ public class RegisterController {
             JOptionPane.showMessageDialog(null, "Quantidade de times excedida, limite: 16 times.", "Erro", JOptionPane.ERROR_MESSAGE);
             return;
         }
-        int sportEnumIndex = frame.jTeamRegisterSportComboBox.getSelectedIndex();
         
-        int phaseIndex = (int) (Math.log(count) / Math.log(2));
-        TournamentPhase startPhase = TournamentPhase.values()[TournamentPhase.values().length - phaseIndex];
+        int sportEnumIndex = frame.jTeamRegisterSportComboBox.getSelectedIndex();
+        int phaseIndex = tournamentService.getHighestPhaseIndex(count);
+        TournamentPhase startPhase = TournamentPhase.values()[phaseIndex];
         
         Tournament tournament = new Tournament(this.frame.tournamentNameField.getText(),
                 parseStringToLocalDate(this.frame.tournamentStartDateField.getText()),
@@ -337,6 +344,8 @@ public class RegisterController {
             e.printStackTrace();
             JOptionPane.showMessageDialog(null, "Erro!", "Erro ao cadastrar torneio.", JOptionPane.ERROR_MESSAGE);
         }
+        
+        clearTournamentRegisterFields();
     }
 
     public DefaultTableModel getTableModel(int rowCount) {
@@ -369,7 +378,7 @@ public class RegisterController {
         for (int i = 0; i < table.getRowCount(); i++) {
             if (table.getValueAt(i, 2) != null && (Boolean) table.getValueAt(i, 2)) {
                 Long teamId = (Long) table.getValueAt(i, 0);
-                Team team = teamDao.searchTeamById(teamId);
+                Team team = teamDao.findById(teamId).get();
                 
                 // Cria chave composta para criar a entidade de junção Tournament-Team
                 TournamentTeam tt = new TournamentTeam();
@@ -407,7 +416,7 @@ public class RegisterController {
             return;
         }
         DefaultTableModel model = getTableModel(teams.size());
-        frame.jTournamentRegisterTeamsTable.setModel(model);
+        frame.tournamentRegisterTeamsTable.setModel(model);
 
         for (int i = 0; i < teams.size(); i++) {
             System.out.println(teams.get(i).toString());
@@ -444,6 +453,21 @@ public class RegisterController {
         this.frame.jRegisterStudentMotherNameField.setText("");
         this.frame.jRegisterStudentTelephoneField.setText("");
         //this.frame.jRegisterStudentClassComboBox.setSelectedIndex(-1);
+    }
+    
+    public void clearTournamentRegisterFields() {
+        ControllerUtilities.resetTable(frame.tournamentRegisterTeamsTable);
+        frame.tournamentNameField.setText("");
+        frame.tournamentStartDateField.setText("");
+        frame.tournamentEndDateField.setText("");
+        frame.tournamentSportComboBox.setSelectedIndex(0);
+    }
+    
+    public void clearClassRegisterFields() {
+        frame.jClassNameField.setText("");
+        frame.jClassNumber.setText("");
+        frame.jClassShift.setSelectedIndex(0);
+        frame.jClassCycle.setSelectedIndex(0);
     }
 
     public void updateComboBoxes() {

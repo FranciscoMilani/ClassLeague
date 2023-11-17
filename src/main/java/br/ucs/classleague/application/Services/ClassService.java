@@ -2,14 +2,14 @@ package br.ucs.classleague.application.Services;
 
 import br.ucs.classleague.domain.SchoolClass;
 import br.ucs.classleague.infrastructure.data.ClassDao;
-import br.ucs.classleague.infrastructure.data.DaoFactory;
+import br.ucs.classleague.infrastructure.data.DaoProvider;
 
 public class ClassService {
 
     private ClassDao classDao;
 
     public ClassService() {
-        this.classDao = DaoFactory.getClassDao();
+        this.classDao = DaoProvider.getClassDao();
     }
 
     public void registerClass(SchoolClass schoolClass) {
@@ -34,5 +34,7 @@ public class ClassService {
         return names;
     }
 
-    
+    public Boolean checkForValidNumber(int classNumber) {
+        return classDao.findByNumber(classNumber) == null ? true : false;
+    }
 }

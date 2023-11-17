@@ -3,7 +3,9 @@ package br.ucs.classleague.infrastructure.presentation.controllers;
 import br.ucs.classleague.application.Services.TournamentService;
 import br.ucs.classleague.domain.Match;
 import br.ucs.classleague.domain.Tournament;
-import br.ucs.classleague.infrastructure.data.DaoFactory;
+import br.ucs.classleague.domain.Tournament.TournamentPhase;
+import br.ucs.classleague.domain.Tournament.TournamentStatus;
+import br.ucs.classleague.infrastructure.data.DaoProvider;
 import br.ucs.classleague.infrastructure.data.MatchDao;
 import br.ucs.classleague.infrastructure.data.TournamentDao;
 import br.ucs.classleague.infrastructure.presentation.model.MatchModel;
@@ -14,8 +16,6 @@ import java.util.stream.Collectors;
 import javax.swing.table.DefaultTableModel;
 
 public class TournamentController {
-    
-    public static Long selectedMatchId = -1L;
     
     private GUI frame;
     private TournamentModel tournamentModel;
@@ -28,22 +28,20 @@ public class TournamentController {
         this.frame = frame;
         this.tournamentModel = tournamentModel;
         this.matchModel = matchModel;
-        matchDao = DaoFactory.getMatchDao();
-        tournamentDao = DaoFactory.getTournamentDao();
+        matchDao = DaoProvider.getMatchDao();
+        tournamentDao = DaoProvider.getTournamentDao();
         tournamentService = new TournamentService();
     }
     
-    public void showTournamentDialog(String tournamentId){
+    public void enableTournamentDialog(String tournamentId){
         Long curTournamentId = Long.parseLong(tournamentId);
         frame.jTournamentSelectTable.getSelectionModel().clearSelection();
+        Tournament tournament = tournamentDao.findById(curTournamentId).get();
         
-        Tournament t = tournamentDao.findById(curTournamentId).get();
-        if (t != null) {
-            tournamentModel.setTournament(t);
+        if (tournament != null) {
+            tournamentModel.setTournament(tournament);
+            frame.setAndShowActiveTournamentDialogCard("card1");
         }
-        
-        fillTournamentMatchTableData(tournamentModel.getTournament());
-        frame.tournamentDialog.setVisible(true);
     }
     
     public void checkEnableMatch(String matchId) {
@@ -55,15 +53,26 @@ public class TournamentController {
     }
     
     public void fillTournamentData() {
-        Tournament t = tournamentModel.getTournament();
+        Tournament tournament = tournamentModel.getTournament();
+        
+        boolean isEnded = tournamentService.checkEndedTournament(tournament);
+        frame.tournamentStatusLabel.setText(TournamentStatus
+                .mapBoolToStatus(isEnded)
+                .toUpperCase()
+        );
 
-        frame.tournamentDialogNameData.setText(t.getName());
-        frame.tournamentDialogSportTypeInfoData.setText(t.getSportEnum().getName());
-        frame.tournamentDialogStartDateInfoData.setText(t.getStartTime().toString());
-        frame.tournamentDialogEndInfoData.setText(t.getEndTime().toString());
-        frame.tournamentDialogPhaseLabel.setText(t.getPhase().getName());
+        frame.tournamentDialogNameData.setText(tournament.getName());
+        frame.tournamentDialogSportTypeInfoData.setText(tournament.getSportEnum().getName());
+        frame.tournamentDialogStartDateInfoData.setText(tournament.getStartTime().toString());
+        frame.tournamentDialogEndInfoData.setText(tournament.getEndTime().toString());
+        frame.tournamentDialogPhaseInfoData.setText(tournament.getPhase().getName());
+        frame.tournamentHistoryComboBox.setEnabled(true);
+        
+        fillTournamentMatchTableData();
+        fillPreviousMatchesComboBox();
+        fillPreviousMatchesTableData();
 
-        boolean canStart = tournamentService.checkNextPhase(t);
+        boolean canStart = tournamentService.checkNextPhase(tournament);
         frame.startNewPhaseButton.setEnabled(canStart);
     }
     
@@ -71,7 +80,7 @@ public class TournamentController {
         ControllerUtilities.resetTable(frame.jTournamentSelectTable);
         
         try {
-            List<Tournament> tournaments = tournamentDao.findAll();
+            List<Tournament> tournaments = tournamentDao.findAllOrderByStartDate(); //tournamentDao.findAll();
             return fillTournamentListTableData(tournaments);
         } catch (Exception e){  
             e.printStackTrace();
@@ -121,7 +130,7 @@ public class TournamentController {
     }
     
     public DefaultTableModel getTournamentMatchTableModel(int rowCount){
-        String[] columnHeaders = new String[] {"ID", "Time 1", "Time 2"};
+        String[] columnHeaders = new String[] {"ID", "Time 1", "Time 2", "Vencedor", "Placar"};
 
         DefaultTableModel tournamentMatchModel = new DefaultTableModel(columnHeaders, rowCount) {           
             @Override
@@ -133,7 +142,9 @@ public class TournamentController {
         return tournamentMatchModel;
     }
     
-    public void fillTournamentMatchTableData(Tournament tournament) {
+    public void fillTournamentMatchTableData() {
+        frame.tournamentMatchesTable.clearSelection();
+        Tournament tournament = tournamentModel.getTournament();
         DefaultTableModel model = (DefaultTableModel) frame.tournamentMatchesTable.getModel();
         
         // coleta apenas confrontos da fase atual do torneio
@@ -144,12 +155,82 @@ public class TournamentController {
   
         ControllerUtilities.resetTable(frame.tournamentMatchesTable);
         
-        for (int i = 0; i < matches.size(); i++) {;
+        for (int i = 0; i < matches.size(); i++) {
+            Match match = matches.get(i);
+            
+            String col5 = String.format("%d - %d",
+                    match.getFirst_team_score(),
+                    match.getSecond_team_score()
+            );
+
             model.addRow(new Object[]{
-                matches.get(i).getId(), 
-                matches.get(i).getFirst_team().getName(),
-                matches.get(i).getSecond_team().getName(),
+                match.getId(), 
+                match.getFirst_team().getName(),
+                match.getSecond_team().getName(),
+                match.getWinner() == null ? "" : match.getWinner().getName(),
+                match.getEnded() ? col5 : ""
             });
+        }
+    }
+    
+    public DefaultTableModel getPreviousMatchesTableModel(int rowCount){
+        String[] columnHeaders = new String[] {"Times", "Vencedor", "Placar"};
+
+        DefaultTableModel tournamentMatchModel = new DefaultTableModel(columnHeaders, rowCount) {           
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
+        
+        return tournamentMatchModel;
+    }
+    
+    public void fillPreviousMatchesTableData() {
+        Tournament tournament = tournamentModel.getTournament();
+        DefaultTableModel model = (DefaultTableModel) frame.tournamentPreviousMatchesTable.getModel();
+        TournamentPhase tPhase;
+        
+        if ((String) frame.tournamentHistoryComboBox.getSelectedItem() != null) {
+            frame.tournamentHistoryComboBox.setEnabled(true);
+            tPhase = TournamentPhase.fromString((String) frame.tournamentHistoryComboBox.getSelectedItem());
+        } else {
+            frame.tournamentHistoryComboBox.setEnabled(false);
+            tPhase = null;
+        }
+        
+        List<Match> matches = tournament.getMatches()
+                .stream()
+                .filter((m) -> m.getPhase() == tPhase)
+                .collect(Collectors.toList());
+  
+        ControllerUtilities.resetTable(frame.tournamentPreviousMatchesTable); 
+
+        for (int i = 0; i < matches.size(); i++) {
+            Match match = matches.get(i);
+            
+            String col1 = String.format("%s x %s",
+                    match.getFirst_team().getName(),
+                    match.getSecond_team().getName()
+            );  
+            
+            String col2 = match.getWinner().getName();
+            
+            String col3 = String.format("%d - %d",
+                    match.getFirst_team_score(),
+                    match.getSecond_team_score()
+            );
+            
+            model.addRow(new Object[]{ col1, col2, col3 });
+        }
+    }
+    
+    public void fillPreviousMatchesComboBox() {
+        frame.tournamentHistoryComboBox.removeAllItems();
+        
+        String[] phases = tournamentService.getPhasesInTournament(tournamentModel.getTournament());
+        for (String p : phases) {
+            frame.tournamentHistoryComboBox.addItem(p);
         }
     }
     
@@ -160,7 +241,9 @@ public class TournamentController {
     
     public void startNextPhase() {
         tournamentService.startNextPhase(tournamentModel.getTournament());
-        fillTournamentMatchTableData(tournamentModel.getTournament());
+        fillTournamentMatchTableData();
+        fillPreviousMatchesComboBox();
+        fillPreviousMatchesTableData();
         frame.startNewPhaseButton.setEnabled(false);
     }
 }

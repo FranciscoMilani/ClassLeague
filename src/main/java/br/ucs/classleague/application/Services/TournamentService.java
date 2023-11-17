@@ -5,9 +5,10 @@ import br.ucs.classleague.domain.Team;
 import br.ucs.classleague.domain.Tournament;
 import br.ucs.classleague.domain.Tournament.TournamentPhase;
 import br.ucs.classleague.domain.TournamentTeam;
-import br.ucs.classleague.infrastructure.data.DaoFactory;
+import br.ucs.classleague.infrastructure.data.DaoProvider;
 import br.ucs.classleague.infrastructure.data.MatchDao;
 import br.ucs.classleague.infrastructure.data.TournamentDao;
+import br.ucs.classleague.infrastructure.data.TournamentTeamDao;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -16,8 +17,15 @@ import java.util.stream.Collectors;
 
 public class TournamentService {
     
-    private TournamentDao tournamentDao = DaoFactory.getTournamentDao();
-    private MatchDao matchDao = DaoFactory.getMatchDao();
+    private TournamentDao tournamentDao;
+    private MatchDao matchDao;
+    private TournamentTeamDao ttDao;
+
+    public TournamentService() {
+        this.tournamentDao = DaoProvider.getTournamentDao();
+        this.matchDao = DaoProvider.getMatchDao();
+        this.ttDao = DaoProvider.getTournamentTeamDao();
+    }
     
     /*
         Cria confrontos entre times
@@ -76,7 +84,24 @@ public class TournamentService {
         return tournament.getMatches()
                 .stream()
                 .map(Match::getEnded)
-                .allMatch((t) -> t.equals(true));
+                .allMatch((t) -> t.equals(true) 
+                        && tournament.getPhase() != TournamentPhase.FINAL);
+    }
+    
+    /**
+    * Retorna true se torneio terminou e false caso ainda não tenha terminado.
+    */
+    public boolean checkEndedTournament(Tournament tournament) {
+        if (tournament.getPhase() != TournamentPhase.FINAL) {
+            return false;
+        } else {
+            boolean allEnded = tournament.getMatches()
+                    .stream()
+                    .map(Match::getEnded)
+                    .allMatch((t) -> t.equals(true));  
+            
+            return allEnded;
+        }
     }
     
     public void startNextPhase(Tournament tournament) {
@@ -85,5 +110,29 @@ public class TournamentService {
         tournament.setPhase(nextPhase);
         tournamentDao.update(tournament);
         createLaterSimpleClashes(tournament);
+    }
+    
+    public int getHighestPhaseIndex(int teamCount) {
+        int phases = (int) (Math.log(teamCount) / Math.log(2));
+        return TournamentPhase.values().length - phases;
+    }
+    
+    public int getHighestPhaseIndex(Tournament tournament) {
+        int teamCount = tournament.getTournamentTeam().size();
+        int phases = (int) (Math.log(teamCount) / Math.log(2));
+        return TournamentPhase.values().length - phases;
+    }
+    
+    public String[] getPhasesInTournament(Tournament tournament) {
+        int i = getHighestPhaseIndex(tournament);    
+        int currIndex = tournament.getPhase().ordinal();
+        int diff = i - currIndex;
+        String[] arr = new String[Math.abs(diff)];
+        
+        for (int j = 0; j < arr.length; j++) {
+            arr[j] = TournamentPhase.getNameByPhaseIndex(currIndex - j-1);   
+        }
+
+        return arr;
     }
 }

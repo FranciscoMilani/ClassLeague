@@ -51,6 +51,40 @@ public class Tournament implements Serializable {
         public String getName() {
             return name;
         }
+        
+        public static String getNameByPhaseIndex(int index) {
+            return TournamentPhase.values()[index].getName();
+        }
+        
+        public static TournamentPhase fromString(String text) {
+            for (TournamentPhase tp : TournamentPhase.values()) {
+                if (tp.name.equalsIgnoreCase(text)) {
+                    return tp;
+                }
+            }
+            
+            throw new RuntimeException("Nenhuma constante de nome " + text + " encontrada");
+        }
+    }
+    
+    public static enum TournamentStatus {
+        IN_PROGRESS("Em progresso"),
+        ENDED("Finalizado");
+        
+        private String status;
+        
+        TournamentStatus(String status) {
+            this.status = status;
+        }
+
+        public String getStatus() {
+            return status;
+        }
+        
+        public static String mapBoolToStatus(boolean val) {
+            return val ? TournamentStatus.values()[1].getStatus() 
+                    : TournamentStatus.values()[0].getStatus();
+        }
     }
 
     public Tournament() {

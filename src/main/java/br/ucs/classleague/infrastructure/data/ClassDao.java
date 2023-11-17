@@ -34,10 +34,10 @@ public class ClassDao extends GenericDAO<SchoolClass, Long>{
             String jpql = "SELECT sc from SchoolClass sc WHERE sc.number = :schoolClassNumber";
             TypedQuery<SchoolClass> query = entityManager.createQuery(jpql, SchoolClass.class);
             query.setParameter("schoolClassNumber", schoolClassNumber);
-            
+
             return query.getSingleResult();
-        } finally {
-            //entityManager.close();
+        } catch (Exception e) {
+            return null;
         }
     }
 }

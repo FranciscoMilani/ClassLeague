@@ -3,7 +3,7 @@ package br.ucs.classleague.application.Services;
 import br.ucs.classleague.domain.Sport;
 import br.ucs.classleague.domain.StudentTeam;
 import br.ucs.classleague.domain.Team;
-import br.ucs.classleague.infrastructure.data.DaoFactory;
+import br.ucs.classleague.infrastructure.data.DaoProvider;
 import br.ucs.classleague.infrastructure.data.StudentTeamDao;
 import br.ucs.classleague.infrastructure.data.TeamDao;
 import java.util.List;
@@ -13,8 +13,8 @@ public class TeamRegisterService {
     private StudentTeamDao studentTeamDao;
 
     public TeamRegisterService() {
-        this.teamDao = DaoFactory.getTeamDao();
-        this.studentTeamDao = DaoFactory.getStudentTeamDao(); 
+        this.teamDao = DaoProvider.getTeamDao();
+        this.studentTeamDao = DaoProvider.getStudentTeamDao(); 
     }
     
     public String[] getSportsNames(){

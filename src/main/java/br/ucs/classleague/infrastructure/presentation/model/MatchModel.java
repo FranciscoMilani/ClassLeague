@@ -12,12 +12,7 @@ public class MatchModel extends AbstractModel {
     private Long tournamentId;
     private Long selectedMatchId;
     
-    // Disparar firePropertyChange após mudar as variáveis para a View "ouvir" as mudanças nos métodos desse model
-    // Esse método é chamado no Controller. O controller não deve implementar lógica de negócio
-    // exemplo:             pcs.firePropertyChange(NOME DA PROPRIEDADE, VALOR ANTIGO, VALOR NOVO)
-    // "pcs" é um campo do tipo SwingPropertyChangeSupport declarado na classe pai. 
-    // SwingPropertyChangeSupport serve para adicionar listeners da GUI (view) e lançar eventos, implementando assim o padrão de projeto Observer
-
+    
     public void setInfo(){
         
     }

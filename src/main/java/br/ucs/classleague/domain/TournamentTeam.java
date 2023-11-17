@@ -29,8 +29,7 @@ public class TournamentTeam implements Serializable {
     @JoinColumn(name = "team_id")
     private Team team;
     
-    private Integer points;
-    
+    private Integer points = 0;
     private Integer bracketSeed;
 
     public TournamentTeam() {
@@ -66,6 +65,10 @@ public class TournamentTeam implements Serializable {
 
     public void setPoints(Integer points) {
         this.points = points;
+    }
+    
+    public void addPoints(Integer pointsToAdd) {
+        this.points += pointsToAdd;
     }
 
     public Integer getBracketSeed() {

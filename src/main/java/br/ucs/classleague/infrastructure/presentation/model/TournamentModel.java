@@ -11,11 +11,10 @@ public class TournamentModel extends AbstractModel {
     private Tournament tournament = null;
     
     public void checkEnableMatch(Match match) {
-        // se a partida não terminou, quer dizer que ainda não aconteceu e pode inicia-la
         setEnableMatch(!match.getEnded());
     }
     
-    public void setEnableMatch(Boolean newVal){
+    public void setEnableMatch(Boolean newVal) {
         var oldVal = canStartMatch;
         canStartMatch = newVal;
         

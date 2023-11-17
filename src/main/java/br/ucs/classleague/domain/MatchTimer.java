@@ -15,14 +15,6 @@ public class MatchTimer {
         currentPeriod = 1;
     }
     
-    public static enum MatchState {
-        WAITING,
-        RUNNING,
-        STOPPED,
-        INTERVAL,
-        ENDED
-    }
-    
     public void addPeriod() {
         currentPeriod++;
     }
