@@ -1,5 +1,6 @@
 package br.ucs.classleague.infrastructure.presentation.views;
 
+import br.ucs.classleague.application.Services.CSVConverterService;
 import br.ucs.classleague.domain.MatchState;
 import br.ucs.classleague.domain.MatchTimer;
 import br.ucs.classleague.infrastructure.presentation.controllers.ControllerUtilities;
@@ -146,21 +147,25 @@ public class GUI extends javax.swing.JFrame {
         classesTableScrollPane = new javax.swing.JScrollPane();
         jClassesTable = new javax.swing.JTable(visualizationDataController.getClassesTableModel(0));
         classVisualizationLabel = new javax.swing.JLabel();
+        exportClassesToCSVButton = new javax.swing.JButton();
         studentsDialog = new javax.swing.JDialog();
         studentsTablePanel = new javax.swing.JPanel();
         studentsTableScrollPane1 = new javax.swing.JScrollPane();
         jStudentsTable = new javax.swing.JTable(visualizationDataController.getStudentsTableModel(0));
         studentsVisualizationLabel = new javax.swing.JLabel();
+        exportStudentsToCSVButton = new javax.swing.JButton();
         teamsDialog = new javax.swing.JDialog();
         teamsTablePanel = new javax.swing.JPanel();
         teamsTableScrollPane = new javax.swing.JScrollPane();
         jTeamsTable = new javax.swing.JTable(visualizationDataController.getTeamsTableModel(0));
         teamsVisualizationLabel = new javax.swing.JLabel();
+        exportTeamsToSCVButton = new javax.swing.JButton();
         coachDialog = new javax.swing.JDialog();
         coachTablePanel = new javax.swing.JPanel();
         coachTableScrollPane = new javax.swing.JScrollPane();
         jCoachTable = new javax.swing.JTable(visualizationDataController.getCoachTableModel(0));
         coachVisualizationLabel = new javax.swing.JLabel();
+        exportCoachToCSVButton = new javax.swing.JButton();
         mainTabbedPane = new javax.swing.JTabbedPane();
         mainPanel = new javax.swing.JPanel();
         mainTopPanel = new javax.swing.JPanel();
@@ -1106,6 +1111,13 @@ public class GUI extends javax.swing.JFrame {
         classVisualizationLabel.setText("Visualização de Turmas");
         classVisualizationLabel.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
+        exportClassesToCSVButton.setText("Exportar em CSV");
+        exportClassesToCSVButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                exportClassesToCSVButtonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout classesDialogLayout = new javax.swing.GroupLayout(classesDialog.getContentPane());
         classesDialog.getContentPane().setLayout(classesDialogLayout);
         classesDialogLayout.setHorizontalGroup(
@@ -1119,13 +1131,19 @@ public class GUI extends javax.swing.JFrame {
                         .addGap(39, 39, 39)
                         .addComponent(classVisualizationLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 973, Short.MAX_VALUE)))
                 .addContainerGap())
+            .addGroup(classesDialogLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(exportClassesToCSVButton)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         classesDialogLayout.setVerticalGroup(
             classesDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(classesDialogLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(classVisualizationLabel)
-                .addGap(39, 39, 39)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(exportClassesToCSVButton)
+                .addGap(10, 10, 10)
                 .addComponent(classesTablePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(287, Short.MAX_VALUE))
         );
@@ -1170,6 +1188,13 @@ public class GUI extends javax.swing.JFrame {
         studentsVisualizationLabel.setText("Visualização de Alunos");
         studentsVisualizationLabel.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
+        exportStudentsToCSVButton.setText("Exportar em CSV");
+        exportStudentsToCSVButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                exportStudentsToCSVButtonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout studentsDialogLayout = new javax.swing.GroupLayout(studentsDialog.getContentPane());
         studentsDialog.getContentPane().setLayout(studentsDialogLayout);
         studentsDialogLayout.setHorizontalGroup(
@@ -1183,13 +1208,19 @@ public class GUI extends javax.swing.JFrame {
                         .addGap(39, 39, 39)
                         .addComponent(studentsVisualizationLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 973, Short.MAX_VALUE)))
                 .addContainerGap())
+            .addGroup(studentsDialogLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(exportStudentsToCSVButton)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         studentsDialogLayout.setVerticalGroup(
             studentsDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(studentsDialogLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(studentsVisualizationLabel)
-                .addGap(39, 39, 39)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(exportStudentsToCSVButton)
+                .addGap(10, 10, 10)
                 .addComponent(studentsTablePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(287, Short.MAX_VALUE))
         );
@@ -1235,6 +1266,13 @@ public class GUI extends javax.swing.JFrame {
         teamsVisualizationLabel.setText("Visualização de Times");
         teamsVisualizationLabel.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
+        exportTeamsToSCVButton.setText("Exportar em CSV");
+        exportTeamsToSCVButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                exportTeamsToSCVButtonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout teamsDialogLayout = new javax.swing.GroupLayout(teamsDialog.getContentPane());
         teamsDialog.getContentPane().setLayout(teamsDialogLayout);
         teamsDialogLayout.setHorizontalGroup(
@@ -1248,13 +1286,19 @@ public class GUI extends javax.swing.JFrame {
                         .addGap(39, 39, 39)
                         .addComponent(teamsVisualizationLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 973, Short.MAX_VALUE)))
                 .addContainerGap())
+            .addGroup(teamsDialogLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(exportTeamsToSCVButton)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         teamsDialogLayout.setVerticalGroup(
             teamsDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(teamsDialogLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(teamsVisualizationLabel)
-                .addGap(39, 39, 39)
+                .addGap(10, 10, 10)
+                .addComponent(exportTeamsToSCVButton)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(teamsTablePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(287, Short.MAX_VALUE))
         );
@@ -1300,6 +1344,13 @@ public class GUI extends javax.swing.JFrame {
         coachVisualizationLabel.setText("Visualização de Treinadores");
         coachVisualizationLabel.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
+        exportCoachToCSVButton.setText("Exportar em CSV");
+        exportCoachToCSVButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                exportCoachToCSVButtonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout coachDialogLayout = new javax.swing.GroupLayout(coachDialog.getContentPane());
         coachDialog.getContentPane().setLayout(coachDialogLayout);
         coachDialogLayout.setHorizontalGroup(
@@ -1313,13 +1364,19 @@ public class GUI extends javax.swing.JFrame {
                         .addGap(39, 39, 39)
                         .addComponent(coachVisualizationLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 973, Short.MAX_VALUE)))
                 .addContainerGap())
+            .addGroup(coachDialogLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(exportCoachToCSVButton)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         coachDialogLayout.setVerticalGroup(
             coachDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(coachDialogLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(coachVisualizationLabel)
-                .addGap(39, 39, 39)
+                .addGap(4, 4, 4)
+                .addComponent(exportCoachToCSVButton)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(coachTablePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(287, Short.MAX_VALUE))
         );
@@ -1564,7 +1621,7 @@ public class GUI extends javax.swing.JFrame {
                 .addGap(310, 310, 310)
                 .addGroup(tournamentRegisterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(tournamentLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(tournamentRegisterPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                    .addComponent(tournamentRegisterPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 0, Short.MAX_VALUE))
                 .addContainerGap(406, Short.MAX_VALUE))
         );
         tournamentRegisterLayout.setVerticalGroup(
@@ -2559,6 +2616,26 @@ public class GUI extends javax.swing.JFrame {
         ControllerUtilities.convertTableToCSV(participantTeamsMainPanel, tournamentParticipantsTable);
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    private void exportClassesToCSVButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exportClassesToCSVButtonActionPerformed
+        // TODO add your handling code here:
+        CSVConverterService.exportToCSV(jClassesTable, "C:\\Temp", "Tabela de Turmas");
+    }//GEN-LAST:event_exportClassesToCSVButtonActionPerformed
+
+    private void exportCoachToCSVButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exportCoachToCSVButtonActionPerformed
+        // TODO add your handling code here:
+        CSVConverterService.exportToCSV(jCoachTable, "C:\\Temp", "Tabela de Treinadores");
+    }//GEN-LAST:event_exportCoachToCSVButtonActionPerformed
+
+    private void exportStudentsToCSVButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exportStudentsToCSVButtonActionPerformed
+        // TODO add your handling code here:
+        CSVConverterService.exportToCSV(jStudentsTable, "C:\\Temp", "Tabela de Alunos");
+    }//GEN-LAST:event_exportStudentsToCSVButtonActionPerformed
+
+    private void exportTeamsToSCVButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exportTeamsToSCVButtonActionPerformed
+        // TODO add your handling code here:
+        CSVConverterService.exportToCSV(jTeamsTable, "C:\\Temp", "Tabela de Times");
+    }//GEN-LAST:event_exportTeamsToSCVButtonActionPerformed
+
     public void setAndShowActiveTournamentDialogCard(String cardName) {
         int op = DISPOSE_ON_CLOSE;
         
@@ -2623,6 +2700,10 @@ public class GUI extends javax.swing.JFrame {
     public javax.swing.JScrollPane coachTableScrollPane;
     public javax.swing.JLabel coachVisualizationLabel;
     public javax.swing.JButton endMatchButton;
+    public javax.swing.JButton exportClassesToCSVButton;
+    public javax.swing.JButton exportCoachToCSVButton;
+    public javax.swing.JButton exportStudentsToCSVButton;
+    public javax.swing.JButton exportTeamsToSCVButton;
     public javax.swing.JLabel firstTeamNameLabel;
     public javax.swing.JLabel firstTeamScoreLabel;
     public javax.swing.JButton jButton1;
