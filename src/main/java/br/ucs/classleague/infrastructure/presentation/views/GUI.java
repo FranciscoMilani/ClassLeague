@@ -1,5 +1,6 @@
 package br.ucs.classleague.infrastructure.presentation.views;
 
+import br.ucs.classleague.application.Services.CSVConverterService;
 import br.ucs.classleague.domain.MatchState;
 import br.ucs.classleague.domain.MatchTimer;
 import br.ucs.classleague.infrastructure.presentation.controllers.ControllerUtilities;
@@ -7,6 +8,7 @@ import br.ucs.classleague.infrastructure.presentation.controllers.MatchControlle
 import br.ucs.classleague.infrastructure.presentation.controllers.MatchPointsController;
 import br.ucs.classleague.infrastructure.presentation.controllers.RegisterController;
 import br.ucs.classleague.infrastructure.presentation.controllers.TournamentController;
+import br.ucs.classleague.infrastructure.presentation.controllers.visualizationDataController;
 import br.ucs.classleague.infrastructure.presentation.controllers.TournamentParticipantsController;
 import br.ucs.classleague.infrastructure.presentation.model.MatchModel;
 import br.ucs.classleague.infrastructure.presentation.model.TournamentModel;
@@ -14,8 +16,10 @@ import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ItemEvent;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTabbedPane;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.UIManager;
 
 public class GUI extends javax.swing.JFrame {
@@ -24,6 +28,7 @@ public class GUI extends javax.swing.JFrame {
     public Color defaultColor = UIManager.getColor("timerCurrentTimeLabel.background"); 
     
     private RegisterController registerController;
+    private visualizationDataController visualizationDataController;
     private TournamentController tournamentController;
     private MatchController matchController;
     private MatchPointsController matchPointsController;
@@ -49,6 +54,7 @@ public class GUI extends javax.swing.JFrame {
     
     private void initControllers() {
         this.registerController = new RegisterController(this);
+        this.visualizationDataController = new visualizationDataController(this);
         this.tournamentController = new TournamentController(this, tournamentModel, matchModel);
         this.matchController = new MatchController(this, matchModel, tournamentModel);
         this.matchPointsController = new MatchPointsController(this, matchModel);
@@ -136,6 +142,30 @@ public class GUI extends javax.swing.JFrame {
         jButton2 = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
         scoreLogDialog = new javax.swing.JDialog();
+        classesDialog = new javax.swing.JDialog();
+        classesTablePanel = new javax.swing.JPanel();
+        classesTableScrollPane = new javax.swing.JScrollPane();
+        jClassesTable = new javax.swing.JTable(visualizationDataController.getClassesTableModel(0));
+        classVisualizationLabel = new javax.swing.JLabel();
+        exportClassesToCSVButton = new javax.swing.JButton();
+        studentsDialog = new javax.swing.JDialog();
+        studentsTablePanel = new javax.swing.JPanel();
+        studentsTableScrollPane1 = new javax.swing.JScrollPane();
+        jStudentsTable = new javax.swing.JTable(visualizationDataController.getStudentsTableModel(0));
+        studentsVisualizationLabel = new javax.swing.JLabel();
+        exportStudentsToCSVButton = new javax.swing.JButton();
+        teamsDialog = new javax.swing.JDialog();
+        teamsTablePanel = new javax.swing.JPanel();
+        teamsTableScrollPane = new javax.swing.JScrollPane();
+        jTeamsTable = new javax.swing.JTable(visualizationDataController.getTeamsTableModel(0));
+        teamsVisualizationLabel = new javax.swing.JLabel();
+        exportTeamsToSCVButton = new javax.swing.JButton();
+        coachDialog = new javax.swing.JDialog();
+        coachTablePanel = new javax.swing.JPanel();
+        coachTableScrollPane = new javax.swing.JScrollPane();
+        jCoachTable = new javax.swing.JTable(visualizationDataController.getCoachTableModel(0));
+        coachVisualizationLabel = new javax.swing.JLabel();
+        exportCoachToCSVButton = new javax.swing.JButton();
         mainTabbedPane = new javax.swing.JTabbedPane();
         mainPanel = new javax.swing.JPanel();
         mainTopPanel = new javax.swing.JPanel();
@@ -228,6 +258,13 @@ public class GUI extends javax.swing.JFrame {
         coachPhoneField = new javax.swing.JFormattedTextField();
         coachSportComboBox = new javax.swing.JComboBox<>(registerController.showSportsNames());
         coachGenderComboBox = new javax.swing.JComboBox<>(registerController.showGender());
+        viewListsRegister = new javax.swing.JPanel();
+        jViewRegisterTitle = new javax.swing.JLabel();
+        ViewListsRegisterPanel = new javax.swing.JPanel();
+        viewClassesButton = new javax.swing.JButton();
+        viewStudentsButton1 = new javax.swing.JButton();
+        viewTeamsButton2 = new javax.swing.JButton();
+        viewCoachButton = new javax.swing.JButton();
 
         tournamentDialog.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         tournamentDialog.setTitle("Torneio");
@@ -298,24 +335,32 @@ public class GUI extends javax.swing.JFrame {
                 .addGroup(tournamentInfoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(tournamentInfoPanelLayout.createSequentialGroup()
                         .addComponent(tournamentDialogInfoTitleLabel)
+                        .addGap(0, 491, Short.MAX_VALUE)
+                        .addComponent(tournamentDialogInfoIcon)
+                        .addGap(31, 31, 31))
+                    .addGroup(tournamentInfoPanelLayout.createSequentialGroup()
+                        .addGroup(tournamentInfoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(tournamentDialogPhaseLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 157, Short.MAX_VALUE)
+                            .addComponent(tournamentDialogSportTypeLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(tournamentInfoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(tournamentDialogSportTypeInfoData, javax.swing.GroupLayout.DEFAULT_SIZE, 120, Short.MAX_VALUE)
+                            .addComponent(tournamentDialogPhaseInfoData, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 64, Short.MAX_VALUE)
+                        .addGroup(tournamentInfoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(tournamentDialogStartDateField, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(tournamentDialogEndDateField))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(tournamentDialogInfoIcon, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap())
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, tournamentInfoPanelLayout.createSequentialGroup()
                         .addGroup(tournamentInfoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jSeparator1, javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, tournamentInfoPanelLayout.createSequentialGroup()
-                                .addGroup(tournamentInfoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(tournamentDialogPhaseLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 145, Short.MAX_VALUE)
-                                    .addComponent(tournamentDialogSportTypeLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addGroup(tournamentInfoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(tournamentInfoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(tournamentDialogSportTypeInfoData, javax.swing.GroupLayout.DEFAULT_SIZE, 161, Short.MAX_VALUE)
-                                    .addComponent(tournamentDialogPhaseInfoData, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addGroup(tournamentInfoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 31, Short.MAX_VALUE)
-                                .addGroup(tournamentInfoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(tournamentDialogStartDateField, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(tournamentDialogEndDateField, javax.swing.GroupLayout.Alignment.TRAILING))
+                                .addGroup(tournamentInfoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(tournamentInfoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(tournamentDialogStartDateInfoData, javax.swing.GroupLayout.DEFAULT_SIZE, 126, Short.MAX_VALUE)
@@ -1023,6 +1068,317 @@ public class GUI extends javax.swing.JFrame {
         scoreLogDialogLayout.setVerticalGroup(
             scoreLogDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 300, Short.MAX_VALUE)
+        );
+
+        classesDialog.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        classesDialog.setTitle("Visualizar Turmas");
+        classesDialog.setMinimumSize(null);
+        classesDialog.setModal(true);
+        classesDialog.setModalityType(java.awt.Dialog.ModalityType.TOOLKIT_MODAL);
+        classesDialog.setResizable(false);
+        classesDialog.setSize(new java.awt.Dimension(1055, 810));
+
+        jClassesTable.setModel(visualizationDataController.getClassesTableModel(0));
+        jClassesTable.setColumnSelectionAllowed(true);
+        jClassesTable.setDragEnabled(true);
+        jClassesTable.setEnabled(false);
+        jClassesTable.setFillsViewportHeight(true);
+        jClassesTable.setRowHeight(40);
+        jClassesTable.setShowHorizontalLines(true);
+        jClassesTable.setSurrendersFocusOnKeystroke(true);
+        visualizationDataController.updateClassVisualizationCells();
+        classesTableScrollPane.setViewportView(jClassesTable);
+        DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
+        centerRenderer.setHorizontalAlignment(JLabel.CENTER);
+
+        for (int i = 0; i < jClassesTable.getColumnCount(); i++) {
+            jClassesTable.getColumnModel().getColumn(i).setCellRenderer(centerRenderer);
+        }
+
+        javax.swing.GroupLayout classesTablePanelLayout = new javax.swing.GroupLayout(classesTablePanel);
+        classesTablePanel.setLayout(classesTablePanelLayout);
+        classesTablePanelLayout.setHorizontalGroup(
+            classesTablePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(classesTableScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 1006, Short.MAX_VALUE)
+        );
+        classesTablePanelLayout.setVerticalGroup(
+            classesTablePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(classesTableScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 412, Short.MAX_VALUE)
+        );
+
+        classVisualizationLabel.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
+        classVisualizationLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        classVisualizationLabel.setText("Visualização de Turmas");
+        classVisualizationLabel.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+
+        exportClassesToCSVButton.setText("Exportar em CSV");
+        exportClassesToCSVButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                exportClassesToCSVButtonActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout classesDialogLayout = new javax.swing.GroupLayout(classesDialog.getContentPane());
+        classesDialog.getContentPane().setLayout(classesDialogLayout);
+        classesDialogLayout.setHorizontalGroup(
+            classesDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(classesDialogLayout.createSequentialGroup()
+                .addGroup(classesDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(classesDialogLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(classesTablePanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(classesDialogLayout.createSequentialGroup()
+                        .addGap(39, 39, 39)
+                        .addComponent(classVisualizationLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 973, Short.MAX_VALUE)))
+                .addContainerGap())
+            .addGroup(classesDialogLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(exportClassesToCSVButton)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        classesDialogLayout.setVerticalGroup(
+            classesDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(classesDialogLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(classVisualizationLabel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(exportClassesToCSVButton)
+                .addGap(10, 10, 10)
+                .addComponent(classesTablePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(287, Short.MAX_VALUE))
+        );
+
+        studentsDialog.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        studentsDialog.setTitle("Visualizar Alunos");
+        studentsDialog.setMinimumSize(null);
+        studentsDialog.setModal(true);
+        studentsDialog.setModalityType(java.awt.Dialog.ModalityType.TOOLKIT_MODAL);
+        studentsDialog.setResizable(false);
+        studentsDialog.setSize(new java.awt.Dimension(1055, 810));
+
+        jStudentsTable.setModel(visualizationDataController.getStudentsTableModel(0));
+        jStudentsTable.setColumnSelectionAllowed(true);
+        jStudentsTable.setDragEnabled(true);
+        jStudentsTable.setEnabled(false);
+        jStudentsTable.setFillsViewportHeight(true);
+        jStudentsTable.setRowHeight(40);
+        jStudentsTable.setShowHorizontalLines(true);
+        jStudentsTable.setSurrendersFocusOnKeystroke(true);
+        visualizationDataController.updateStudentVisualizationCells();
+        studentsTableScrollPane1.setViewportView(jStudentsTable);
+        centerRenderer.setHorizontalAlignment(JLabel.CENTER);
+
+        for (int i = 0; i < jStudentsTable.getColumnCount(); i++) {
+            jStudentsTable.getColumnModel().getColumn(i).setCellRenderer(centerRenderer);
+        }
+
+        javax.swing.GroupLayout studentsTablePanelLayout = new javax.swing.GroupLayout(studentsTablePanel);
+        studentsTablePanel.setLayout(studentsTablePanelLayout);
+        studentsTablePanelLayout.setHorizontalGroup(
+            studentsTablePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(studentsTableScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1006, Short.MAX_VALUE)
+        );
+        studentsTablePanelLayout.setVerticalGroup(
+            studentsTablePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(studentsTableScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 412, Short.MAX_VALUE)
+        );
+
+        studentsVisualizationLabel.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
+        studentsVisualizationLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        studentsVisualizationLabel.setText("Visualização de Alunos");
+        studentsVisualizationLabel.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+
+        exportStudentsToCSVButton.setText("Exportar em CSV");
+        exportStudentsToCSVButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                exportStudentsToCSVButtonActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout studentsDialogLayout = new javax.swing.GroupLayout(studentsDialog.getContentPane());
+        studentsDialog.getContentPane().setLayout(studentsDialogLayout);
+        studentsDialogLayout.setHorizontalGroup(
+            studentsDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(studentsDialogLayout.createSequentialGroup()
+                .addGroup(studentsDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(studentsDialogLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(studentsTablePanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(studentsDialogLayout.createSequentialGroup()
+                        .addGap(39, 39, 39)
+                        .addComponent(studentsVisualizationLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 973, Short.MAX_VALUE)))
+                .addContainerGap())
+            .addGroup(studentsDialogLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(exportStudentsToCSVButton)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        studentsDialogLayout.setVerticalGroup(
+            studentsDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(studentsDialogLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(studentsVisualizationLabel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(exportStudentsToCSVButton)
+                .addGap(10, 10, 10)
+                .addComponent(studentsTablePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(287, Short.MAX_VALUE))
+        );
+
+        teamsDialog.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        teamsDialog.setTitle("Visualizar Times");
+        teamsDialog.setMinimumSize(null);
+        teamsDialog.setModal(true);
+        teamsDialog.setModalityType(java.awt.Dialog.ModalityType.TOOLKIT_MODAL);
+        teamsDialog.setResizable(false);
+        teamsDialog.setSize(new java.awt.Dimension(1055, 810));
+
+        jTeamsTable.setModel(visualizationDataController.getTeamsTableModel(0));
+        jTeamsTable.setColumnSelectionAllowed(true);
+        jTeamsTable.setDragEnabled(true);
+        jTeamsTable.setEnabled(false);
+        jTeamsTable.setFillsViewportHeight(true);
+        jTeamsTable.setRowHeight(40);
+        jTeamsTable.setShowHorizontalLines(true);
+        jTeamsTable.setSurrendersFocusOnKeystroke(true);
+        visualizationDataController.updateTeamVisualizationCells();
+        teamsTableScrollPane.setViewportView(jTeamsTable);
+        jTeamsTable.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
+        centerRenderer.setHorizontalAlignment(JLabel.CENTER);
+
+        for (int i = 0; i < jTeamsTable.getColumnCount(); i++) {
+            jTeamsTable.getColumnModel().getColumn(i).setCellRenderer(centerRenderer);
+        }
+
+        javax.swing.GroupLayout teamsTablePanelLayout = new javax.swing.GroupLayout(teamsTablePanel);
+        teamsTablePanel.setLayout(teamsTablePanelLayout);
+        teamsTablePanelLayout.setHorizontalGroup(
+            teamsTablePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(teamsTableScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 1006, Short.MAX_VALUE)
+        );
+        teamsTablePanelLayout.setVerticalGroup(
+            teamsTablePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(teamsTableScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 412, Short.MAX_VALUE)
+        );
+
+        teamsVisualizationLabel.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
+        teamsVisualizationLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        teamsVisualizationLabel.setText("Visualização de Times");
+        teamsVisualizationLabel.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+
+        exportTeamsToSCVButton.setText("Exportar em CSV");
+        exportTeamsToSCVButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                exportTeamsToSCVButtonActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout teamsDialogLayout = new javax.swing.GroupLayout(teamsDialog.getContentPane());
+        teamsDialog.getContentPane().setLayout(teamsDialogLayout);
+        teamsDialogLayout.setHorizontalGroup(
+            teamsDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(teamsDialogLayout.createSequentialGroup()
+                .addGroup(teamsDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(teamsDialogLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(teamsTablePanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(teamsDialogLayout.createSequentialGroup()
+                        .addGap(39, 39, 39)
+                        .addComponent(teamsVisualizationLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 973, Short.MAX_VALUE)))
+                .addContainerGap())
+            .addGroup(teamsDialogLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(exportTeamsToSCVButton)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        teamsDialogLayout.setVerticalGroup(
+            teamsDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(teamsDialogLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(teamsVisualizationLabel)
+                .addGap(10, 10, 10)
+                .addComponent(exportTeamsToSCVButton)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(teamsTablePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(287, Short.MAX_VALUE))
+        );
+
+        coachDialog.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        coachDialog.setTitle("Visualizar Times");
+        coachDialog.setMinimumSize(null);
+        coachDialog.setModal(true);
+        coachDialog.setModalityType(java.awt.Dialog.ModalityType.TOOLKIT_MODAL);
+        coachDialog.setResizable(false);
+        coachDialog.setSize(new java.awt.Dimension(1055, 810));
+
+        jCoachTable.setModel(visualizationDataController.getCoachTableModel(0));
+        jCoachTable.setColumnSelectionAllowed(true);
+        jCoachTable.setDragEnabled(true);
+        jCoachTable.setEnabled(false);
+        jCoachTable.setFillsViewportHeight(true);
+        jCoachTable.setRowHeight(40);
+        jCoachTable.setShowHorizontalLines(true);
+        jCoachTable.setSurrendersFocusOnKeystroke(true);
+        visualizationDataController.updateCoachVisualizationCells();
+        coachTableScrollPane.setViewportView(jCoachTable);
+        jCoachTable.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
+        centerRenderer.setHorizontalAlignment(JLabel.CENTER);
+
+        for (int i = 0; i < jCoachTable.getColumnCount(); i++) {
+            jCoachTable.getColumnModel().getColumn(i).setCellRenderer(centerRenderer);
+        }
+
+        javax.swing.GroupLayout coachTablePanelLayout = new javax.swing.GroupLayout(coachTablePanel);
+        coachTablePanel.setLayout(coachTablePanelLayout);
+        coachTablePanelLayout.setHorizontalGroup(
+            coachTablePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(coachTableScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 1006, Short.MAX_VALUE)
+        );
+        coachTablePanelLayout.setVerticalGroup(
+            coachTablePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(coachTableScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 412, Short.MAX_VALUE)
+        );
+
+        coachVisualizationLabel.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
+        coachVisualizationLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        coachVisualizationLabel.setText("Visualização de Treinadores");
+        coachVisualizationLabel.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+
+        exportCoachToCSVButton.setText("Exportar em CSV");
+        exportCoachToCSVButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                exportCoachToCSVButtonActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout coachDialogLayout = new javax.swing.GroupLayout(coachDialog.getContentPane());
+        coachDialog.getContentPane().setLayout(coachDialogLayout);
+        coachDialogLayout.setHorizontalGroup(
+            coachDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(coachDialogLayout.createSequentialGroup()
+                .addGroup(coachDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(coachDialogLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(coachTablePanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(coachDialogLayout.createSequentialGroup()
+                        .addGap(39, 39, 39)
+                        .addComponent(coachVisualizationLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 973, Short.MAX_VALUE)))
+                .addContainerGap())
+            .addGroup(coachDialogLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(exportCoachToCSVButton)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        coachDialogLayout.setVerticalGroup(
+            coachDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(coachDialogLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(coachVisualizationLabel)
+                .addGap(4, 4, 4)
+                .addComponent(exportCoachToCSVButton)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(coachTablePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(287, Short.MAX_VALUE))
         );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -1895,6 +2251,92 @@ public class GUI extends javax.swing.JFrame {
 
         mainTabbedPane.addTab("Cadastro de Treinadores", coachRegister);
 
+        jViewRegisterTitle.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
+        jViewRegisterTitle.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jViewRegisterTitle.setText("Visualização de Dados");
+        jViewRegisterTitle.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+
+        viewClassesButton.setText("Visualizar Turmas");
+        viewClassesButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                viewClassesButtonActionPerformed(evt);
+            }
+        });
+
+        viewStudentsButton1.setText("Visualizar Alunos");
+        viewStudentsButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                viewStudentsButton1ActionPerformed(evt);
+            }
+        });
+
+        viewTeamsButton2.setText("Visualizar Times");
+        viewTeamsButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                viewTeamsButton2ActionPerformed(evt);
+            }
+        });
+
+        viewCoachButton.setText("Visualizar Treinadores");
+        viewCoachButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                viewCoachButtonActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout ViewListsRegisterPanelLayout = new javax.swing.GroupLayout(ViewListsRegisterPanel);
+        ViewListsRegisterPanel.setLayout(ViewListsRegisterPanelLayout);
+        ViewListsRegisterPanelLayout.setHorizontalGroup(
+            ViewListsRegisterPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(ViewListsRegisterPanelLayout.createSequentialGroup()
+                .addContainerGap(36, Short.MAX_VALUE)
+                .addComponent(viewClassesButton, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(viewStudentsButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(viewTeamsButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(viewCoachButton)
+                .addGap(43, 43, 43))
+        );
+        ViewListsRegisterPanelLayout.setVerticalGroup(
+            ViewListsRegisterPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(ViewListsRegisterPanelLayout.createSequentialGroup()
+                .addGap(63, 63, 63)
+                .addGroup(ViewListsRegisterPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(viewClassesButton, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(viewStudentsButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(viewTeamsButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(viewCoachButton, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(63, Short.MAX_VALUE))
+        );
+
+        javax.swing.GroupLayout viewListsRegisterLayout = new javax.swing.GroupLayout(viewListsRegister);
+        viewListsRegister.setLayout(viewListsRegisterLayout);
+        viewListsRegisterLayout.setHorizontalGroup(
+            viewListsRegisterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(viewListsRegisterLayout.createSequentialGroup()
+                .addGroup(viewListsRegisterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(viewListsRegisterLayout.createSequentialGroup()
+                        .addGap(146, 146, 146)
+                        .addComponent(ViewListsRegisterPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(viewListsRegisterLayout.createSequentialGroup()
+                        .addGap(306, 306, 306)
+                        .addComponent(jViewRegisterTitle)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        viewListsRegisterLayout.setVerticalGroup(
+            viewListsRegisterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(viewListsRegisterLayout.createSequentialGroup()
+                .addGap(50, 50, 50)
+                .addComponent(jViewRegisterTitle)
+                .addGap(34, 34, 34)
+                .addComponent(ViewListsRegisterPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(360, Short.MAX_VALUE))
+        );
+
+        mainTabbedPane.addTab("Visualização", viewListsRegister);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -2123,6 +2565,39 @@ public class GUI extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_addPointsComboBoxItemStateChanged
 
+    private void viewClassesButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewClassesButtonActionPerformed
+        // TODO add your handling code here:
+        this.classesDialog.setVisible(true);
+    }//GEN-LAST:event_viewClassesButtonActionPerformed
+
+    private void viewStudentsButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewStudentsButton1ActionPerformed
+        // TODO add your handling code here:
+        this.studentsDialog.setVisible(true);
+    }//GEN-LAST:event_viewStudentsButton1ActionPerformed
+
+    private void viewTeamsButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewTeamsButton2ActionPerformed
+        // TODO add your handling code here:
+        this.teamsDialog.setVisible(true);
+    }//GEN-LAST:event_viewTeamsButton2ActionPerformed
+
+    private void viewCoachButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewCoachButtonActionPerformed
+        // TODO add your handling code here:
+        this.coachDialog.setVisible(true);
+    }//GEN-LAST:event_viewCoachButtonActionPerformed
+
+    public void setAndShowActiveTournamentDialogLayout(String cardName) {
+        int op = cardName.equals("card1") ? DISPOSE_ON_CLOSE : DO_NOTHING_ON_CLOSE;
+        tournamentDialog.setDefaultCloseOperation(op);
+        tournamentDialogActiveLayout = cardName;
+        cl.show(tournamentDialogMainPanel, cardName);
+        
+        if (tournamentDialogActiveLayout.equals("card1")) {
+            tournamentController.fillTournamentData();
+        } else if (tournamentDialogActiveLayout.equals("card2")) {
+            matchController.setMatchInfo();
+        }
+    }
+    
     private void viewTeamsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewTeamsButtonActionPerformed
         setAndShowActiveTournamentDialogCard("card3");
     }//GEN-LAST:event_viewTeamsButtonActionPerformed
@@ -2140,6 +2615,26 @@ public class GUI extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         ControllerUtilities.convertTableToCSV(participantTeamsMainPanel, tournamentParticipantsTable);
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void exportClassesToCSVButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exportClassesToCSVButtonActionPerformed
+        // TODO add your handling code here:
+        CSVConverterService.exportToCSV(jClassesTable, "C:\\Temp", "Tabela de Turmas");
+    }//GEN-LAST:event_exportClassesToCSVButtonActionPerformed
+
+    private void exportCoachToCSVButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exportCoachToCSVButtonActionPerformed
+        // TODO add your handling code here:
+        CSVConverterService.exportToCSV(jCoachTable, "C:\\Temp", "Tabela de Treinadores");
+    }//GEN-LAST:event_exportCoachToCSVButtonActionPerformed
+
+    private void exportStudentsToCSVButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exportStudentsToCSVButtonActionPerformed
+        // TODO add your handling code here:
+        CSVConverterService.exportToCSV(jStudentsTable, "C:\\Temp", "Tabela de Alunos");
+    }//GEN-LAST:event_exportStudentsToCSVButtonActionPerformed
+
+    private void exportTeamsToSCVButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exportTeamsToSCVButtonActionPerformed
+        // TODO add your handling code here:
+        CSVConverterService.exportToCSV(jTeamsTable, "C:\\Temp", "Tabela de Times");
+    }//GEN-LAST:event_exportTeamsToSCVButtonActionPerformed
 
     public void setAndShowActiveTournamentDialogCard(String cardName) {
         int op = DISPOSE_ON_CLOSE;
@@ -2175,14 +2670,20 @@ public class GUI extends javax.swing.JFrame {
     public javax.swing.JLabel JRegisterStudentClassLabel;
     public javax.swing.JLabel JRegisterStudentFatherNameLabel;
     public javax.swing.JButton JStudentRegisterButton;
+    public javax.swing.JPanel ViewListsRegisterPanel;
     public javax.swing.JButton addPointButton;
     public javax.swing.JComboBox<String> addPointsComboBox;
     public javax.swing.JButton addTournamentBtn;
     public javax.swing.JPanel classRegister;
+    public javax.swing.JLabel classVisualizationLabel;
+    public javax.swing.JDialog classesDialog;
+    public javax.swing.JPanel classesTablePanel;
+    public javax.swing.JScrollPane classesTableScrollPane;
     public javax.swing.JFormattedTextField coachBirthDateField;
     public javax.swing.JLabel coachBirthDateLabel;
     public javax.swing.JFormattedTextField coachCPFField;
     public javax.swing.JLabel coachCPFLabel;
+    public javax.swing.JDialog coachDialog;
     public javax.swing.JComboBox<String> coachGenderComboBox;
     public javax.swing.JLabel coachGenderLabel;
     public javax.swing.JTextField coachNameField;
@@ -2195,7 +2696,14 @@ public class GUI extends javax.swing.JFrame {
     public javax.swing.JLabel coachSportLabel;
     public javax.swing.JTextField coachSurnameField1;
     public javax.swing.JLabel coachSurnameLabel;
+    public javax.swing.JPanel coachTablePanel;
+    public javax.swing.JScrollPane coachTableScrollPane;
+    public javax.swing.JLabel coachVisualizationLabel;
     public javax.swing.JButton endMatchButton;
+    public javax.swing.JButton exportClassesToCSVButton;
+    public javax.swing.JButton exportCoachToCSVButton;
+    public javax.swing.JButton exportStudentsToCSVButton;
+    public javax.swing.JButton exportTeamsToSCVButton;
     public javax.swing.JLabel firstTeamNameLabel;
     public javax.swing.JLabel firstTeamScoreLabel;
     public javax.swing.JButton jButton1;
@@ -2205,7 +2713,9 @@ public class GUI extends javax.swing.JFrame {
     public javax.swing.JTextField jClassNameField;
     public javax.swing.JTextField jClassNumber;
     public javax.swing.JComboBox<String> jClassShift;
+    public javax.swing.JTable jClassesTable;
     public javax.swing.JLabel jCoachRegisterTitle1;
+    public javax.swing.JTable jCoachTable;
     public javax.swing.JPanel jInnerTeamRegisterPanel;
     public javax.swing.JLabel jLabel1;
     public javax.swing.JLabel jLabel10;
@@ -2240,6 +2750,7 @@ public class GUI extends javax.swing.JFrame {
     public javax.swing.JSeparator jSeparator3;
     public javax.swing.JPanel jStudentRegisterPanel;
     public javax.swing.JLabel jStudentRegisterTitle;
+    public javax.swing.JTable jStudentsTable;
     public javax.swing.JTextField jTeamRegisterAcronymField;
     public javax.swing.JLabel jTeamRegisterAcronymLabel;
     public javax.swing.JButton jTeamRegisterButton;
@@ -2252,10 +2763,12 @@ public class GUI extends javax.swing.JFrame {
     public javax.swing.JScrollPane jTeamRegisterStudentsScrollPane;
     public javax.swing.JTable jTeamRegisterStudentsTable;
     public javax.swing.JLabel jTeamRegisterTitle;
+    public javax.swing.JTable jTeamsTable;
     public javax.swing.JLabel jTournamentLabel;
     public javax.swing.JScrollPane jTournamentRegisterTeamScrollPane;
     public javax.swing.JScrollPane jTournamentSelectScrollPane;
     public javax.swing.JTable jTournamentSelectTable;
+    public javax.swing.JLabel jViewRegisterTitle;
     public javax.swing.JPanel mainBottomPanel;
     public javax.swing.JPanel mainInnerTopPanel;
     public javax.swing.JPanel mainPanel;
@@ -2285,7 +2798,15 @@ public class GUI extends javax.swing.JFrame {
     public javax.swing.JButton startNewPhaseButton;
     public javax.swing.JComboBox<String> studentGenderComboBox;
     public javax.swing.JPanel studentRegister2;
+    public javax.swing.JDialog studentsDialog;
+    public javax.swing.JPanel studentsTablePanel;
+    public javax.swing.JScrollPane studentsTableScrollPane1;
+    public javax.swing.JLabel studentsVisualizationLabel;
     public javax.swing.JPanel teamRegisterPanel;
+    public javax.swing.JDialog teamsDialog;
+    public javax.swing.JPanel teamsTablePanel;
+    public javax.swing.JScrollPane teamsTableScrollPane;
+    public javax.swing.JLabel teamsVisualizationLabel;
     public javax.swing.JLabel timerCurrentTimeLabel;
     public javax.swing.JLabel timerEndTimeLabel;
     public javax.swing.JButton timerNextPeriodButton;
@@ -2333,7 +2854,12 @@ public class GUI extends javax.swing.JFrame {
     public javax.swing.JLabel tournamentStartDateLabel;
     public javax.swing.JLabel tournamentStatusLabel;
     public javax.swing.JLabel tournamentTeamsLabel;
+    public javax.swing.JButton viewClassesButton;
+    public javax.swing.JButton viewCoachButton;
+    public javax.swing.JPanel viewListsRegister;
+    public javax.swing.JButton viewStudentsButton1;
     public javax.swing.JButton viewTeamsButton;
+    public javax.swing.JButton viewTeamsButton2;
     // End of variables declaration//GEN-END:variables
 
 }

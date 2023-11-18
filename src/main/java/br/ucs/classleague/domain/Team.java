@@ -94,4 +94,12 @@ public class Team implements Serializable {
     public String toString() {
         return "Team{" + "id=" + id + ", name=" + name + ", acronym=" + acronym + ", schoolClass=" + schoolClass + ", sport=" + sport + ", studentTeam=" + studentTeam + '}';
     }
+
+    public Sport.SportsEnum getSport() {
+        return sport;
+    }
+
+    public void setSport(Sport.SportsEnum sport) {
+        this.sport = sport;
+    }
 }
