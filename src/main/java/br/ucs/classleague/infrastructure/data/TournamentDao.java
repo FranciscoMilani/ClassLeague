@@ -13,7 +13,7 @@ public class TournamentDao extends GenericDAO<Tournament, Long> {
     
     public List<Tournament> findByName(String name) {
         EntityManager entityManager = EntityManagerProvider.getEntityManager();
-        TypedQuery<Tournament> query = entityManager.createQuery("SELECT t FROM Tournament t WHERE t.name LIKE :name", Tournament.class);
+        TypedQuery<Tournament> query = entityManager.createQuery("SELECT t FROM Tournament t WHERE LOWER(t.name) LIKE LOWER(:name)", Tournament.class);
         query.setParameter("name",  "%" + name + "%");
         
         List<Tournament> resultList = query.getResultList();

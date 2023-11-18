@@ -1,5 +1,6 @@
 package br.ucs.classleague.domain;
 
+import br.ucs.classleague.domain.Sport.SportsEnum;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -23,7 +24,7 @@ public class Team implements Serializable {
     
     @ManyToOne
     private SchoolClass schoolClass;
-    private Sport.SportsEnum sport;
+    private SportsEnum sport;
     
     @OneToMany(mappedBy = "team")
     private Set<StudentTeam> studentTeam;
@@ -34,7 +35,7 @@ public class Team implements Serializable {
     public Team() {
     }
 
-    public Team(String name, String acronym, Sport.SportsEnum sport, SchoolClass schoolClass) {
+    public Team(String name, String acronym, SportsEnum sport, SchoolClass schoolClass) {
         this.name = name;
         this.acronym = acronym;
         this.sport = sport;
@@ -72,21 +73,21 @@ public class Team implements Serializable {
     public void setSchoolClass(SchoolClass schoolClass) {
         this.schoolClass = schoolClass;
     }
-//
-//    public Sport getSport() {
-//        return sport;
-//    }
-//
-//    public void setSport(Sport sport) {
-//        this.sport = sport;
-//    }
-
+    
     public Set<StudentTeam> getStudentTeam() {
         return studentTeam;
     }
 
     public void setStudentTeam(Set<StudentTeam> studentTeam) {
         this.studentTeam = studentTeam;
+    }
+
+    public SportsEnum getSport() {
+        return sport;
+    }
+
+    public void setSport(SportsEnum sport) {
+        this.sport = sport;
     }
 
     @Override

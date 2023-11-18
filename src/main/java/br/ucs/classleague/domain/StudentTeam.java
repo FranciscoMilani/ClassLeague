@@ -1,6 +1,8 @@
 package br.ucs.classleague.domain;
 
+import br.ucs.classleague.domain.Sport.SportsEnum;
 import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
@@ -12,7 +14,8 @@ import java.io.Serializable;
 
 @Entity
 @Table(name = "student_team", uniqueConstraints = {
-        @UniqueConstraint(name = "unique_student_team", columnNames = {"student_id", "team_id"})
+        @UniqueConstraint(name = "unique_student_team", columnNames = {"student_id", "team_id"}),
+        @UniqueConstraint(name = "unique_student_sport", columnNames = {"student_id", "sport_type"})
 })
 public class StudentTeam implements Serializable {
 
@@ -31,6 +34,9 @@ public class StudentTeam implements Serializable {
     
     private int points;
     private String position;
+    
+    @Column(name = "sport_type")
+    private SportsEnum sportType;
 
     public StudentTeamKey getStudentTeamKey() {
         return studentTeamKey;
@@ -54,6 +60,7 @@ public class StudentTeam implements Serializable {
 
     public void setTeam(Team team) {
         this.team = team;
+        this.sportType = team.getSport();
     }
 
     public int getPoints() {
@@ -70,6 +77,10 @@ public class StudentTeam implements Serializable {
 
     public void setPosition(String position) {
         this.position = position;
+    }
+
+    public SportsEnum getSportType() {
+        return sportType;
     }
     
 }

@@ -17,13 +17,11 @@ import br.ucs.classleague.domain.TournamentTeam;
 import br.ucs.classleague.domain.TournamentTeamKey;
 import br.ucs.classleague.infrastructure.data.ClassDao;
 import br.ucs.classleague.infrastructure.data.CoachDao;
-import br.ucs.classleague.infrastructure.data.EntityManagerProvider;
 import br.ucs.classleague.infrastructure.data.StudentDao;
 import br.ucs.classleague.infrastructure.data.StudentTeamDao;
 import br.ucs.classleague.infrastructure.data.TeamDao;
 import br.ucs.classleague.infrastructure.data.TournamentDao;
 import br.ucs.classleague.infrastructure.presentation.views.GUI;
-import jakarta.persistence.EntityManager;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -271,15 +269,14 @@ public class RegisterController {
             Map.Entry<Long, Boolean> newMap = (Map.Entry<Long, Boolean>) itr.next();
 
             StudentTeam st = new StudentTeam();
-            EntityManager em = EntityManagerProvider.getEntityManager();
-            Student student = em.find(Student.class, newMap.getKey());
+            Student student = studentDao.findById(newMap.getKey()).get();
 
             st.setStudentTeamKey(new StudentTeamKey(newMap.getKey(), teamId));
             st.setStudent(student);
             st.setTeam(team);
 
             if (teamRegisterService.registerStudentForTeam(st) == null) {
-                JOptionPane.showMessageDialog(frame, "Erro no cadastro da relação entre aluno e time para aluno" + newMap.getValue());
+                JOptionPane.showMessageDialog(frame, "Erro no cadastro da relação entre aluno e time para aluno.");
                 return;
             }
         }
