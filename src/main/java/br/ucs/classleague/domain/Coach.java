@@ -1,5 +1,6 @@
 package br.ucs.classleague.domain;
 
+import br.ucs.classleague.domain.Sport.SportsEnum;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -12,12 +13,12 @@ public class Coach extends Person {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String sport;
+    private SportsEnum sport;
 
     public Coach() {
     }
 
-    public Coach(String sport, String name, String surname, LocalDate birthDate, String gender, String telephone, String cpf) {
+    public Coach(SportsEnum sport, String name, String surname, LocalDate birthDate, String gender, String telephone, String cpf) {
         super(name, surname, birthDate, gender, telephone, cpf);
         this.sport = sport;
     }
@@ -30,12 +31,15 @@ public class Coach extends Person {
         this.id = id;
     }
 
-    public String getSport() {
+    public SportsEnum getSport() {
         return sport;
     }
 
-    public void setSport(String sport) {
+    public void setSport(SportsEnum sport) {
         this.sport = sport;
     }
     
+    public String getDisplayName() {
+        return super.getName();
+    }
 }

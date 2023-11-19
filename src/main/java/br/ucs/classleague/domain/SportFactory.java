@@ -1,5 +1,6 @@
 package br.ucs.classleague.domain;
 
+import br.ucs.classleague.domain.sports.Football;
 import br.ucs.classleague.domain.Sport.SportsEnum;
 
 public class SportFactory {

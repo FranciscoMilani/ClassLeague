@@ -17,8 +17,8 @@ import br.ucs.classleague.domain.TournamentTeam;
 import br.ucs.classleague.domain.TournamentTeamKey;
 import br.ucs.classleague.infrastructure.data.ClassDao;
 import br.ucs.classleague.infrastructure.data.CoachDao;
+import br.ucs.classleague.infrastructure.data.DaoProvider;
 import br.ucs.classleague.infrastructure.data.StudentDao;
-import br.ucs.classleague.infrastructure.data.StudentTeamDao;
 import br.ucs.classleague.infrastructure.data.TeamDao;
 import br.ucs.classleague.infrastructure.data.TournamentDao;
 import br.ucs.classleague.infrastructure.presentation.views.GUI;
@@ -40,19 +40,33 @@ import javax.swing.table.DefaultTableModel;
 
 public class RegisterController {
 
+    // View
     private GUI frame;
-    private ClassDao classDao = new ClassDao();
-    private StudentDao studentDao = new StudentDao();
-    private TeamDao teamDao = new TeamDao();
-    private ClassService classService = new ClassService();
-    private CoachDao coachDao = new CoachDao();
-    private TeamRegisterService teamRegisterService = new TeamRegisterService();
-    private StudentTeamDao studentTeamDao = new StudentTeamDao();
-    private TournamentDao tournamentDao = new TournamentDao();
-    private TournamentService tournamentService = new TournamentService();
+    
+    // DAOs
+    private ClassDao classDao;
+    private StudentDao studentDao;
+    private TeamDao teamDao;
+    private CoachDao coachDao;
+    private TournamentDao tournamentDao;
+    
+    // Services
+    private ClassService classService;
+    private TeamRegisterService teamRegisterService;
+    private TournamentService tournamentService;
 
     public RegisterController(GUI frame) {
         this.frame = frame;
+        
+        classDao = DaoProvider.getClassDao();
+        studentDao = DaoProvider.getStudentDao();
+        teamDao = DaoProvider.getTeamDao();
+        coachDao = DaoProvider.getCoachDao();
+        tournamentDao = DaoProvider.getTournamentDao();
+        
+        classService = new ClassService();
+        teamRegisterService = new TeamRegisterService();
+        tournamentService = new TournamentService();
     }
 
     public void showClassesNumbers() {
@@ -68,6 +82,14 @@ public class RegisterController {
         model.addAll(numbers);
         comboBox.setModel(model);
         comboBoxTeam.setModel(model);
+    }
+    
+    public void showCoachesNames() {
+        frame.jTeamRegisterCoachPickerComboBox.removeAllItems();
+        List<Object> coaches = List.of(getCoachesToArray());
+        coaches.stream().forEach(c -> {
+            frame.jTeamRegisterCoachPickerComboBox.addItem((Coach) c);
+        });
     }
 
     public Boolean registerStudent() {
@@ -233,6 +255,7 @@ public class RegisterController {
     public void registerTeam(JTable table) {
         String name = frame.jTeamRegisterNameField.getText();
         String acronym = frame.jTeamRegisterAcronymField.getText();
+        Coach coach = (Coach) frame.jTeamRegisterCoachPickerComboBox.getSelectedItem();
         String classString = frame.jTeamRegisterClassPickerComboBox.getSelectedItem().toString();
         int sportEnumIndex = frame.jTeamRegisterSportComboBox.getSelectedIndex();
 
@@ -241,7 +264,8 @@ public class RegisterController {
         Long teamId = teamRegisterService.registerTeam(new Team(
                 name,
                 acronym,
-                Sport.SportsEnum.values()[sportEnumIndex],
+                SportsEnum.values()[sportEnumIndex],
+                coach,
                 classDao.findByNumber(classNumber)
         ));
 
@@ -286,7 +310,7 @@ public class RegisterController {
 
     public void createCoach() {
         int sportEnumIndex = frame.coachSportComboBox.getSelectedIndex();
-        Coach coach = new Coach(Sport.SportsEnum.values()[sportEnumIndex].getName(),
+        Coach coach = new Coach(SportsEnum.values()[sportEnumIndex],
                 this.frame.coachNameField.getText(),
                 this.frame.coachSurnameField1.getText(),
                 parseStringToLocalDate(this.frame.coachBirthDateField.getText()),
@@ -470,5 +494,18 @@ public class RegisterController {
     public void updateComboBoxes() {
         this.showClassesNumbers();
         this.showSportsNames();
+        this.showCoachesNames();
+    }
+    
+    public Object[] getCoachesToArray() {
+        int sportIndex = frame.jTeamRegisterSportComboBox.getSelectedIndex();
+        Object[] coachesToArray = teamRegisterService.getCoachesToArray(sportIndex);
+        
+        if (coachesToArray == null) {
+            System.err.println("Coaches retornado vazio");
+            return new Object[0];
+        }
+        
+        return coachesToArray;    
     }
 }

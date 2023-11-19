@@ -38,6 +38,7 @@ public class TournamentParticipantsController {
                 team.getAcronym(),
                 team.getName(),
                 team.getSchoolClass().getName(),
+                team.getCoach().getName(),
                 tt.getPoints() == null ? "" : tt.getPoints()
             });
         }

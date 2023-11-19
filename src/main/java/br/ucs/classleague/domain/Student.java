@@ -10,12 +10,15 @@ public class Student extends Person {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    
     @ManyToOne(optional = false)
     @JoinColumn(name = "schoolclass_id")
     private SchoolClass schoolClass;
+    
     private String fatherName;
     private String motherName;
     private Integer pontos;
+    
     @OneToMany(mappedBy = "student")
     private Set<StudentTeam> studentTeam;
     

@@ -1,4 +1,6 @@
-package br.ucs.classleague.domain;
+package br.ucs.classleague.domain.sports;
+
+import br.ucs.classleague.domain.Sport;
 
 public class Football extends Sport {
 

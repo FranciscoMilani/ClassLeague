@@ -19,11 +19,13 @@ public class Team implements Serializable {
     private Long id;
     private String name;
     
-    @Column(unique = true)
+    @Column(unique = true, nullable = false)
     private String acronym;
     
     @ManyToOne
     private SchoolClass schoolClass;
+    
+    @Column(nullable = false)
     private SportsEnum sport;
     
     @OneToMany(mappedBy = "team")
@@ -31,14 +33,18 @@ public class Team implements Serializable {
     
     @OneToMany(mappedBy = "team")
     private Set<TournamentTeam> TournamentTeam;
+    
+    @ManyToOne(optional = false)
+    private Coach coach;
 
     public Team() {
     }
 
-    public Team(String name, String acronym, SportsEnum sport, SchoolClass schoolClass) {
+    public Team(String name, String acronym, SportsEnum sport, Coach coach, SchoolClass schoolClass) {
         this.name = name;
         this.acronym = acronym;
         this.sport = sport;
+        this.coach = coach;
         this.schoolClass = schoolClass;
     }
 
@@ -63,7 +69,7 @@ public class Team implements Serializable {
     }
 
     public void setAcronym(String acronym) {
-        this.acronym = acronym;
+        this.acronym = acronym.toUpperCase();
     }
 
     public SchoolClass getSchoolClass() {
@@ -90,16 +96,12 @@ public class Team implements Serializable {
         this.sport = sport;
     }
 
+    public Coach getCoach() {
+        return coach;
+    }
+    
     @Override
     public String toString() {
         return "Team{" + "id=" + id + ", name=" + name + ", acronym=" + acronym + ", schoolClass=" + schoolClass + ", sport=" + sport + ", studentTeam=" + studentTeam + '}';
-    }
-
-    public Sport.SportsEnum getSport() {
-        return sport;
-    }
-
-    public void setSport(Sport.SportsEnum sport) {
-        this.sport = sport;
     }
 }

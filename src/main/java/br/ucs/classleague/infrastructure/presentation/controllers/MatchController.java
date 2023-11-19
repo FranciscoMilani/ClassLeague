@@ -122,8 +122,20 @@ public class MatchController {
     
     public void startTimer() {
         if (timer == null) {
-            beginMatch();
+            int confirmStart = JOptionPane.showConfirmDialog(
+                    view.tournamentDialog, 
+                    "Deseja confirmar início da partida?",
+                    "Aviso!", 
+                    JOptionPane.YES_NO_OPTION
+            );
             
+            // opção "No" ou janela fechada
+            if (confirmStart != 0) {
+                view.timerPlayButton.setSelected(false);
+                return;
+            }
+            
+            beginMatch();
             Integer roundTimeSeconds = matchModel.getMatch()
                     .getTournament()
                     .getSport()

@@ -1,7 +1,6 @@
 package br.ucs.classleague.domain;
 
 import jakarta.persistence.MappedSuperclass;
-import jakarta.persistence.OneToOne;
 import java.io.Serializable;
 import java.time.LocalDate;
 
