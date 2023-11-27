@@ -48,7 +48,7 @@ public class TournamentController {
         Long id = Long.parseLong(matchId);
         Match match = matchDao.findById(id).get();
         
-        matchModel.setMatchId(id);
+        matchModel.setMatch(match);
         tournamentModel.checkEnableMatch(match);
     }
     
@@ -61,6 +61,7 @@ public class TournamentController {
                 .toUpperCase()
         );
 
+        frame.tournamentMatchesTable.clearSelection();
         frame.tournamentDialogNameData.setText(tournament.getName());
         frame.tournamentDialogSportTypeInfoData.setText(tournament.getSportEnum().getName());
         frame.tournamentDialogStartDateInfoData.setText(tournament.getStartTime().toString());

@@ -57,7 +57,8 @@ public class MatchPointsController {
         int playerScore = matchService.updatePointsForPlayer(
                 point, 
                 Long.parseLong(studentId), 
-                team.getId()
+                team.getId(),
+                matchModel.getMatchId()
         );
         
         view.pointsScoredTable.clearSelection();

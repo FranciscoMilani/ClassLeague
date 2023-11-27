@@ -9,7 +9,6 @@ import br.ucs.classleague.infrastructure.data.DaoProvider;
 import br.ucs.classleague.infrastructure.data.MatchDao;
 import br.ucs.classleague.infrastructure.data.TournamentDao;
 import br.ucs.classleague.infrastructure.data.TournamentTeamDao;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -20,11 +19,13 @@ public class TournamentService {
     private TournamentDao tournamentDao;
     private MatchDao matchDao;
     private TournamentTeamDao ttDao;
+    private MatchService matchService;
 
     public TournamentService() {
         this.tournamentDao = DaoProvider.getTournamentDao();
         this.matchDao = DaoProvider.getMatchDao();
         this.ttDao = DaoProvider.getTournamentTeamDao();
+        this.matchService = new MatchService();
     }
     
     /*
@@ -37,23 +38,32 @@ public class TournamentService {
         List<Team> teams = ttList.stream()
                 .map(TournamentTeam::getTeam)
                 .collect(Collectors.toList());
-        
-        Collections.shuffle(teams);
 
+        Collections.shuffle(teams);
+        
         for (int i = 0; i < teams.size() / 2; i++) {  
+            
+            Team[] teamArray = new Team[] {
+                teams.get(i*2),
+                teams.get(i*2+1)
+            };
+            
             Match m = new Match(
                     tournament, 
-                    LocalDateTime.now(), 
-                    teams.get(i*2), 
-                    teams.get(i*2+1),
+                    null,
+                    teamArray[0], 
+                    teamArray[1],
                     tournament.getPhase()
             );
             
             matchDao.create(m);
+            matchService.registerTeamStudentsForMatch(m, teamArray);
         }
     }
     
-    // O campeonato já foi iniciado. Pegando times vencedores dessa fase para criar novos confrontos.
+    /*
+        O campeonato já foi iniciado. Pegando times vencedores dessa fase para criar novos confrontos.
+    */
     public void createLaterSimpleClashes(Tournament tournament) {
         List<Team> winners = tournament.getMatches()
             .stream()
@@ -61,17 +71,24 @@ public class TournamentService {
                     TournamentPhase.values()[tournament.getPhase().ordinal() - 1])
             .map(Match::getWinner)
             .collect(Collectors.toList());
-
+        
         for (int i = 0; i < winners.size() / 2; i++) {  
+            
+            Team[] teamArray = new Team[] {
+                winners.get(i*2),
+                winners.get(i*2+1)
+            };
+            
             Match m = new Match(
                     tournament, 
-                    LocalDateTime.now(), 
-                    winners.get(i*2), 
-                    winners.get(i*2+1),
+                    null,
+                    teamArray[0], 
+                    teamArray[1],
                     tournament.getPhase()
             );
             
             matchDao.create(m);
+            matchService.registerTeamStudentsForMatch(m, teamArray);
         }
         
         tournamentDao.refresh(tournament);
@@ -134,5 +151,15 @@ public class TournamentService {
         }
 
         return arr;
+    }
+    
+    public Object[] getTeamsToArray(Long id) {
+        List<Team> teams = ttDao.findTeamsByTournamentId(id);
+        
+        if (teams != null) {
+            return teams.toArray();   
+        } else {
+            return null;
+        }
     }
 }

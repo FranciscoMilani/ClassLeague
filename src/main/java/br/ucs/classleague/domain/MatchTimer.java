@@ -50,4 +50,8 @@ public class MatchTimer {
         currentTimeSeconds = 0;
         currentPeriod++;
     }
+    
+    public void endTimer() {
+        MatchTimer.state = MatchState.ENDED;
+    }
 }

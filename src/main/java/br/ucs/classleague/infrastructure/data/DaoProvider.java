@@ -12,6 +12,7 @@ public class DaoProvider {
     private static MatchDao matchDao;
     private static TournamentTeamDao tournamentTeamDao;
     private static CoachDao coachDao;
+    private static StudentMatchDao studentMatchDao;
     
     static {
         classDao = new ClassDao();
@@ -22,6 +23,7 @@ public class DaoProvider {
         matchDao = new MatchDao();
         tournamentTeamDao = new TournamentTeamDao();
         coachDao = new CoachDao();
+        studentMatchDao = new StudentMatchDao();
     }
     
     public static ClassDao getClassDao() {
@@ -54,5 +56,9 @@ public class DaoProvider {
 
     public static CoachDao getCoachDao() {
         return coachDao;
+    }
+
+    public static StudentMatchDao getStudentMatchDao() {
+        return studentMatchDao;
     }
 }

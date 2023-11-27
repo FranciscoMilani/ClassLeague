@@ -51,7 +51,7 @@ public class ControllerUtilities {
         if (result == JFileChooser.APPROVE_OPTION) {
             try {
                 String path = CSVConverterService.exportToCSV(table, fc.getSelectedFile().getPath(), "output");
-                JOptionPane.showMessageDialog(parent, "Sucesso ao converter. Salvo em:\n" + path);
+                JOptionPane.showMessageDialog(parent, "Salvo em:\n" + path);
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(parent, "Erro ao converter:\n" + e.getMessage());
             }

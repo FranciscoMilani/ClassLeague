@@ -5,6 +5,7 @@ import br.ucs.classleague.domain.Match;
 import br.ucs.classleague.domain.MatchState;
 import br.ucs.classleague.domain.MatchTimer;
 import br.ucs.classleague.domain.Team;
+import br.ucs.classleague.domain.Tournament;
 import br.ucs.classleague.infrastructure.data.DaoProvider;
 import br.ucs.classleague.infrastructure.data.MatchDao;
 import br.ucs.classleague.infrastructure.presentation.model.MatchModel;
@@ -25,7 +26,7 @@ public class MatchController {
     private TournamentModel tournamentModel;
     private MatchService matchService;
     
-    // Classe Timer do java swing. Roda eventos mesma thread dos componentes swing
+    // Timer do Java Swing
     private Timer timer;
     
     public MatchController(GUI view, MatchModel matchModel, TournamentModel tournamentModel){
@@ -34,12 +35,22 @@ public class MatchController {
         this.tournamentModel = tournamentModel;
         dao = DaoProvider.getMatchDao();
         matchService = new MatchService();
-        
         matchModel.setTimer(new MatchTimer());
     }
     
     public void beginMatch() {
+        Match match = matchModel.getMatch();
         MatchTimer.setState(MatchState.RUNNING);
+        LocalDateTime nowTime = LocalDateTime.now();
+        
+        match.setDateTime(nowTime);
+        dao.update(match);
+        
+        String date = ControllerUtilities.getFormattedDate(nowTime);
+        String time = ControllerUtilities.getFormattedTime(nowTime);
+            
+        view.matchStartDateDataLabel.setText(date);
+        view.matchStartTimeDataLabel.setText(time);
         view.addPointButton.setEnabled(true);
         view.removePointButton.setEnabled(true);
     }
@@ -56,7 +67,7 @@ public class MatchController {
         int option = JOptionPane.showConfirmDialog(
                 view.tournamentDialog, 
                 "Confirmar encerramento da partida?", 
-                "Encerrando partida",
+                "Aviso",
                 0
         );
         
@@ -66,15 +77,26 @@ public class MatchController {
             Team winner = matchService.determineMatchWinner(match);
             
             if (winner != null) {
-                match.setEnded(true);
-                match.setWinner(winner);
-                dao.update(match);
-                
-                view.setAndShowActiveTournamentDialogCard("card1");
+                JOptionPane.showMessageDialog(
+                    view.tournamentDialog, 
+                    "Partida encerrada", 
+                    "",
+                    1
+                );
             } else {
-                // implementar logica de empate
-                JOptionPane.showMessageDialog(view.tournamentDialog, "Partida empatada...");
+                Integer opt = showCustomDrawOptionPane(
+                        match.getFirst_team().getName(),
+                        match.getSecond_team().getName()
+                );
+                
+                if (opt != -1) {
+                    matchService.setDrawedMatchWinner(match, opt);   
+                } else {
+                    return;
+                }
             }
+            
+            view.setAndShowActiveTournamentDialogCard("card1");
         }
     }
     
@@ -88,9 +110,11 @@ public class MatchController {
         view.endMatchButton.setEnabled(false);
         view.addPointButton.setEnabled(false);
         view.removePointButton.setEnabled(false);
+        view.matchTitle.setText("Partida");
         
         if (!match.getEnded()) {
             fillInfoForMatch(match);
+            matchModel.getTimer().resetTimer();
         }
     }
     
@@ -118,21 +142,24 @@ public class MatchController {
         });
         
         timer.setInitialDelay(0);
+        timer.start();
     }
     
     public void startTimer() {
-        if (timer == null) {
-            int confirmStart = JOptionPane.showConfirmDialog(
-                    view.tournamentDialog, 
-                    "Deseja confirmar início da partida?",
-                    "Aviso!", 
-                    JOptionPane.YES_NO_OPTION
-            );
-            
-            // opção "No" ou janela fechada
-            if (confirmStart != 0) {
-                view.timerPlayButton.setSelected(false);
-                return;
+        if (timer == null) {  
+            System.out.println(MatchTimer.getState());
+            if (!MatchTimer.getState().equals(MatchState.INTERVAL)) {
+                int confirmStart = JOptionPane.showConfirmDialog(
+                        view.tournamentDialog, 
+                        "Deseja iniciar a partida agora?",
+                        "Aviso!", 
+                        JOptionPane.YES_NO_OPTION
+                );
+
+                if (confirmStart != 0) {
+                    view.timerPlayButton.setSelected(false);
+                    return;
+                }
             }
             
             beginMatch();
@@ -140,16 +167,15 @@ public class MatchController {
                     .getTournament()
                     .getSport()
                     .getMatchDurationMinutes() * 60;
-            
+
             view.timerProgressBar.setMaximum(roundTimeSeconds);
             initTimer(roundTimeSeconds);
-            timer.start();
         } else {
             resumeTimer();
         }
     }
     
-    public void freezeTimer() {        
+    public void freezeTimer() { 
         if (timer.isRunning()) {
             timer.stop();
             MatchTimer.setState(MatchState.STOPPED);
@@ -181,7 +207,6 @@ public class MatchController {
     
     public void endTimer() {
         if (timer != null) {
-            freezeTimer();
             view.timerCurrentTimeLabel.setForeground(view.defaultColor);
             view.timerCurrentTimeLabel.setText("--:--");
             view.timerPeriodNumberLabel.setText("-");
@@ -191,7 +216,8 @@ public class MatchController {
             view.timerNextPeriodButton.setEnabled(false);
             view.timerResetTimerButton.setEnabled(false);
             
-            matchModel.getTimer().resetTimer();
+            matchModel.getTimer().endTimer();
+            timer.stop();
             timer = null;
         }
     }
@@ -231,9 +257,15 @@ public class MatchController {
     }
     
     public void fillInfoForMatch(Match match) {
+        Tournament tournament = matchModel.getMatch().getTournament();
         LocalDateTime ldt = match.getDateTime();
-        String dateText = ControllerUtilities.getFormattedDate(ldt);
-        String timeText = ControllerUtilities.getFormattedTime(ldt);
+        String dateText = "aguardando início...";
+        String timeText = "aguardando início...";
+        
+        if (ldt != null) {
+            dateText = ControllerUtilities.getFormattedDate(ldt);
+            timeText = ControllerUtilities.getFormattedTime(ldt);
+        }
         
         // buttons
         view.timerPlayButton.setSelected(false);
@@ -242,25 +274,50 @@ public class MatchController {
         view.timerNextPeriodButton.setEnabled(false);
         
         // labels
-        view.matchStartTimeDataLabel.setText(dateText);
-        view.matchEndTimeDataLabel.setText(timeText);
+        
+        view.matchTitle.setText("Partida do torneio " + tournament.getName());
+        view.matchStartDateDataLabel.setText(dateText);
+        view.matchStartTimeDataLabel.setText(timeText);
         view.matchPhaseDataLabel.setText(match.getTournament().getPhase().getName());
-        view.firstTeamNameLabel.setText(match.getFirst_team().getName());
-        view.secondTeamNameLabel.setText(match.getSecond_team().getName());
         view.firstTeamScoreLabel.setText("0");
         view.secondTeamScoreLabel.setText("0");
         view.timerCurrentTimeLabel.setText("00:00");
         view.timerPeriodNumberLabel.setText("1");
+        view.firstTeamNameLabel.setText(String.format(
+                match.getFirst_team().getName() + " [%s]", 
+                match.getFirst_team().getAcronym())
+        );
+        view.secondTeamNameLabel.setText(String.format(
+                match.getSecond_team().getName() + " [%s]", 
+                match.getSecond_team().getAcronym())
+        );
         
         // outros
         view.timerProgressBar.setValue(0);
         
-        String periodTimeMins = matchModel.getMatch()
-            .getTournament()
-            .getSport()
-            .getMatchDurationMinutes()
-        .toString();
-        
+        String periodTimeMins = tournament.getSport().getMatchDurationMinutes().toString(); 
         view.timerEndTimeLabel.setText(periodTimeMins + ":00");
+    }
+    
+    public Integer showCustomDrawOptionPane(String teamOneName, String teamTwoName) {
+        String message = "Partida empatada. Defina o vencedor:\n"
+                + "Time 1: " + teamOneName
+                + "\nTime 2 : " + teamTwoName;
+        String title = "Empate!";
+
+        Object[] options = {"Time 1", "Time 2"};
+
+        int result = JOptionPane.showOptionDialog(
+                view.tournamentDialog,
+                message,
+                title,
+                JOptionPane.YES_NO_OPTION,
+                JOptionPane.QUESTION_MESSAGE,
+                null,
+                options,
+                null
+        );
+
+        return result;
     }
 }

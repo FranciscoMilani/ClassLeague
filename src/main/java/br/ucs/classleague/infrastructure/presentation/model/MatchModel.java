@@ -5,27 +5,17 @@ import br.ucs.classleague.domain.MatchTimer;
 
 public class MatchModel extends AbstractModel {
     
-    public static final String MATCH_ID = "match_id";
+    public static final String MATCH = "match";
     
     private Match match;
     private MatchTimer timer;
     private Long tournamentId;
-    private Long selectedMatchId;
     
-    
-    public void setInfo(){
-        
+    public void setInfo() {
     }
 
     public Long getMatchId() {
-        return selectedMatchId;
-    }
-    
-    public void setMatchId(Long matchId) {
-        var oldVal = matchId;
-        this.selectedMatchId = matchId;
-        
-        pcs.firePropertyChange(MATCH_ID, oldVal, matchId);
+        return match.getId();
     }
     
     public Match getMatch() {
@@ -33,7 +23,10 @@ public class MatchModel extends AbstractModel {
     }
 
     public void setMatch(Match match) {
+        var oldVal = match;
         this.match = match;
+        
+        pcs.firePropertyChange(MATCH, oldVal, match);
     }
 
     public MatchTimer getTimer() {

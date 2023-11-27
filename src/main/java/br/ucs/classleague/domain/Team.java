@@ -47,6 +47,10 @@ public class Team implements Serializable {
         this.coach = coach;
         this.schoolClass = schoolClass;
     }
+    
+    public String getDisplayName() {
+        return name;
+    }
 
     public Long getId() {
         return id;

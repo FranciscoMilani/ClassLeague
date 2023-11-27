@@ -17,7 +17,7 @@ public class Student extends Person {
     
     private String fatherName;
     private String motherName;
-    private Integer pontos;
+    private Integer pontos = 0;
     
     @OneToMany(mappedBy = "student")
     private Set<StudentTeam> studentTeam;

@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Optional;
 
 public class GenericDAO<T, ID extends Serializable> {
+    
     private final Class<T> entityClass;
 
     public GenericDAO(Class<T> entityClass) {
@@ -15,21 +16,13 @@ public class GenericDAO<T, ID extends Serializable> {
     
     public Optional<T> findById(ID id) {
         EntityManager entityManager = EntityManagerProvider.getEntityManager();
-        try {
-            return Optional.ofNullable(entityManager.find(entityClass, id));
-        } finally {
-            //entityManager.close();
-        }
+        return Optional.ofNullable(entityManager.find(entityClass, id));
     }
     
     public List<T> findAll() {
         EntityManager entityManager = EntityManagerProvider.getEntityManager();
-        try {
-            return entityManager.createQuery("SELECT e FROM " + entityClass.getSimpleName() + " e", entityClass)
+        return entityManager.createQuery("SELECT e FROM " + entityClass.getSimpleName() + " e", entityClass)
                 .getResultList();
-        } finally {
-            //entityManager.close();
-        }
     }
 
     public T create(T entity) {
@@ -47,8 +40,6 @@ public class GenericDAO<T, ID extends Serializable> {
                 transaction.rollback();
             }
             e.printStackTrace();
-        } finally {
-            //entityManager.close();
         }
         
         return null;
@@ -70,8 +61,6 @@ public class GenericDAO<T, ID extends Serializable> {
                 transaction.rollback();
             }
             e.printStackTrace();
-        } finally {
-            //entityManager.close();
         }
     }
     
@@ -90,7 +79,6 @@ public class GenericDAO<T, ID extends Serializable> {
         
         return updatedEntity;
     }
-    
     
     public void refresh(T entity) {
         EntityManager entityManager = EntityManagerProvider.getEntityManager();

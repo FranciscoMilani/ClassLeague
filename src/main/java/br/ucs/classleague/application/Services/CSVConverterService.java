@@ -1,5 +1,6 @@
 package br.ucs.classleague.application.Services;
 
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Path;
@@ -12,6 +13,9 @@ public class CSVConverterService {
 
     public static String exportToCSV(JTable table, String dirPath, String fileName) {
         Path path = Paths.get(dirPath, fileName + ".csv");
+        Path p = Paths.get(dirPath);
+        
+        prepareDirectory(p.toFile());
 
         try (FileWriter csv = new FileWriter(path.toFile())) {
             TableModel model = table.getModel();
@@ -29,14 +33,24 @@ public class CSVConverterService {
                 csv.write("\n");
             }
             csv.close();
-            JOptionPane.showMessageDialog(null, "O arquivo foi gerado no seu diretório 'C:/Temp'.", "Sucesso!", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(table.getParent(), "O arquivo foi gerado no seu diretório 'C:/Temp'.", "Sucesso!", JOptionPane.INFORMATION_MESSAGE);
         } catch (IOException e) {
             e.printStackTrace();
-            JOptionPane.showMessageDialog(null, "Erro ao gerar arquivo .CSV'.", "ERRO!", JOptionPane.ERROR);
+            JOptionPane.showMessageDialog(table.getParent(), "Erro ao gerar arquivo .CSV'.", "Erro!", JOptionPane.ERROR);
 
             return e.getMessage();
         }
 
         return path.toString();
+    }
+    
+    private static void prepareDirectory(File directory) {
+        try {
+            if (!directory.exists()) {
+                directory.mkdir();
+            }     
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
