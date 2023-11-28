@@ -1,4 +1,4 @@
-package br.ucs.classleague.application.Services;
+package br.ucs.classleague.application.services;
 
 import br.ucs.classleague.domain.SchoolClass;
 import br.ucs.classleague.infrastructure.data.ClassDao;

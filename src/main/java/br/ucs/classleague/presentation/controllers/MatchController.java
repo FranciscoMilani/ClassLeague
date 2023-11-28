@@ -1,6 +1,6 @@
-package br.ucs.classleague.infrastructure.presentation.controllers;
+package br.ucs.classleague.presentation.controllers;
 
-import br.ucs.classleague.application.Services.MatchService;
+import br.ucs.classleague.application.services.MatchService;
 import br.ucs.classleague.domain.Match;
 import br.ucs.classleague.domain.MatchState;
 import br.ucs.classleague.domain.MatchTimer;
@@ -8,9 +8,9 @@ import br.ucs.classleague.domain.Team;
 import br.ucs.classleague.domain.Tournament;
 import br.ucs.classleague.infrastructure.data.DaoProvider;
 import br.ucs.classleague.infrastructure.data.MatchDao;
-import br.ucs.classleague.infrastructure.presentation.model.MatchModel;
-import br.ucs.classleague.infrastructure.presentation.model.TournamentModel;
-import br.ucs.classleague.infrastructure.presentation.views.GUI;
+import br.ucs.classleague.presentation.model.MatchModel;
+import br.ucs.classleague.presentation.model.TournamentModel;
+import br.ucs.classleague.presentation.views.GUI;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;

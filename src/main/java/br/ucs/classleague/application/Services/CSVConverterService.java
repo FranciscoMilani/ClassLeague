@@ -1,4 +1,4 @@
-package br.ucs.classleague.application.Services;
+package br.ucs.classleague.application.services;
 
 import java.io.File;
 import java.io.FileWriter;

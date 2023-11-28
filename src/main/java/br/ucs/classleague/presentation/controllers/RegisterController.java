@@ -1,9 +1,9 @@
-package br.ucs.classleague.infrastructure.presentation.controllers;
+package br.ucs.classleague.presentation.controllers;
 
-import br.ucs.classleague.application.Services.ClassService;
-import br.ucs.classleague.application.Services.RegisterService;
-import br.ucs.classleague.application.Services.TeamRegisterService;
-import br.ucs.classleague.application.Services.TournamentService;
+import br.ucs.classleague.application.services.ClassService;
+import br.ucs.classleague.application.services.RegisterService;
+import br.ucs.classleague.application.services.TeamRegisterService;
+import br.ucs.classleague.application.services.TournamentService;
 import br.ucs.classleague.domain.Coach;
 import br.ucs.classleague.domain.SchoolClass;
 import br.ucs.classleague.domain.Sport;
@@ -18,7 +18,7 @@ import br.ucs.classleague.infrastructure.data.DaoProvider;
 import br.ucs.classleague.infrastructure.data.StudentDao;
 import br.ucs.classleague.infrastructure.data.TeamDao;
 import br.ucs.classleague.infrastructure.data.TournamentDao;
-import br.ucs.classleague.infrastructure.presentation.views.GUI;
+import br.ucs.classleague.presentation.views.GUI;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -348,7 +348,7 @@ public class RegisterController {
         if (name.equals("")) {
             JOptionPane.showMessageDialog(
                     frame.tournamentRegisterPanel,
-                    "Nome não pode ser nulo"
+                    "Campo \"Nome\" não pode estar vazio."
             );
             
             return;
@@ -358,7 +358,7 @@ public class RegisterController {
         int phaseIndex = tournamentService.getHighestPhaseIndex(selectedTeamIds.size());
         Map<String, Object> response = registerService.verifyTournamentFields(selectedTeamIds.size(), phaseIndex);
         if (!(boolean) response.get("isValid")) {
-            JOptionPane.showMessageDialog(frame.tournamentRegisterPanel, response.get("message"));
+            JOptionPane.showMessageDialog(frame.mainPanel, response.get("message"));
             return;
         }
         

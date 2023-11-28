@@ -1,4 +1,4 @@
-package br.ucs.classleague.infrastructure.presentation.model;
+package br.ucs.classleague.presentation.model;
 
 import java.beans.PropertyChangeListener;
 import javax.swing.event.SwingPropertyChangeSupport;

@@ -1,4 +1,4 @@
-package br.ucs.classleague.infrastructure.presentation.controllers;
+package br.ucs.classleague.presentation.controllers;
 
 import br.ucs.classleague.domain.Coach;
 import br.ucs.classleague.domain.SchoolClass;
@@ -8,7 +8,7 @@ import br.ucs.classleague.infrastructure.data.ClassDao;
 import br.ucs.classleague.infrastructure.data.CoachDao;
 import br.ucs.classleague.infrastructure.data.StudentDao;
 import br.ucs.classleague.infrastructure.data.TeamDao;
-import br.ucs.classleague.infrastructure.presentation.views.GUI;
+import br.ucs.classleague.presentation.views.GUI;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;

@@ -1,4 +1,4 @@
-package br.ucs.classleague.infrastructure.presentation.model;
+package br.ucs.classleague.presentation.model;
 
 import br.ucs.classleague.domain.Match;
 import br.ucs.classleague.domain.Tournament;

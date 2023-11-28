@@ -1,6 +1,6 @@
-package br.ucs.classleague.infrastructure.presentation.controllers;
+package br.ucs.classleague.presentation.controllers;
 
-import br.ucs.classleague.application.Services.CSVConverterService;
+import br.ucs.classleague.application.services.CSVConverterService;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;

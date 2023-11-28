@@ -1,6 +1,6 @@
-package br.ucs.classleague.infrastructure.presentation.controllers;
+package br.ucs.classleague.presentation.controllers;
 
-import br.ucs.classleague.application.Services.TournamentService;
+import br.ucs.classleague.application.services.TournamentService;
 import br.ucs.classleague.domain.Team;
 import br.ucs.classleague.domain.Tournament;
 import br.ucs.classleague.domain.TournamentTeam;
@@ -9,8 +9,8 @@ import br.ucs.classleague.infrastructure.data.StudentDao;
 import br.ucs.classleague.infrastructure.data.StudentMatchDao;
 import br.ucs.classleague.infrastructure.data.TeamDao;
 import br.ucs.classleague.infrastructure.data.TournamentTeamDao;
-import br.ucs.classleague.infrastructure.presentation.model.TournamentModel;
-import br.ucs.classleague.infrastructure.presentation.views.GUI;
+import br.ucs.classleague.presentation.model.TournamentModel;
+import br.ucs.classleague.presentation.views.GUI;
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
 

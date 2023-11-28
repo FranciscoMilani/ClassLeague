@@ -1,11 +1,11 @@
-package br.ucs.classleague.infrastructure.presentation.controllers;
+package br.ucs.classleague.presentation.controllers;
 
-import br.ucs.classleague.application.Services.MatchService;
-import br.ucs.classleague.application.Services.TournamentService;
+import br.ucs.classleague.application.services.MatchService;
+import br.ucs.classleague.application.services.TournamentService;
 import br.ucs.classleague.domain.Match;
 import br.ucs.classleague.domain.Team;
-import br.ucs.classleague.infrastructure.presentation.model.MatchModel;
-import br.ucs.classleague.infrastructure.presentation.views.GUI;
+import br.ucs.classleague.presentation.model.MatchModel;
+import br.ucs.classleague.presentation.views.GUI;
 import java.util.List;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;

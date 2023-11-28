@@ -1,6 +1,6 @@
 package br.ucs.classleague;
 
-import br.ucs.classleague.infrastructure.presentation.views.GUI;
+import br.ucs.classleague.presentation.views.GUI;
 import com.formdev.flatlaf.themes.FlatMacDarkLaf;
 import javax.swing.SwingUtilities;
 
