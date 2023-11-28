@@ -53,4 +53,19 @@ public class TeamDao extends GenericDAO<Team, Long>{
             return null;
         }
     }
+    
+    public boolean existsByAcronym(String acronym) {
+        EntityManager entityManager = EntityManagerProvider.getEntityManager();
+        try {
+            String jpql = "SELECT COUNT(t) FROM Team t WHERE t.acronym = :acronym";
+            TypedQuery<Long> query = entityManager.createQuery(jpql, Long.class);
+            query.setParameter("acronym", acronym);
+
+            Long count = query.getSingleResult();
+            return count != null && count > 0;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
 }

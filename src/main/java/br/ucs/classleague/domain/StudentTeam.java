@@ -32,11 +32,23 @@ public class StudentTeam implements Serializable {
     @JoinColumn(name = "team_id")
     private Team team;
     
-    private int points;
+    private int points = 0;
     private String position;
     
-    @Column(name = "sport_type")
+    @Column(name = "sport_type", nullable = false)
     private SportsEnum sportType;
+
+    public StudentTeam() {
+    }
+
+    public StudentTeam(StudentTeamKey studentTeamKey, Student student, Team team, int points, String position, SportsEnum sportType) {
+        this.studentTeamKey = studentTeamKey;
+        this.student = student;
+        this.team = team;
+        this.points = points;
+        this.position = position;
+        this.sportType = sportType;
+    }
 
     public StudentTeamKey getStudentTeamKey() {
         return studentTeamKey;

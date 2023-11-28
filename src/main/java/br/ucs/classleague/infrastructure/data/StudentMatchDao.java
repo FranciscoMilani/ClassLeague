@@ -12,7 +12,7 @@ public class StudentMatchDao extends GenericDAO<StudentMatch, StudentMatchKey>{
         super(StudentMatch.class);
     }
     
-    public List<Object[]> findAllByTournamentId(Long tournamentId, Long teamId) {
+    public List<Object[]> findAllByTournamentTeamId(Long tournamentId, Long teamId) {
         EntityManager em = EntityManagerProvider.getEntityManager();
         
         String jpql =   "SELECT s.name, tt.name, SUM(sm.points) as sum " +
@@ -24,7 +24,7 @@ public class StudentMatchDao extends GenericDAO<StudentMatch, StudentMatchKey>{
                         "WHERE t.id = :tournamentId " +
                         (teamId != null ? "AND tt.id = :teamId ": "") +
                         "GROUP BY s.name, tt.name " +
-                        "ORDER BY sum DESC, tt.name DESC";
+                        "ORDER BY sum DESC, tt.name ASC, s.name";
         
         TypedQuery<Object[]> query = em.createQuery(jpql, Object[].class);
         query.setParameter("tournamentId", tournamentId);

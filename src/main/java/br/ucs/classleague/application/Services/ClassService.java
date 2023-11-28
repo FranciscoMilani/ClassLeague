@@ -12,10 +12,6 @@ public class ClassService {
         this.classDao = DaoProvider.getClassDao();
     }
 
-    public void registerClass(SchoolClass schoolClass) {
-        classDao.create(schoolClass);
-    }
-
     public String[] getClassShiftNames() {
         String[] names = new String[SchoolClass.SchoolShift.values().length];
 

@@ -103,12 +103,17 @@ public class TournamentController {
     }
         
     public DefaultTableModel getTournamentListTableModel(int rowCount) {
-        String[] columnHeaders = new String[] {"ID", "Esporte", "Nome", "Data de início"};
+        String[] columnHeaders = new String[] {"ID", "Status", "Esporte", "Nome", "Data de início"};
 
         DefaultTableModel tournamentListModel = new DefaultTableModel(columnHeaders, rowCount) {           
             @Override
             public boolean isCellEditable(int row, int column) {
                 return false;
+            }
+
+            @Override
+            public Class<?> getColumnClass(int columnIndex) {
+                return columnIndex == 1 ? Boolean.class : super.getColumnClass(columnIndex);
             }
         };
         
@@ -117,13 +122,15 @@ public class TournamentController {
     
     private DefaultTableModel fillTournamentListTableData(List<Tournament> tournaments) {
         DefaultTableModel model = (DefaultTableModel) frame.jTournamentSelectTable.getModel();
-                            
         for (int i = 0; i < tournaments.size(); i++) {
+            Tournament tournament = tournaments.get(i);
+            
             model.addRow(new Object[]{ 
-                tournaments.get(i).getId(), 
-                tournaments.get(i).getSportEnum().getName() ,
-                tournaments.get(i).getName(),
-                tournaments.get(i).getStartTime()
+                tournament.getId(), 
+                tournamentService.checkEndedTournament(tournament),
+                tournament.getSportEnum().getName() ,
+                tournament.getName(),
+                tournament.getStartTime()
             });
         }
         

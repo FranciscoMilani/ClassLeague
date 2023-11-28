@@ -2,23 +2,30 @@ package br.ucs.classleague.application.Services;
 
 import br.ucs.classleague.domain.Coach;
 import br.ucs.classleague.domain.Sport;
+import br.ucs.classleague.domain.Sport.SportsEnum;
+import br.ucs.classleague.domain.Student;
 import br.ucs.classleague.domain.StudentTeam;
+import br.ucs.classleague.domain.StudentTeamKey;
 import br.ucs.classleague.domain.Team;
 import br.ucs.classleague.infrastructure.data.CoachDao;
 import br.ucs.classleague.infrastructure.data.DaoProvider;
+import br.ucs.classleague.infrastructure.data.StudentDao;
 import br.ucs.classleague.infrastructure.data.StudentTeamDao;
 import br.ucs.classleague.infrastructure.data.TeamDao;
+import java.util.ArrayList;
 import java.util.List;
 
 public class TeamRegisterService {
     private TeamDao teamDao;
     private StudentTeamDao studentTeamDao;
     private CoachDao coachDao;
+    private StudentDao studentDao;
 
     public TeamRegisterService() {
         this.teamDao = DaoProvider.getTeamDao();
         this.studentTeamDao = DaoProvider.getStudentTeamDao(); 
         this.coachDao = DaoProvider.getCoachDao();
+        this.studentDao = DaoProvider.getStudentDao();
     }
     
     public String[] getSportsNames(){
@@ -31,18 +38,9 @@ public class TeamRegisterService {
         return names;
     }
     
-    public Long registerTeam(Team team){
-        return teamDao.create(team).getId();
-    }
-    
-    public void registerStudentsForTeam(List<StudentTeam> stList){
-        for (StudentTeam st : stList) {
-            studentTeamDao.create(st);
-        }
-    }
-    
-    public StudentTeam registerStudentForTeam(StudentTeam st){
-        return studentTeamDao.create(st);
+    public boolean registerStudentsForTeam(List<StudentTeam> stList){
+        List<StudentTeam> result = studentTeamDao.createAllTeamRelations(stList);      
+        return result == null ? false : true;
     }
     
     public Object[] getCoachesToArray(int sportIndex) {
@@ -53,5 +51,43 @@ public class TeamRegisterService {
         } else {
             return null;
         }
+    }
+    
+    public boolean assignTeamMembers(List<Long> memberIds, Long teamId) {
+        Team team = teamDao.findById(teamId).get();
+        List<StudentTeam> stList = new ArrayList<>();
+        
+        for (Long id : memberIds) {
+            StudentTeam st = new StudentTeam();
+            Student student = studentDao.findById(id).get();
+
+            st.setStudentTeamKey(new StudentTeamKey(id, teamId));
+            st.setStudent(student);
+            st.setTeam(team);
+            
+            stList.add(st);
+        }
+        
+        return registerStudentsForTeam(stList);
+    }
+    
+    public boolean verifyAvailableStudent(Long studentId, SportsEnum sportType) {
+        boolean exists = studentTeamDao.existsByTeamIdAndSportType(studentId, sportType);
+        if (exists) {
+            System.out.println("Estudante já inserido no time");
+            return false;
+        } 
+        
+        return true;
+    }
+    
+    public boolean verifyAvailableAcronym(String acronym) {
+        var result = teamDao.existsByAcronym(acronym);
+        if (result) {
+            System.out.println("Acronimo já cadastrado");
+            return false;
+        } 
+        
+        return true;
     }
 }

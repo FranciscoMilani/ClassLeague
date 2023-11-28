@@ -112,12 +112,10 @@ public class TournamentService {
         if (tournament.getPhase() != TournamentPhase.FINAL) {
             return false;
         } else {
-            boolean allEnded = tournament.getMatches()
+            return tournament.getMatches()
                     .stream()
                     .map(Match::getEnded)
                     .allMatch((t) -> t.equals(true));  
-            
-            return allEnded;
         }
     }
     

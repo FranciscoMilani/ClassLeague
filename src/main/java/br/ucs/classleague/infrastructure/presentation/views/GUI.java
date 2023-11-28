@@ -1752,6 +1752,8 @@ public class GUI extends javax.swing.JFrame {
         jTournamentSelectTable.setShowHorizontalLines(true);
         jTournamentSelectTable.getTableHeader().setReorderingAllowed(false);
         jTournamentSelectScrollPane.setViewportView(jTournamentSelectTable);
+        jTournamentSelectTable.getColumnModel().getColumn(0).setMinWidth(0);
+        jTournamentSelectTable.getColumnModel().getColumn(0).setMaxWidth(0);
         jTournamentSelectTable.getSelectionModel().addListSelectionListener((evt) -> {
             if (!evt.getValueIsAdjusting() && jTournamentSelectTable.getSelectedRow() != -1){
                 int row = jTournamentSelectTable.getSelectedRow();
@@ -2227,6 +2229,7 @@ public class GUI extends javax.swing.JFrame {
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 1;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTH;
         studentRegister2.add(jStudentRegisterPanel, gridBagConstraints);
 
         mainTabbedPane.addTab("Cadastro de Aluno", studentRegister2);
@@ -2637,9 +2640,9 @@ public class GUI extends javax.swing.JFrame {
             .addGroup(viewListsRegisterLayout.createSequentialGroup()
                 .addGap(50, 50, 50)
                 .addComponent(jViewRegisterTitle)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 150, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 119, Short.MAX_VALUE)
                 .addComponent(ViewListsRegisterPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(397, Short.MAX_VALUE))
+                .addContainerGap(365, Short.MAX_VALUE))
         );
 
         mainTabbedPane.addTab("Visualização", viewListsRegister);
@@ -2695,11 +2698,11 @@ public class GUI extends javax.swing.JFrame {
                     break;
                 case "team":
                     ControllerUtilities.resetTable(jTeamRegisterStudentsTable);
-                    registerController.showCoachesNames();
+                    //registerController.showCoachesNames();
                     break;
-                default:
-                    registerController.updateComboBoxes();
             } 
+            
+            registerController.updateComboBoxes();
         }
     }//GEN-LAST:event_mainTabbedPaneStateChanged
 

@@ -44,8 +44,6 @@ public class TournamentDataController {
     
     public void updateTournamentRankingsList() {
         fillTournamentRankingsList();
-//        Team team = (Team) view.tournamentRankingTeamsComboBox.getSelectedItem();
-//        fillTournamentRankingsList(team);
     }
         
     private Object[] getTeamsToArray() {
@@ -88,7 +86,7 @@ public class TournamentDataController {
         if (view.tournamentRankingTeamsComboBox.getSelectedIndex() != -1) {
             Team team = (Team) view.tournamentRankingTeamsComboBox.getSelectedItem();
             Long teamId = team.getId() != -1L ? team.getId() : null;
-            List<Object[]> result = studentMatchDao.findAllByTournamentId(
+            List<Object[]> result = studentMatchDao.findAllByTournamentTeamId(
                     tournament.getId(),
                     teamId
             );
