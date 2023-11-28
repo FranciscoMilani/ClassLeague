@@ -85,45 +85,60 @@ public class RegisterController {
         });
     }
 
-    public Boolean registerStudent() {
-        Integer classNumber = Integer.parseInt(frame.jRegisterStudentClassComboBox.getSelectedItem().toString());
-        SchoolClass schoolClass = classDao.findByNumber(classNumber);
-        
-        if (classNumber.equals(null)) {
+    public void registerStudent() {
+        String name = frame.jRegisterStudentNameField.getText();
+
+        if (name.equals("")) {
             JOptionPane.showMessageDialog(
                     frame.jStudentRegisterPanel, 
-                    "Sucesso!", 
-                    "Aluno cadastrado com sucesso.", 
-                    JOptionPane.INFORMATION_MESSAGE);
+                    "O campo \"Nome\" precisa ser preenchido.", 
+                    "Erro!", 
+                    JOptionPane.ERROR_MESSAGE);
+            return;
         }
+                
+        Object classCBObject = frame.jRegisterStudentClassComboBox.getSelectedItem();
+        if (classCBObject == null) {
+            JOptionPane.showMessageDialog(
+                    frame.jStudentRegisterPanel, 
+                    "É necessário selecionar uma turma.", 
+                    "Erro!", 
+                    JOptionPane.ERROR_MESSAGE);
+            
+            return;
+        }
+        Integer classNumber = Integer.parseInt(classCBObject.toString());
+        SchoolClass schoolClass = classDao.findByNumber(classNumber);
 
         Student student = new Student(
                 schoolClass,
                 frame.jRegisterStudentFatherNameField.getText(),
                 frame.jRegisterStudentMotherNameField.getText(),
                 0,
-                frame.jRegisterStudentNameField.getText(),
+                name,
                 frame.jRegisterStudentSurnameField.getText(),
                 registerService.parseStringToLocalDate(frame.jRegisterStudentBirthdateField.getText()),
                 frame.studentGenderComboBox.getSelectedItem().toString(),
                 frame.jRegisterStudentTelephoneField.getText(),
                 frame.jRegisterStudentCPFField.getText()
         );
+        
 
-        try {
-            studentDao.create(student);
-            clearStudentRegisterFields();
+        Map<String, Object> response = registerService.registerStudent(student);
+        if (!(boolean) response.get("isValid")) {
+            JOptionPane.showMessageDialog(frame.jStudentRegisterPanel,
+                    response.get("message"), 
+                    "Erro!", 
+                    JOptionPane.ERROR_MESSAGE);
+            
+            return;
+        } else {
             JOptionPane.showMessageDialog(frame.jStudentRegisterPanel, 
-                    "Sucesso!", 
-                    "Aluno cadastrado com sucesso.", 
+                    response.get("message"), 
+                    "Sucesso!",
                     JOptionPane.INFORMATION_MESSAGE);
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(frame.jStudentRegisterPanel, 
-            "Erro!", 
-            "Erro ao cadastrar aluno.", 
-            JOptionPane.ERROR_MESSAGE);
+            return;
         }
-        return true;
     }
 
     public void registerClass() {

@@ -13,7 +13,7 @@ public class StudentDao extends GenericDAO<Student, Long> {
     public boolean existsStudentCPF(String cpf) {
         EntityManager entityManager = EntityManagerProvider.getEntityManager();
         try {
-            String jpql = "SELECT COUNT(s) FROM students s WHERE s.cpf = :cpf";
+            String jpql = "SELECT COUNT(s) FROM Student s WHERE s.cpf = :cpf";
             TypedQuery<Long> query = entityManager.createQuery(jpql, Long.class);
             query.setParameter("cpf", cpf);
 

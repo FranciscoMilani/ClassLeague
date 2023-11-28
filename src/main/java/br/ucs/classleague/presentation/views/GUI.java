@@ -1,6 +1,5 @@
 package br.ucs.classleague.presentation.views;
 
-import br.ucs.classleague.application.services.CSVConverterService;
 import br.ucs.classleague.domain.Coach;
 import br.ucs.classleague.domain.MatchState;
 import br.ucs.classleague.domain.MatchTimer;
@@ -2938,27 +2937,23 @@ public class GUI extends javax.swing.JFrame {
     }//GEN-LAST:event_tournamentHistoryComboBoxItemStateChanged
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        ControllerUtilities.convertTableToCSV(participantTeamsMainPanel, tournamentParticipantsTable);
+        ControllerUtilities.convertTableToCSV(participantTeamsMainPanel, tournamentParticipantsTable, "Participantes do Torneio");
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void exportClassesToCSVButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exportClassesToCSVButtonActionPerformed
-        // TODO add your handling code here:
-        CSVConverterService.exportToCSV(jClassesTable, "C:\\Temp", "Tabela de Turmas");
+        ControllerUtilities.convertTableToCSV(classesTablePanel, jClassesTable, "Tabela de Turmas");
     }//GEN-LAST:event_exportClassesToCSVButtonActionPerformed
 
     private void exportCoachToCSVButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exportCoachToCSVButtonActionPerformed
-        // TODO add your handling code here:
-        CSVConverterService.exportToCSV(jCoachTable, "C:\\Temp", "Tabela de Treinadores");
+        ControllerUtilities.convertTableToCSV(coachTablePanel, jCoachTable, "Tabela de Treinadores");
     }//GEN-LAST:event_exportCoachToCSVButtonActionPerformed
 
     private void exportStudentsToCSVButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exportStudentsToCSVButtonActionPerformed
-        // TODO add your handling code here:
-        CSVConverterService.exportToCSV(jStudentsTable, "C:\\Temp", "Tabela de Alunos");
+         ControllerUtilities.convertTableToCSV(studentsTablePanel, jStudentsTable, "Tabela de Alunos");
     }//GEN-LAST:event_exportStudentsToCSVButtonActionPerformed
 
     private void exportTeamsToSCVButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exportTeamsToSCVButtonActionPerformed
-        // TODO add your handling code here:
-        CSVConverterService.exportToCSV(jTeamsTable, "C:\\Temp", "Tabela de Times");
+        ControllerUtilities.convertTableToCSV(teamsTablePanel, jTeamsTable, "Tabela de Times");
     }//GEN-LAST:event_exportTeamsToSCVButtonActionPerformed
 
     private void jTeamRegisterSportComboBoxItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jTeamRegisterSportComboBoxItemStateChanged
@@ -2968,7 +2963,7 @@ public class GUI extends javax.swing.JFrame {
     }//GEN-LAST:event_jTeamRegisterSportComboBoxItemStateChanged
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        CSVConverterService.exportToCSV(rankingTable, "C:\\Temp", "Ranking de Alunos");
+        ControllerUtilities.convertTableToCSV(rankingMainPanel, rankingTable, "Ranking de Alunos do Torneio");
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed

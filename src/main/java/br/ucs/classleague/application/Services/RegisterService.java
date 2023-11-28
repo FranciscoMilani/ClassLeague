@@ -176,11 +176,11 @@ public class RegisterService {
     public Map<String, Object> registerStudent(Student student) {
         Map<String, Object> response = new HashMap<>();
         response.put("isValid", true);
-        response.put("message", "");
+        response.put("message", "Cadastro realizado.");
         
         boolean existsCpf = studentDao.existsStudentCPF(student.getCpf());
-        if (!existsCpf) {
-            response.put("isValid", true);
+        if (existsCpf) {
+            response.put("isValid", false);
             response.put("message", "CPF já existe.");
             return response;
         }
